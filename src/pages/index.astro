@@ -1,0 +1,1696 @@
+---
+const student = {
+  name: 'Trần Anh Đức',
+  id: '25021739',
+  className: 'UET.A11',
+  role: 'Sinh viên năm nhất ngành Khoa học máy tính',
+  github: 'https://github.com/kieran-lucas'
+};
+
+const missions = [
+  {
+    no: '01',
+    slug: 'file-system',
+    label: 'File System',
+    title: 'Quản lý tệp và thư mục trên Windows',
+    command: 'organize --workspace ThucHanh_TranAnhDuc --rule clear',
+    pdf: '/pdfs/bai1.pdf',
+    tools: ['Windows File Explorer', 'Folder structure', 'Recycle Bin'],
+    summary: 'Thực hành tạo thư mục, đổi tên, sao chép, di chuyển, xóa và khôi phục tệp để xây dựng nền tảng quản lý dữ liệu cá nhân có hệ thống.',
+    evidence: 'PDF ghi lại thao tác từng bước với ảnh minh họa quá trình làm việc trên Windows.',
+    insight: 'Dữ liệu cần được tổ chức trước khi khối lượng tài liệu tăng lên; cấu trúc rõ giúp giảm lỗi, tiết kiệm thời gian và dễ kiểm soát phiên bản.',
+    rubric: 'Quản lý tệp và thư mục',
+    tint: 'cyan'
+  },
+  {
+    no: '02',
+    slug: 'academic-search',
+    label: 'Academic Search',
+    title: 'Tìm kiếm và đánh giá thông tin học thuật về AI trong an ninh mạng',
+    command: 'search --query "AI cybersecurity" --source academic --verify',
+    pdf: '/pdfs/bai2.pdf',
+    tools: ['Google Scholar', 'IEEE/ACM', 'Academic keywords'],
+    summary: 'Khảo sát tài liệu học thuật về ứng dụng trí tuệ nhân tạo trong an ninh mạng, kết hợp tìm kiếm có chiến lược và đánh giá độ tin cậy nguồn.',
+    evidence: 'Báo cáo có danh sách nguồn, tiêu chí đánh giá, phân tích độ tin cậy và trực quan hóa dữ liệu.',
+    insight: 'Tìm kiếm học thuật không chỉ là nhập từ khóa; cần thu hẹp phạm vi, so sánh nguồn và kiểm tra tính cập nhật trước khi sử dụng thông tin.',
+    rubric: 'Tìm kiếm & đánh giá thông tin',
+    tint: 'blue'
+  },
+  {
+    no: '03',
+    slug: 'prompt-engineering',
+    label: 'Prompt Engineering',
+    title: 'Kỹ năng viết prompt hiệu quả cho mô hình ngôn ngữ lớn',
+    command: 'prompt.optimize({ role, context, format, criteria })',
+    pdf: '/pdfs/bai3.pdf',
+    tools: ['ChatGPT', 'Role prompting', 'Structured output'],
+    summary: 'Thử nghiệm ba cấp độ prompt trên các tác vụ học tập: tóm tắt tài liệu, giải thích khái niệm và tạo câu hỏi ôn tập.',
+    evidence: 'Báo cáo so sánh prompt cơ bản, cải tiến, nâng cao và phân tích sự khác biệt về chất lượng đầu ra.',
+    insight: 'AI phản hồi tốt hơn khi người dùng mô tả rõ vai trò, bối cảnh, định dạng và tiêu chí đánh giá. Prompt tốt là thiết kế nhiệm vụ.',
+    rubric: 'Viết prompt hiệu quả',
+    tint: 'violet'
+  },
+  {
+    no: '04',
+    slug: 'collaboration',
+    label: 'Collaboration System',
+    title: 'Sử dụng công cụ hợp tác trực tuyến cho dự án nhóm',
+    command: 'team.sync --board Trello --docs GoogleDocs --status live',
+    pdf: '/pdfs/bai4.pdf',
+    tools: ['Trello', 'Google Docs', 'Google Drive', 'Google Meet'],
+    summary: 'Tổ chức dự án nhóm về ứng dụng AI tạo sinh trong hỗ trợ học tập và quản lý thời gian cho sinh viên đại học.',
+    evidence: 'Báo cáo mô tả vai trò quản lý tiến độ, thiết lập board, phân loại task, theo dõi deadline và tổng hợp nội dung.',
+    insight: 'Hợp tác hiệu quả cần một không gian làm việc chung, trạng thái công việc rõ ràng và quy trình cập nhật tiến độ minh bạch.',
+    rubric: 'Hợp tác trực tuyến',
+    tint: 'aqua'
+  },
+  {
+    no: '05',
+    slug: 'ai-content',
+    label: 'Creative AI Pipeline',
+    title: 'Sử dụng AI tạo sinh trong sáng tạo nội dung số',
+    command: 'create --format infographic --topic "AI và tương lai việc làm"',
+    pdf: '/pdfs/bai5.pdf',
+    tools: ['Claude', 'ChatGPT', 'Adobe Firefly', 'Canva AI'],
+    summary: 'Tạo infographic về trí tuệ nhân tạo và tương lai việc làm, kết hợp AI tạo nội dung, phản biện, tạo hình ảnh và hỗ trợ bố cục.',
+    evidence: 'Báo cáo ghi lại prompt, kết quả, cách chỉnh sửa và tỷ lệ đóng góp giữa AI và con người.',
+    insight: 'AI tăng tốc ý tưởng, nhưng sản phẩm chất lượng vẫn phụ thuộc vào lựa chọn, biên tập, thiết kế và kiểm soát thông điệp.',
+    rubric: 'Sáng tạo nội dung với AI',
+    tint: 'indigo'
+  },
+  {
+    no: '06',
+    slug: 'responsible-ai',
+    label: 'Responsible AI',
+    title: 'Sử dụng AI có trách nhiệm trong học tập và nghiên cứu',
+    command: 'ai.use --mode transparent --verify true --cite sources',
+    pdf: '/pdfs/bai6.pdf',
+    tools: ['Policy review', 'AI disclosure', 'Ethical analysis'],
+    summary: 'Xây dựng bộ nguyên tắc cá nhân về sử dụng AI dựa trên minh bạch, kiểm chứng, liêm chính học thuật và trách nhiệm của người học.',
+    evidence: 'Báo cáo có bản đồ tiêu chí, nghiên cứu chính sách, phân tích đạo đức, nguyên tắc cá nhân và phần truyền thông trực quan.',
+    insight: 'Sử dụng AI đúng cách không làm giảm giá trị học tập; vấn đề nằm ở minh bạch, kiểm chứng và trách nhiệm của người học.',
+    rubric: 'AI có trách nhiệm',
+    tint: 'teal'
+  },
+  {
+    no: '07',
+    slug: 'literature-review',
+    label: 'AI Literature Review',
+    title: 'Tổng quan tài liệu bằng công cụ AI Elicit/Consensus',
+    command: 'review --topic graphene-membrane --tools Elicit Consensus',
+    pdf: '/pdfs/bai7.pdf',
+    tools: ['Elicit', 'Consensus', 'Literature screening'],
+    summary: 'Sử dụng công cụ AI để khảo sát nhanh tài liệu về màng graphene/graphene oxide cho khử mặn và lọc ion trong nước.',
+    evidence: 'Báo cáo nêu câu hỏi nghiên cứu, chiến lược tìm kiếm, tiêu chí lọc và lựa chọn các bài báo tiêu biểu.',
+    insight: 'Công cụ AI giúp tăng tốc tổng quan tài liệu, nhưng quyết định giữ hay loại nguồn vẫn cần người học đọc lại và đánh giá giới hạn.',
+    rubric: 'Tổng quan tài liệu bằng AI',
+    tint: 'sky'
+  }
+];
+
+const stats = [
+  { value: '7/7', label: 'Bài học chính', detail: 'Đầy đủ artifact' },
+  { value: 'PDF', label: 'Minh chứng gốc', detail: 'Mở trực tiếp' },
+  { value: 'AI', label: 'Ứng dụng có kiểm soát', detail: 'Minh bạch & trách nhiệm' },
+  { value: 'Astro', label: 'Website tĩnh nhẹ', detail: 'Tối ưu trải nghiệm' }
+];
+
+const principles = [
+  ['Không thay thế tư duy cá nhân', 'AI hỗ trợ gợi ý, phản biện và diễn đạt; bài nộp cuối cùng phải thể hiện hiểu biết của người học.'],
+  ['Kiểm chứng thông tin quan trọng', 'Nội dung học thuật cần được đối chiếu với giáo trình, bài báo hoặc nguồn chính thức trước khi sử dụng.'],
+  ['Minh bạch khi dùng AI', 'Khi bài tập yêu cầu, cần ghi rõ công cụ đã dùng, mục đích sử dụng và phần đã chỉnh sửa.'],
+  ['Bảo vệ dữ liệu cá nhân', 'Không đưa thông tin riêng tư, tài liệu nội bộ hoặc dữ liệu nhạy cảm vào công cụ AI.'],
+  ['Giữ năng lực học thật', 'Người học phải giải thích lại được sản phẩm của mình; nếu không hiểu, việc dùng AI đã lệch mục tiêu.']
+];
+
+const rubric = [
+  ['Thiết kế & cấu trúc Portfolio', 'One-page portfolio có hero, điều hướng cố định, mission index, PDF gốc, tổng kết và rubric map.'],
+  ['Quản lý tệp và thư mục', 'Bài 01 trình bày thao tác quản lý file/folder trên Windows.'],
+  ['Tìm kiếm & đánh giá thông tin', 'Bài 02 thể hiện chiến lược tìm kiếm học thuật và đánh giá nguồn.'],
+  ['Viết Prompt hiệu quả', 'Bài 03 so sánh prompt cơ bản, cải tiến và nâng cao.'],
+  ['Hợp tác trực tuyến', 'Bài 04 mô tả Trello, Google Docs, Drive và quy trình nhóm.'],
+  ['Sáng tạo nội dung với AI', 'Bài 05 ghi lại quy trình tạo infographic bằng nhiều công cụ AI.'],
+  ['AI có trách nhiệm', 'Bài 06 xây dựng nguyên tắc cá nhân và phân tích đạo đức học thuật.'],
+  ['Tổng kết và đánh giá bản thân', 'Reflection section nêu kỹ năng, thách thức, bài học và định hướng ứng dụng.']
+];
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#eff8ff" />
+    <meta
+      name="description"
+      content="Portfolio kỹ thuật số của Trần Anh Đức: website one-page cao cấp, mượt và có minh chứng cho 7 bài học chính về công nghệ số, AI, prompt engineering và liêm chính học thuật."
+    />
+    <title>Hành trình học tập số và ứng dụng AI — Trần Anh Đức</title>
+    <link rel="preload" as="image" href="/assets/avatar-duc.webp" type="image/webp" />
+    <link rel="preload" as="font" href="/fonts/Lexend-Regular.ttf" type="font/ttf" crossorigin />
+    <link rel="preload" as="font" href="/fonts/Lexend-SemiBold.ttf" type="font/ttf" crossorigin />
+    <style is:global>
+      @font-face { font-family: "Lexend"; src: url("/fonts/Lexend-Light.ttf") format("truetype"); font-weight: 300; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Lexend"; src: url("/fonts/Lexend-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Lexend"; src: url("/fonts/Lexend-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Lexend"; src: url("/fonts/Lexend-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Lexend"; src: url("/fonts/Lexend-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Lexend"; src: url("/fonts/Lexend-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; font-display: swap; }
+
+      :root {
+        --ink: #071424;
+        --ink-2: #193250;
+        --muted: #6683a1;
+        --muted-2: #8aa3bc;
+        --surface: rgba(255, 255, 255, .64);
+        --surface-strong: rgba(255, 255, 255, .78);
+        --hairline: rgba(32, 140, 255, .18);
+        --hairline-strong: rgba(22, 119, 255, .34);
+        --blue: #007aff;
+        --blue-2: #0a5dff;
+        --cyan: #00d7ff;
+        --aqua: #71efff;
+        --indigo: #5f5cff;
+        --violet: #8b5cf6;
+        --teal: #14b8a6;
+        --glow-blue: rgba(0, 122, 255, .26);
+        --glow-cyan: rgba(0, 215, 255, .22);
+        --shadow-lg: 0 34px 94px rgba(22, 119, 255, .16);
+        --shadow-md: 0 22px 64px rgba(22, 119, 255, .12);
+        --shadow-sm: 0 12px 36px rgba(22, 119, 255, .09);
+        --radius-3xl: 42px;
+        --radius-2xl: 32px;
+        --radius-xl: 24px;
+        --radius-lg: 18px;
+        --container: 1208px;
+        --topbar-h: 70px;
+        --font-ui: "Lexend", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --font-mono: "Cascadia Code", "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+        --mx: 50%;
+        --my: 20%;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: 116px; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        font-family: var(--font-ui);
+        font-size: 16px;
+        line-height: 1.65;
+        background:
+          radial-gradient(circle at 14% -4%, rgba(0, 122, 255, .24), transparent 34rem),
+          radial-gradient(circle at 88% 6%, rgba(0, 215, 255, .23), transparent 35rem),
+          radial-gradient(circle at 68% 48%, rgba(111, 76, 255, .10), transparent 31rem),
+          linear-gradient(180deg, #fbfdff 0%, #eef8ff 46%, #f8fcff 100%);
+        overflow-x: hidden;
+        text-rendering: optimizeLegibility;
+        font-optical-sizing: auto;
+        font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -5;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(0, 122, 255, .055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 122, 255, .055) 1px, transparent 1px);
+        background-size: 46px 46px;
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.84), transparent 72%);
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: -26vh -12vw auto -12vw;
+        height: 78vh;
+        z-index: -4;
+        pointer-events: none;
+        opacity: .94;
+        filter: blur(16px) saturate(155%);
+        background:
+          radial-gradient(circle at 18% 42%, rgba(0, 122, 255, .22), transparent 24%),
+          radial-gradient(circle at 46% 18%, rgba(0, 215, 255, .26), transparent 25%),
+          radial-gradient(circle at 84% 50%, rgba(106, 92, 255, .18), transparent 25%),
+          linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+        animation: aurora 16s ease-in-out infinite alternate;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      ::selection { color: #fff; background: #007aff; }
+      img { max-width: 100%; }
+      .gpu { transform: translateZ(0); backface-visibility: hidden; }
+      .container { width: min(var(--container), calc(100% - 44px)); margin: 0 auto; }
+      .mono { font-family: var(--font-mono); letter-spacing: -0.02em; }
+      main[id], section[id], article[id] { scroll-margin-top: 116px; }
+
+      .orb-field {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: -3;
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(30px) saturate(155%);
+        opacity: .52;
+        will-change: transform;
+      }
+
+      .orb:nth-child(1) { width: 360px; height: 360px; left: -120px; top: 18vh; background: rgba(0,122,255,.20); animation: floatA 24s ease-in-out infinite; }
+      .orb:nth-child(2) { width: 310px; height: 310px; right: -96px; top: 18vh; background: rgba(0,215,255,.19); animation: floatB 26s ease-in-out infinite; }
+      .orb:nth-child(3) { width: 240px; height: 240px; left: 52%; bottom: 4vh; background: rgba(95,92,255,.12); animation: floatC 28s ease-in-out infinite; }
+      .orb:nth-child(4) { width: 210px; height: 210px; left: 9%; bottom: 18vh; background: rgba(113,239,255,.14); animation: floatD 30s ease-in-out infinite; }
+
+      .progress {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 1200;
+        height: 3px;
+        transform-origin: left;
+        transform: scaleX(0);
+        background: linear-gradient(90deg, #007aff, #00d7ff, #5f5cff);
+        box-shadow: 0 0 22px rgba(0, 122, 255, .44);
+      }
+
+      .topbar {
+        position: fixed;
+        top: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1100;
+        width: min(var(--container), calc(100% - 28px));
+        display: grid;
+        grid-template-columns: max-content 1fr max-content;
+        align-items: center;
+        gap: 14px;
+        min-height: var(--topbar-h);
+        padding: 10px 12px 10px 14px;
+        border: 1px solid rgba(255,255,255,.72);
+        border-radius: 999px;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.84), rgba(229,247,255,.58)),
+          radial-gradient(circle at 22% 0%, rgba(0,215,255,.22), transparent 38%),
+          radial-gradient(circle at 90% 40%, rgba(0,122,255,.16), transparent 36%);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 18px 48px rgba(0, 89, 210, .13),
+          inset 0 1px 0 rgba(255,255,255,.94),
+          inset 0 -1px 0 rgba(0,122,255,.08);
+        isolation: isolate;
+      }
+
+      .topbar::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(110deg, rgba(255,255,255,.52), transparent 40%, rgba(0,215,255,.08));
+        z-index: -1;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        min-width: max-content;
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        color: white;
+        font-weight: 800;
+        letter-spacing: -0.09em;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(255,255,255,.55), transparent 31%),
+          linear-gradient(135deg, #007aff 0%, #00d7ff 52%, #5f5cff 100%);
+        box-shadow: 0 16px 34px rgba(0,122,255,.28), inset 0 1px 0 rgba(255,255,255,.44);
+      }
+
+      .brand-copy { display: grid; line-height: 1.1; }
+      .brand-name { font-size: 14px; font-weight: 700; letter-spacing: -0.035em; }
+      .brand-meta { margin-top: 3px; font-size: 11px; color: var(--muted); font-weight: 500; }
+
+      .nav {
+        justify-self: center;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 5px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.48);
+        border: 1px solid rgba(0,122,255,.09);
+      }
+
+      .nav a {
+        position: relative;
+        padding: 10px 12px;
+        border-radius: 999px;
+        color: #45617e;
+        font-size: 12.5px;
+        font-weight: 600;
+        transition: color .18s ease, background .18s ease, transform .18s ease;
+      }
+
+      .nav a:hover,
+      .nav a.is-active {
+        color: #006cff;
+        background: rgba(0,122,255,.09);
+        transform: translateY(-1px);
+      }
+
+      .top-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-width: max-content;
+        border-radius: 999px;
+        padding: 11px 14px;
+        color: white;
+        background: linear-gradient(135deg, #007aff, #00c8ff 62%, #5f5cff);
+        box-shadow: 0 16px 34px rgba(0,122,255,.26), inset 0 1px 0 rgba(255,255,255,.34);
+        font-size: 12.5px;
+        font-weight: 700;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        display: grid;
+        align-items: center;
+        padding: 122px 0 70px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.02fr) minmax(420px, .98fr);
+        gap: 42px;
+        align-items: center;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 2;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 13px;
+        border-radius: 999px;
+        border: 1px solid rgba(0,122,255,.18);
+        background: rgba(255,255,255,.66);
+        backdrop-filter: blur(18px) saturate(180%);
+        color: #005bd8;
+        font-size: 12px;
+        font-weight: 700;
+        box-shadow: 0 10px 26px rgba(0,122,255,.08), inset 0 1px 0 rgba(255,255,255,.86);
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #00d7ff;
+        box-shadow: 0 0 0 6px rgba(0,215,255,.13), 0 0 22px rgba(0,215,255,.6);
+      }
+
+      h1 {
+        margin: 22px 0 18px;
+        max-width: 780px;
+        font-size: clamp(50px, 7vw, 96px);
+        line-height: .96;
+        letter-spacing: -0.078em;
+        font-weight: 800;
+      }
+
+      .gradient-text {
+        color: transparent;
+        background:
+          linear-gradient(110deg, #05182b 0%, #005fff 28%, #00caff 57%, #5d5cff 82%, #081827 100%);
+        background-size: 210% 210%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: gradientFlow 13s ease-in-out infinite alternate;
+      }
+
+      .lead {
+        margin: 0;
+        max-width: 700px;
+        color: var(--ink-2);
+        font-size: clamp(17px, 1.34vw, 19px);
+        line-height: 1.9;
+        font-weight: 320;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-note {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        gap: 14px;
+        align-items: start;
+        max-width: 700px;
+        margin-top: 22px;
+        padding: 18px 18px 18px 16px;
+        border-radius: 28px;
+        border: 1px solid rgba(255,255,255,.76);
+        background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(233,247,255,.52));
+        backdrop-filter: blur(22px) saturate(185%);
+        -webkit-backdrop-filter: blur(22px) saturate(185%);
+        box-shadow: 0 18px 50px rgba(0,122,255,.08), inset 0 1px 0 rgba(255,255,255,.88);
+      }
+
+      .hero-note p { margin: 0; color: #4b6884; font-size: 14.2px; line-height: 1.72; letter-spacing: -0.014em; }
+      .hero-note strong { color: #102238; }
+      .hero-note-mark {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(0,122,255,.18), rgba(0,215,255,.28));
+        color: #005bd8;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 800;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.78);
+      }
+
+      .identity-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin-top: 26px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border-radius: 999px;
+        border: 1px solid rgba(0,122,255,.16);
+        background: rgba(255,255,255,.65);
+        color: #45617e;
+        padding: 8px 11px;
+        font-size: 13px;
+        font-weight: 600;
+        backdrop-filter: blur(14px);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.82);
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 32px;
+      }
+
+      .btn {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        min-height: 50px;
+        padding: 0 19px;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 700;
+        transition: transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease, border-color .22s ease, background .22s ease;
+        will-change: transform;
+      }
+
+      .btn:hover { transform: translateY(-2px); }
+      .btn-primary {
+        color: #fff;
+        background: linear-gradient(135deg, #007aff 0%, #00c8ff 55%, #5f5cff 100%);
+        box-shadow: 0 22px 52px rgba(0,122,255,.29), inset 0 1px 0 rgba(255,255,255,.34);
+      }
+
+      .btn-primary::after,
+      .action-link::after {
+        content: "";
+        position: absolute;
+        inset: -70% auto -70% -82%;
+        width: 58%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.48), transparent);
+        transform: rotate(18deg);
+        transition: transform .72s cubic-bezier(.2,.8,.2,1);
+      }
+
+      .btn-primary:hover::after,
+      .action-link:hover::after { transform: translateX(420%) rotate(18deg); }
+
+      .btn-secondary {
+        color: #005bd8;
+        border: 1px solid rgba(0,122,255,.20);
+        background: rgba(255,255,255,.70);
+        backdrop-filter: blur(16px);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.88);
+      }
+
+      .showcase {
+        position: relative;
+        min-height: 720px;
+        perspective: 1400px;
+        contain: layout paint;
+      }
+
+      .portrait-shell {
+        position: absolute;
+        top: 16px;
+        right: 10px;
+        z-index: 3;
+        width: min(362px, 74%);
+      }
+
+      .portrait-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 36px;
+        padding: 16px;
+        border: 1px solid rgba(255,255,255,.76);
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.80), rgba(228,246,255,.56)),
+          radial-gradient(circle at 18% 0%, rgba(0,215,255,.24), transparent 38%),
+          radial-gradient(circle at 100% 0%, rgba(95,92,255,.20), transparent 32%);
+        backdrop-filter: blur(22px) saturate(185%);
+        -webkit-backdrop-filter: blur(22px) saturate(185%);
+        box-shadow: 0 28px 76px rgba(0,122,255,.16), inset 0 1px 0 rgba(255,255,255,.92), inset 0 -1px 0 rgba(0,122,255,.08);
+      }
+
+      .portrait-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(135deg, rgba(255,255,255,.58), transparent 42%, rgba(0,215,255,.08));
+        pointer-events: none;
+      }
+
+      .portrait-noise {
+        position: absolute;
+        inset: -20px;
+        z-index: -1;
+        border-radius: 48px;
+        background: radial-gradient(circle at 30% 30%, rgba(0,215,255,.22), transparent 24%), radial-gradient(circle at 86% 30%, rgba(0,122,255,.24), transparent 24%), radial-gradient(circle at 50% 80%, rgba(95,92,255,.16), transparent 26%);
+        filter: blur(28px);
+        opacity: .95;
+      }
+
+      .portrait-image-wrap {
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+        border: 1px solid rgba(0,122,255,.12);
+        background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(232,245,255,.72));
+        aspect-ratio: 1 / 1;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.94);
+      }
+
+      .portrait-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.025);
+        backface-visibility: hidden;
+      }
+
+      .portrait-meta {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 8px;
+        padding: 16px 8px 4px;
+      }
+
+      .portrait-meta > span { color: #007aff; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+      .portrait-meta strong { font-size: 22px; line-height: 1.1; letter-spacing: -0.05em; }
+      .portrait-meta p { margin: 0; color: #5c7893; font-size: 13.2px; line-height: 1.6; font-weight: 400; }
+
+      .portrait-chip {
+        position: absolute;
+        display: grid;
+        gap: 5px;
+        min-width: 170px;
+        padding: 12px 14px;
+        border-radius: 22px;
+        border: 1px solid rgba(255,255,255,.76);
+        background: rgba(255,255,255,.74);
+        backdrop-filter: blur(16px) saturate(175%);
+        -webkit-backdrop-filter: blur(16px) saturate(175%);
+        box-shadow: 0 16px 44px rgba(0,122,255,.12), inset 0 1px 0 rgba(255,255,255,.92);
+        animation: floatSoft 10s ease-in-out infinite;
+      }
+      .portrait-chip.left { left: -22px; top: 66px; }
+      .portrait-chip.right { right: -18px; bottom: 54px; animation-delay: -2.2s; }
+      .portrait-chip span { color: #007aff; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+      .portrait-chip strong { color: #193250; font-size: 12px; line-height: 1.45; letter-spacing: -0.02em; }
+
+      .halo {
+        position: absolute;
+        inset: 58px 16px 56px 8px;
+        border-radius: 50%;
+        background:
+          conic-gradient(from 150deg, rgba(0,122,255,.0), rgba(0,122,255,.38), rgba(0,215,255,.48), rgba(95,92,255,.34), rgba(0,122,255,.0));
+        filter: blur(38px) saturate(175%);
+        opacity: .58;
+        animation: slowSpin 32s linear infinite;
+      }
+
+      .workspace {
+        position: absolute;
+        left: 0;
+        bottom: 28px;
+        z-index: 2;
+        width: min(468px, 88%);
+        border-radius: 40px;
+        padding: 14px;
+        border: 1px solid rgba(255,255,255,.72);
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.76), rgba(222,246,255,.46)),
+          radial-gradient(circle at 16% 0%, rgba(0,215,255,.22), transparent 35%),
+          radial-gradient(circle at 100% 8%, rgba(0,122,255,.22), transparent 35%);
+        backdrop-filter: blur(22px) saturate(185%);
+        -webkit-backdrop-filter: blur(22px) saturate(185%);
+        box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.92), inset 0 -1px 0 rgba(0,122,255,.08);
+        transform: rotateX(2deg) rotateY(-5deg) rotateZ(1deg);
+        transition: transform .32s cubic-bezier(.2,.8,.2,1);
+      }
+
+      .workspace:hover { transform: rotateX(0deg) rotateY(-2deg) rotateZ(0deg) translateY(-4px); }
+
+      .window {
+        overflow: hidden;
+        border-radius: 30px;
+        border: 1px solid rgba(0,122,255,.12);
+        background: rgba(255,255,255,.66);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+      }
+
+      .window-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 56px;
+        padding: 0 18px;
+        border-bottom: 1px solid rgba(0,122,255,.10);
+        background: linear-gradient(180deg, rgba(255,255,255,.68), rgba(238,249,255,.44));
+      }
+
+      .dots { display: flex; gap: 7px; }
+      .dot { width: 11px; height: 11px; border-radius: 999px; background: #bfdbfe; border: 1px solid rgba(0,0,0,.04); }
+      .dot:nth-child(1) { background: #fecaca; }
+      .dot:nth-child(2) { background: #fde68a; }
+      .dot:nth-child(3) { background: #bbf7d0; }
+      .window-title { color: #6b86a1; font-size: 12px; }
+
+      .window-body {
+        padding: 22px;
+        display: grid;
+        gap: 14px;
+        contain: layout paint;
+      }
+
+      .code-line {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        color: #203853;
+        border-bottom: 1px solid rgba(0,122,255,.09);
+        padding: 12px 0;
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .code-line:last-child { border-bottom: 0; }
+      .prompt { color: #007aff; font-weight: 800; }
+      .success { color: #079669; font-weight: 800; }
+      .comment { color: #7893ad; }
+
+      .mini-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 11px;
+      }
+
+      .mini-stat {
+        position: relative;
+        overflow: hidden;
+        border-radius: 22px;
+        border: 1px solid rgba(0,122,255,.13);
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.78), rgba(226,246,255,.54)),
+          radial-gradient(circle at 90% 0%, rgba(0,215,255,.18), transparent 48%);
+        padding: 16px;
+      }
+
+      .mini-stat strong { display: block; font-size: 24px; letter-spacing: -0.05em; line-height: 1; }
+      .mini-stat span { display: block; margin-top: 6px; color: #5b7895; font-size: 12px; font-weight: 600; line-height: 1.35; }
+      .mini-stat em { display: block; margin-top: 3px; color: #8aa3bc; font-style: normal; font-size: 11px; }
+
+      .floating-card {
+        position: absolute;
+        z-index: 4;
+        border: 1px solid rgba(255,255,255,.72);
+        background: rgba(255,255,255,.66);
+        backdrop-filter: blur(16px) saturate(170%);
+        -webkit-backdrop-filter: blur(16px) saturate(170%);
+        box-shadow: 0 16px 48px rgba(0,122,255,.13), inset 0 1px 0 rgba(255,255,255,.9);
+        border-radius: 24px;
+        padding: 14px;
+        animation: floatSoft 6.8s ease-in-out infinite;
+      }
+
+      .floating-card.one { left: 18px; top: 28px; width: 226px; }
+      .floating-card.two { display: none; }
+      .floating-card-title { font-size: 12px; color: #006cff; font-weight: 800; }
+      .floating-card-copy { margin-top: 5px; color: #52708d; font-size: 12px; line-height: 1.45; }
+
+      .section { padding: 96px 0; content-visibility: auto; contain-intrinsic-size: 1px 920px; }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, .88fr) minmax(0, 1fr);
+        gap: 38px;
+        align-items: end;
+        margin-bottom: 34px;
+      }
+
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #005bd8;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      .kicker::before {
+        content: "";
+        width: 20px;
+        height: 2px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #007aff, #00d7ff);
+        box-shadow: 0 0 16px rgba(0,122,255,.42);
+      }
+
+      h2 {
+        margin: 10px 0 0;
+        font-size: clamp(34px, 4.2vw, 58px);
+        line-height: 1.05;
+        letter-spacing: -0.06em;
+        font-weight: 800;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--ink-2);
+        font-size: 16.1px;
+        line-height: 1.84;
+        font-weight: 320;
+        letter-spacing: -0.015em;
+      }
+
+      .glass-panel, .mission-card, .rubric-row, .principle {
+        position: relative;
+        border: 1px solid rgba(255,255,255,.72);
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.72), rgba(230,247,255,.48)),
+          radial-gradient(circle at 100% 0%, rgba(0,215,255,.12), transparent 34%);
+        backdrop-filter: blur(18px) saturate(170%);
+        -webkit-backdrop-filter: blur(18px) saturate(170%);
+        box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.92), inset 0 -1px 0 rgba(0,122,255,.07);
+      }
+
+      .glass-panel::before, .mission-card::before, .rubric-row::before, .principle::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(140deg, rgba(255,255,255,.58), transparent 42%, rgba(0,215,255,.09));
+        opacity: .8;
+      }
+
+      .glass-panel > *, .mission-card > *, .rubric-row > *, .principle > * { position: relative; z-index: 1; }
+
+      .overview-grid {
+        display: grid;
+        grid-template-columns: 1.06fr .94fr;
+        gap: 22px;
+      }
+
+      .glass-panel {
+        border-radius: var(--radius-3xl);
+        padding: 34px;
+      }
+
+      .glass-panel h3 {
+        margin: 0 0 12px;
+        font-size: 26px;
+        letter-spacing: -0.048em;
+        line-height: 1.18;
+      }
+
+      .glass-panel p {
+        margin: 0;
+        color: var(--ink-2);
+        line-height: 1.78;
+        font-weight: 300;
+      }
+
+      .quality-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .quality-item {
+        border: 1px solid rgba(0,122,255,.12);
+        background: rgba(255,255,255,.52);
+        border-radius: 20px;
+        padding: 15px;
+      }
+
+      .quality-item strong { display: block; color: #005bd8; font-size: 14px; letter-spacing: -0.025em; }
+      .quality-item span { display: block; margin-top: 5px; color: #647f9b; font-size: 12px; line-height: 1.45; }
+
+      .mission-shell {
+        display: grid;
+        grid-template-columns: 270px minmax(0, 1fr);
+        gap: 24px;
+        align-items: start;
+      }
+
+      .toc {
+        position: sticky;
+        top: 98px;
+        border-radius: 30px;
+        padding: 14px;
+        border: 1px solid rgba(255,255,255,.72);
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.70), rgba(229,247,255,.50)),
+          radial-gradient(circle at 0% 0%, rgba(0,215,255,.12), transparent 42%);
+        backdrop-filter: blur(16px) saturate(165%);
+        -webkit-backdrop-filter: blur(16px) saturate(165%);
+        box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.9);
+      }
+
+      .toc-title {
+        padding: 8px 10px 12px;
+        color: #006cff;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      .toc a {
+        display: grid;
+        grid-template-columns: 34px 1fr auto;
+        align-items: center;
+        gap: 9px;
+        min-height: 46px;
+        padding: 8px 10px;
+        border-radius: 18px;
+        color: #496885;
+        font-size: 12.5px;
+        font-weight: 600;
+        transition: color .18s ease, background .18s ease, transform .18s ease;
+      }
+
+      .toc a:hover {
+        color: #005bd8;
+        background: rgba(0,122,255,.08);
+        transform: translateX(2px);
+      }
+
+      .toc-no {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 12px;
+        background: rgba(255,255,255,.68);
+        color: #007aff;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 800;
+        border: 1px solid rgba(0,122,255,.10);
+      }
+
+      .mission-list { display: grid; gap: 26px; }
+
+      .mission-card {
+        overflow: hidden;
+        border-radius: 42px;
+        padding: 28px;
+        transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease, border-color .28s ease;
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 520px;
+      }
+
+      .mission-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(0,122,255,.34);
+        box-shadow: 0 32px 90px rgba(0,122,255,.16), inset 0 1px 0 rgba(255,255,255,.94);
+      }
+
+      .mission-card::after {
+        content: "";
+        position: absolute;
+        inset: -40% auto -40% -70%;
+        width: 42%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,.46), transparent);
+        transform: rotate(18deg);
+        opacity: 0;
+        transition: opacity .28s ease, transform .9s cubic-bezier(.2,.8,.2,1);
+        pointer-events: none;
+      }
+
+      .mission-card:hover::after {
+        opacity: 1;
+        transform: translateX(440%) rotate(18deg);
+      }
+
+      .mission-top {
+        display: grid;
+        grid-template-columns: 118px minmax(0, 1fr) max-content;
+        gap: 20px;
+        align-items: start;
+      }
+
+      .mission-number {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 106px;
+        height: 106px;
+        border-radius: 32px;
+        color: #006cff;
+        font-family: var(--font-mono);
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -0.08em;
+        border: 1px solid rgba(0,122,255,.16);
+        background:
+          radial-gradient(circle at 28% 18%, rgba(113,239,255,.32), transparent 36%),
+          linear-gradient(145deg, rgba(255,255,255,.94), rgba(220,245,255,.72));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.92), 0 14px 34px rgba(0,122,255,.10);
+      }
+
+      .mission-number span {
+        position: absolute;
+        bottom: 13px;
+        color: #7b95ad;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+      }
+
+      .mission-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 11px;
+        border-radius: 999px;
+        border: 1px solid rgba(0,122,255,.14);
+        background: rgba(255,255,255,.58);
+        color: #006cff;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .mission-label::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #00d7ff;
+        box-shadow: 0 0 16px rgba(0,215,255,.6);
+      }
+
+      .mission-title {
+        margin: 12px 0 0;
+        font-size: clamp(23px, 2.35vw, 34px);
+        line-height: 1.18;
+        letter-spacing: -0.055em;
+        font-weight: 800;
+      }
+
+      .action-link {
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: max-content;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 11px 14px;
+        color: white;
+        background: linear-gradient(135deg, #007aff, #00c8ff 60%, #5f5cff);
+        box-shadow: 0 16px 36px rgba(0,122,255,.22), inset 0 1px 0 rgba(255,255,255,.34);
+        font-size: 13px;
+        font-weight: 700;
+        transition: transform .2s ease, box-shadow .2s ease;
+      }
+
+      .action-link:hover { transform: translateY(-2px); box-shadow: 0 20px 46px rgba(0,122,255,.28); }
+
+      .mission-command {
+        margin: 20px 0 22px;
+        padding: 13px 15px;
+        border-radius: 22px;
+        border: 1px solid rgba(0,122,255,.14);
+        background: linear-gradient(180deg, rgba(245,251,255,.86), rgba(226,246,255,.58));
+        color: #304862;
+        font-size: 12.6px;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .mission-body {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+        gap: 22px;
+        align-items: start;
+      }
+
+      .mission-card[data-even="true"] .mission-panel { order: -1; }
+
+      .copy-block { display: grid; gap: 12px; }
+      .copy-note {
+        padding: 16px 18px;
+        border-radius: 24px;
+        border: 1px solid rgba(0,122,255,.10);
+        background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(238,249,255,.42));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.84);
+      }
+      .copy-note.emphasis {
+        background: linear-gradient(180deg, rgba(244,250,255,.78), rgba(225,244,255,.62));
+      }
+      .copy-kicker {
+        display: inline-block;
+        margin-bottom: 8px;
+        color: #006cff;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .11em;
+        text-transform: uppercase;
+      }
+      .copy-block p {
+        margin: 0;
+        color: #344f69;
+        font-size: 15.05px;
+        line-height: 1.8;
+        font-weight: 320;
+        letter-spacing: -0.012em;
+      }
+
+      .tool-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+      .tool {
+        padding: 7px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(0,122,255,.13);
+        background: rgba(255,255,255,.62);
+        color: #4f6b87;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .mission-panel {
+        border-radius: 30px;
+        border: 1px solid rgba(0,122,255,.13);
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.64), rgba(230,247,255,.48));
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.78);
+        padding: 18px;
+      }
+
+      .panel-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .panel-badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 8px 11px;
+        border: 1px solid rgba(0,122,255,.14);
+        background: rgba(255,255,255,.72);
+        color: #006cff;
+        font-size: 11.5px;
+        font-weight: 800;
+        letter-spacing: .05em;
+      }
+
+      .panel-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 36px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, rgba(0,122,255,.12), rgba(0,215,255,.16));
+        color: #005bd8;
+        font-size: 12px;
+        font-weight: 800;
+        transition: transform .18s ease, background .18s ease;
+      }
+      .panel-cta:hover { transform: translateY(-1px); background: linear-gradient(135deg, rgba(0,122,255,.18), rgba(0,215,255,.24)); }
+
+      .panel-line {
+        display: grid;
+        grid-template-columns: 84px 1fr;
+        gap: 12px;
+        padding: 13px 0;
+        border-bottom: 1px solid rgba(0,122,255,.08);
+      }
+      .panel-line:last-child { border-bottom: 0; }
+      .panel-key {
+        color: #006cff;
+        font-size: 11.2px;
+        font-weight: 800;
+        letter-spacing: .11em;
+        text-transform: uppercase;
+      }
+      .panel-value { color: #526f8c; font-size: 13.5px; line-height: 1.6; }
+
+      .principles-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+      }
+
+      .principle {
+        border-radius: 28px;
+        padding: 20px;
+        min-height: 210px;
+        overflow: hidden;
+      }
+
+      .check {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        color: #fff;
+        background: linear-gradient(135deg, #007aff, #00d7ff);
+        box-shadow: 0 14px 30px rgba(0,122,255,.23), inset 0 1px 0 rgba(255,255,255,.34);
+        font-weight: 800;
+        margin-bottom: 16px;
+      }
+      .principle strong { display: block; letter-spacing: -0.04em; line-height: 1.25; font-size: 17px; }
+      .principle span { display: block; margin-top: 10px; color: #577491; font-size: 13.2px; line-height: 1.64; font-weight: 300; }
+
+      .reflection-layout {
+        display: grid;
+        grid-template-columns: .86fr 1.14fr;
+        gap: 18px;
+      }
+
+      .reflection-visual {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-3xl);
+        padding: 34px;
+        min-height: 380px;
+        color: white;
+        background:
+          radial-gradient(circle at 18% 18%, rgba(113,239,255,.48), transparent 31%),
+          radial-gradient(circle at 82% 22%, rgba(255,255,255,.22), transparent 24%),
+          linear-gradient(135deg, #007aff 0%, #00c8ff 52%, #5f5cff 100%);
+        box-shadow: 0 42px 110px rgba(0,122,255,.28), inset 0 1px 0 rgba(255,255,255,.34);
+      }
+
+      .reflection-visual::after {
+        content: "";
+        position: absolute;
+        inset: auto -22% -30% -8%;
+        height: 48%;
+        background: rgba(255,255,255,.18);
+        filter: blur(28px);
+        border-radius: 50%;
+      }
+
+      .reflection-visual .mono { opacity: .82; font-size: 12px; }
+      .reflection-visual h3 { margin: 20px 0 0; max-width: 420px; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.08; letter-spacing: -0.066em; }
+
+      .reflection-copy { display: grid; gap: 13px; }
+      .reflection-copy p { margin: 0; color: #334f69; font-size: 15.55px; line-height: 1.82; font-weight: 300; letter-spacing: -0.012em; }
+
+      .rubric-table { display: grid; gap: 11px; }
+      .rubric-row {
+        border-radius: 22px;
+        padding: 16px;
+        display: grid;
+        grid-template-columns: 270px 1fr;
+        gap: 16px;
+      }
+      .rubric-name { color: #102238; font-weight: 800; letter-spacing: -0.036em; }
+      .rubric-note { color: #5b7895; line-height: 1.62; font-size: 14px; }
+
+      .footer { padding: 48px 0 64px; }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+        color: #6683a1;
+        border-top: 1px solid rgba(0,122,255,.14);
+        padding-top: 26px;
+        font-size: 14px;
+      }
+      .footer a { color: #006cff; font-weight: 700; }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(22px);
+        transition: opacity .72s ease, transform .72s cubic-bezier(.2,.8,.2,1);
+      }
+      .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+      @keyframes aurora {
+        0% { transform: translate3d(-1.5%, -1%, 0) scale(1); opacity: .78; }
+        100% { transform: translate3d(1.5%, 2%, 0) scale(1.045); opacity: .98; }
+      }
+      @keyframes floatA { 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(24px,-18px,0) scale(1.04)} }
+      @keyframes floatB { 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(-22px,18px,0) scale(1.035)} }
+      @keyframes floatC { 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(18px,-24px,0) scale(1.04)} }
+      @keyframes floatD { 0%,100%{transform:translate3d(0,0,0) scale(1)} 50%{transform:translate3d(-14px,-10px,0) scale(1.035)} }
+      @keyframes floatSoft { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-8px,0)} }
+      @keyframes slowSpin { to { transform: rotate(360deg); } }
+      @keyframes gradientFlow { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
+
+      @media (max-width: 1050px) {
+        .topbar { grid-template-columns: max-content 1fr; border-radius: 28px; }
+        .nav { display: none; }
+        .top-action { justify-self: end; }
+        .hero-grid, .section-head, .overview-grid, .mission-shell, .reflection-layout { grid-template-columns: 1fr; }
+        .showcase { min-height: auto; }
+        .workspace { position: relative; left: 0; bottom: auto; width: 100%; transform: none; margin-top: 20px; }
+        .portrait-shell { position: relative; top: auto; right: auto; width: 100%; margin-bottom: 18px; }
+        .portrait-chip { display: none; }
+        .floating-card { display: none; }
+        .toc { position: relative; top: 0; display: grid; grid-template-columns: repeat(2, 1fr); }
+        .toc-title { grid-column: 1 / -1; }
+        .mission-body { grid-template-columns: 1fr; }
+        .mission-card[data-even="true"] .mission-panel { order: initial; }
+        .principles-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      @media (max-width: 720px) {
+        .container { width: min(100% - 28px, var(--container)); }
+        .topbar { top: 10px; width: calc(100% - 20px); min-height: 62px; padding: 9px 10px; }
+        .brand-meta { display: none; }
+        .brand-mark { width: 38px; height: 38px; border-radius: 14px; }
+        .top-action { display: none; }
+        .hero { padding-top: 104px; }
+        h1 { font-size: clamp(42px, 12vw, 64px); letter-spacing: -0.062em; }
+        .lead { font-size: 15.8px; }
+        .workspace, .mission-card, .glass-panel, .reflection-visual { border-radius: 30px; }
+        .window-body, .mission-card, .glass-panel { padding: 20px; }
+        .hero-note { grid-template-columns: 1fr; }
+        .mini-stats, .quality-strip, .principles-grid { grid-template-columns: 1fr; }
+        .mission-top { grid-template-columns: 1fr; }
+        .mission-number { width: 92px; height: 92px; font-size: 30px; }
+        .toc { grid-template-columns: 1fr; }
+        .rubric-row { grid-template-columns: 1fr; }
+        .footer-inner { flex-direction: column; align-items: flex-start; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.001ms !important;
+        }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="progress" aria-hidden="true"></div>
+    <div class="orb-field" aria-hidden="true"><span class="orb"></span><span class="orb"></span><span class="orb"></span><span class="orb"></span></div>
+
+    <header class="topbar" aria-label="Thanh điều hướng chính">
+      <a class="brand" href="#top" aria-label="Trở về đầu trang">
+        <span class="brand-mark">Đ</span>
+        <span class="brand-copy"><span class="brand-name">Trần Anh Đức</span><span class="brand-meta">Digital Portfolio · UET.A11</span></span>
+      </a>
+      <nav class="nav" aria-label="Mục lục nhanh">
+        <a href="#overview">Tổng quan</a>
+        <a href="#missions">7 bài chính</a>
+        <a href="#ai">AI trách nhiệm</a>
+        <a href="#reflection">Tổng kết</a>
+        <a href="#rubric">Rubric</a>
+      </nav>
+      <a class="top-action" href={student.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+    </header>
+
+    <main id="top">
+      <section class="hero container">
+        <div class="hero-grid">
+          <div class="hero-copy reveal">
+            <span class="eyebrow mono">Digital Portfolio · 7/7 artifacts · 2026</span>
+            <h1><span class="gradient-text">Hành trình học tập số và ứng dụng AI</span></h1>
+            <p class="lead">
+              Portfolio này trình bày bảy bài thực hành chính như một hệ thống sản phẩm học tập hoàn chỉnh: nội dung rõ ràng, minh chứng PDF gốc, phản tư cá nhân và trải nghiệm xem được tối ưu như một website sản phẩm.
+            </p>
+            <div class="hero-note">
+              <span class="hero-note-mark">01</span>
+              <p>Định hướng thiết kế là <strong>premium product/editorial</strong>: đẹp bằng bố cục, ánh sáng, chữ, nhịp cuộn và glass có kiểm soát — không đánh đổi độ mượt để lấy hiệu ứng nặng.</p>
+            </div>
+            <div class="identity-row" aria-label="Thông tin sinh viên">
+              <span class="pill">{student.name}</span>
+              <span class="pill">MSSV {student.id}</span>
+              <span class="pill">Lớp {student.className}</span>
+              <span class="pill">{student.role}</span>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#missions">Khám phá portfolio →</a>
+              <a class="btn btn-secondary" href="#rubric">Đối chiếu rubric</a>
+            </div>
+          </div>
+
+          <div class="showcase reveal" style="transition-delay:.08s">
+            <div class="halo" aria-hidden="true"></div>
+
+            <div class="floating-card one">
+              <div class="floating-card-title mono">design.signal</div>
+              <div class="floating-card-copy">Blue-first liquid glass, typography gọn, motion tinh chỉnh cho cảm giác premium và mượt.</div>
+            </div>
+
+            <div class="portrait-shell">
+              <div class="portrait-noise" aria-hidden="true"></div>
+              <div class="portrait-card">
+                <div class="portrait-image-wrap">
+                  <picture>
+                    <source srcset="/assets/avatar-duc.webp" type="image/webp" />
+                    <img class="portrait-image" src="/assets/avatar-duc-optimized.png" alt="Ảnh đại diện phong cách anime của Trần Anh Đức" width="820" height="820" loading="eager" decoding="async" fetchpriority="high" />
+                  </picture>
+                </div>
+                <div class="portrait-meta">
+                  <span class="mono">profile.identity</span>
+                  <strong>{student.name}</strong>
+                  <p>Sinh viên năm nhất ngành Khoa học máy tính · thích hệ thống đẹp, mượt và có chiều sâu trải nghiệm.</p>
+                </div>
+              </div>
+              <div class="portrait-chip left"><span class="mono">focus.mode</span><strong>UI / AI / hệ thống học tập số</strong></div>
+              <div class="portrait-chip right"><span class="mono">artifact.count</span><strong>07 bài chính · đầy đủ minh chứng</strong></div>
+            </div>
+
+            <div class="workspace">
+              <div class="window">
+                <div class="window-bar">
+                  <div class="dots" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                  <div class="window-title mono">portfolio.control</div>
+                </div>
+                <div class="window-body mono">
+                  <div class="code-line"><span class="prompt">$</span><span>init learning-portfolio --student "Trần Anh Đức"</span></div>
+                  <div class="code-line"><span class="prompt">$</span><span>attach profile --avatar anime --mood premium</span></div>
+                  <div class="code-line"><span class="prompt">$</span><span>render design --reference gitbook mintlify craft warp deno</span></div>
+                  <div class="code-line"><span class="success">✓</span><span>ready_for_assessment <span class="comment"># 7 artifact, PDF gốc, reflection rõ ràng</span></span></div>
+                  <div class="mini-stats">
+                    {stats.map((item) => (
+                      <div class="mini-stat">
+                        <strong>{item.value}</strong>
+                        <span>{item.label}</span>
+                        <em>{item.detail}</em>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="overview" class="section container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Portfolio Intent</div>
+            <h2>Một hồ sơ học tập số được thiết kế như sản phẩm.</h2>
+          </div>
+          <p>
+            Website không chỉ gom các file bài tập, mà biến toàn bộ hành trình học tập thành một trải nghiệm có chủ đích: người xem hiểu nhanh, kiểm chứng được bằng PDF gốc và cảm nhận rõ năng lực số qua từng artifact.
+          </p>
+        </div>
+        <div class="overview-grid">
+          <div class="glass-panel reveal">
+            <h3>Blue liquid glass, docs-style, coding vibe.</h3>
+            <p>
+              Giao diện lấy cảm hứng từ các website tài liệu và sản phẩm developer cao cấp: nền sáng xanh, glass trong, typography Lexend, terminal block tinh tế và animation được kiểm soát để không làm giảm độ mượt khi cuộn.
+            </p>
+            <div class="quality-strip">
+              <div class="quality-item"><strong>Glass</strong><span>Trong, sâu, có highlight như chất liệu thật.</span></div>
+              <div class="quality-item"><strong>Blue</strong><span>Đậm hơn nhưng vẫn sạch và học thuật.</span></div>
+              <div class="quality-item"><strong>Motion</strong><span>Sinh động bằng transform/opacity.</span></div>
+              <div class="quality-item"><strong>Docs</strong><span>Nội dung dễ scan, dễ kiểm chứng.</span></div>
+            </div>
+          </div>
+          <div class="glass-panel reveal" style="transition-delay:.06s">
+            <h3>Logic chấm điểm được đặt ngay trong cấu trúc UI.</h3>
+            <p>
+              Các phần chính bám sát đề bài: giới thiệu, sản phẩm học tập, sử dụng AI có trách nhiệm, tổng kết và đối chiếu rubric. Mỗi bài có tiêu đề, công cụ, nội dung, minh chứng, nhận xét cá nhân và nút mở PDF.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="missions" class="section container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Mission Index</div>
+            <h2>7 bài chính đã hoàn thành.</h2>
+          </div>
+          <p>
+            Mỗi bài được trình bày như một artifact độc lập trong một hệ thống portfolio thống nhất. Cách bố trí này giúp người chấm xem nhanh nội dung chính, đồng thời có thể mở PDF để kiểm tra chi tiết.
+          </p>
+        </div>
+        <div class="mission-shell">
+          <aside class="toc reveal" aria-label="Mục lục 7 bài">
+            <div class="toc-title mono">Contents</div>
+            {missions.map((mission) => (
+              <a href={`#${mission.slug}`}><span class="toc-no">{mission.no}</span><span>{mission.label}</span><span>↘</span></a>
+            ))}
+          </aside>
+          <div class="mission-list">
+            {missions.map((mission, index) => (
+              <article id={mission.slug} class="mission-card reveal" data-tint={mission.tint} data-even={index % 2 === 1 ? 'true' : 'false'} style={`transition-delay:${Math.min(index * .035, .20)}s`}>
+                <div class="mission-top">
+                  <div class="mission-number">{mission.no}<span>Task</span></div>
+                  <div>
+                    <span class="mission-label">{mission.label}</span>
+                    <h3 class="mission-title">{mission.title}</h3>
+                  </div>
+                  <a class="action-link" href={mission.pdf} target="_blank" rel="noreferrer">Mở PDF ↗</a>
+                </div>
+                <div class="mission-command mono"><span class="prompt">$</span> {mission.command}</div>
+                <div class="mission-body">
+                  <div class="copy-block">
+                    <div class="copy-note">
+                      <span class="copy-kicker mono">Nội dung</span>
+                      <p>{mission.summary}</p>
+                    </div>
+                    <div class="copy-note">
+                      <span class="copy-kicker mono">Minh chứng</span>
+                      <p>{mission.evidence}</p>
+                    </div>
+                    <div class="copy-note emphasis">
+                      <span class="copy-kicker mono">Nhận xét cá nhân</span>
+                      <p>{mission.insight}</p>
+                    </div>
+                    <div class="tool-list" aria-label="Công cụ sử dụng">
+                      {mission.tools.map((tool) => <span class="tool">{tool}</span>)}
+                    </div>
+                  </div>
+                  <div class="mission-panel">
+                    <div class="panel-top">
+                      <span class="panel-badge">Assessment Fit</span>
+                      <a class="panel-cta" href={mission.pdf} target="_blank" rel="noreferrer">Xem minh chứng ↗</a>
+                    </div>
+                    <div class="panel-line"><div class="panel-key mono">Rubric</div><div class="panel-value">{mission.rubric}</div></div>
+                    <div class="panel-line"><div class="panel-key mono">Status</div><div class="panel-value">Hoàn thành, có báo cáo PDF gốc và có thể đối chiếu ngay với yêu cầu đề bài.</div></div>
+                    <div class="panel-line"><div class="panel-key mono">Value</div><div class="panel-value">Thể hiện kỹ năng số qua sản phẩm cụ thể, quy trình rõ ràng và khả năng tự phản tư sau khi hoàn thành.</div></div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="ai" class="section container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Responsible AI</div>
+            <h2>AI mạnh nhất khi được dùng minh bạch.</h2>
+          </div>
+          <p>
+            Phần này bám sát yêu cầu về liêm chính học thuật: AI có thể hỗ trợ học tập, nhưng người học phải kiểm chứng, chỉnh sửa, ghi nhận và chịu trách nhiệm với sản phẩm cuối cùng.
+          </p>
+        </div>
+        <div class="principles-grid">
+          {principles.map(([name, note], index) => (
+            <div class="principle reveal" style={`transition-delay:${Math.min(index * .045, .18)}s`}>
+              <div class="check">✓</div>
+              <strong>{name}</strong>
+              <span>{note}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="reflection" class="section container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Final Reflection</div>
+            <h2>Tổng kết và đánh giá bản thân.</h2>
+          </div>
+          <p>
+            Phần tổng kết không chỉ nhắc lại các bài đã làm, mà phân tích sự chuyển biến từ việc dùng công cụ rời rạc sang xây dựng một quy trình học tập số có kiểm soát.
+          </p>
+        </div>
+        <div class="reflection-layout">
+          <div class="reflection-visual reveal">
+            <div class="mono">reflection.note</div>
+            <h3>Từ người dùng công cụ sang người biết thiết kế quy trình học tập số.</h3>
+          </div>
+          <div class="glass-panel reflection-copy reveal" style="transition-delay:.06s">
+            <p>
+              Qua 7 bài thực hành, tôi nhận ra kỹ năng số không chỉ nằm ở việc biết sử dụng một phần mềm cụ thể, mà nằm ở khả năng xây dựng quy trình làm việc có kiểm soát: tổ chức file, tìm nguồn đáng tin cậy, đặt prompt rõ ràng, phối hợp nhóm, tạo sản phẩm và đánh giá rủi ro đạo đức.
+            </p>
+            <p>
+              Thách thức lớn nhất là biến các nhiệm vụ rời rạc thành một hệ thống thống nhất. Portfolio này giải quyết điều đó bằng cách xem mỗi bài như một artifact trong hành trình học tập, có minh chứng, có công cụ và có phần phản tư cá nhân.
+            </p>
+            <p>
+              Sau dự án, tôi có thể áp dụng các kỹ năng này vào nghiên cứu tài liệu, làm việc nhóm, chuẩn bị báo cáo học thuật và xây dựng các sản phẩm số trong tương lai. Đặc biệt, tôi hiểu rằng AI mạnh nhất khi được sử dụng minh bạch, có kiểm chứng và đặt dưới trách nhiệm của con người.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="rubric" class="section container">
+        <div class="section-head reveal">
+          <div>
+            <div class="kicker">Assessment Map</div>
+            <h2>Đối chiếu với rubric đánh giá.</h2>
+          </div>
+          <p>
+            Bảng này cho thấy portfolio đáp ứng từng tiêu chí: từ thiết kế, cấu trúc, nhiệm vụ bắt buộc đến phần tổng kết và đánh giá bản thân.
+          </p>
+        </div>
+        <div class="rubric-table">
+          {rubric.map(([name, note], index) => (
+            <div class="rubric-row reveal" style={`transition-delay:${Math.min(index * .025, .16)}s`}>
+              <div class="rubric-name">{name}</div>
+              <div class="rubric-note">{note}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer container">
+      <div class="footer-inner">
+        <div>© 2026 · Trần Anh Đức · Portfolio Kỹ thuật số</div>
+        <a href={student.github} target="_blank" rel="noreferrer">github.com/kieran-lucas ↗</a>
+      </div>
+    </footer>
+
+    <script>
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const progress = document.querySelector('.progress');
+
+      let scrollRaf = 0;
+      const updateProgress = () => {
+        if (!progress) return;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = max > 0 ? Math.min(scrollTop / max, 1) : 0;
+        progress.style.transform = `scaleX(${ratio})`;
+      };
+      const onScroll = () => {
+        if (scrollRaf) return;
+        scrollRaf = requestAnimationFrame(() => {
+          updateProgress();
+          updateActiveLink();
+          scrollRaf = 0;
+        });
+      };
+
+      const navLinks = [...document.querySelectorAll('.nav a')];
+      const sectionMap = navLinks
+        .map((link) => {
+          const id = link.getAttribute('href')?.replace('#', '');
+          return id ? [link, document.getElementById(id)] : null;
+        })
+        .filter(Boolean);
+
+      const updateActiveLink = () => {
+        const y = window.scrollY + 160;
+        let currentId = sectionMap[0]?.[1]?.id;
+        sectionMap.forEach(([, section]) => {
+          if (section && y >= section.offsetTop) currentId = section.id;
+        });
+        navLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${currentId}`));
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      updateProgress();
+      updateActiveLink();
+
+      if (!prefersReduced) {
+        const items = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        items.forEach((item) => observer.observe(item));
+      } else {
+        document.querySelectorAll('.reveal').forEach((item) => item.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>
