@@ -1,34 +1,58 @@
-/* Reflection aurora fix: make the left card visibly dynamic and soften paragraph glass hover. */
+/* Reflection aurora fix v2: lighter shadow + clearly visible color drift on the left card. */
 #reflection .reflection-visual{
-  border-color:rgba(255,255,255,.44)!important;
-  box-shadow:0 38px 100px rgba(0,122,255,.26),0 14px 36px rgba(12,79,180,.11),inset 0 1px 0 rgba(255,255,255,.52),inset 0 -22px 48px rgba(255,255,255,.12)!important;
+  border-color:rgba(255,255,255,.42)!important;
+  background:
+    radial-gradient(circle at 16% 12%,rgba(255,255,255,.36),transparent 22%),
+    radial-gradient(circle at var(--aurora-x,72%) var(--aurora-y,34%),rgba(93,231,255,.42),transparent 25%),
+    radial-gradient(circle at calc(100% - var(--aurora-x,72%)) 78%,rgba(117,104,255,.38),transparent 29%),
+    linear-gradient(135deg,#0a74ff 0%,#11c7ef 44%,#4188ff 68%,#6872ff 100%)!important;
+  background-size:100% 100%,140% 140%,150% 150%,185% 185%!important;
+  background-position:0 0,0% 30%,100% 70%,0% 50%!important;
+  box-shadow:
+    0 22px 54px rgba(0,122,255,.16),
+    0 8px 20px rgba(12,79,180,.075),
+    inset 0 1px 0 rgba(255,255,255,.46),
+    inset 0 -18px 36px rgba(255,255,255,.08)!important;
+  animation:reflectionBaseColorDrift 6.8s ease-in-out infinite alternate!important;
+  will-change:background-position,filter;
+}
+
+#reflection .reflection-visual:hover{
+  box-shadow:
+    0 28px 68px rgba(0,122,255,.19),
+    0 10px 24px rgba(12,79,180,.085),
+    inset 0 1px 0 rgba(255,255,255,.52),
+    inset 0 -18px 36px rgba(255,255,255,.09)!important;
 }
 
 #reflection .reflection-visual::before{
   content:""!important;
   position:absolute!important;
-  inset:-46%!important;
+  inset:-34%!important;
   z-index:0!important;
   pointer-events:none!important;
   border-radius:999px!important;
-  background:radial-gradient(circle at 24% 28%,rgba(255,255,255,.46),transparent 18%),radial-gradient(circle at 70% 34%,rgba(90,230,255,.42),transparent 25%),radial-gradient(circle at 40% 78%,rgba(106,92,255,.40),transparent 27%),conic-gradient(from 120deg at 50% 50%,rgba(0,122,255,0),rgba(88,224,255,.46),rgba(122,108,255,.40),rgba(255,255,255,.26),rgba(0,122,255,0))!important;
-  filter:blur(7px) saturate(1.24)!important;
-  opacity:.72!important;
+  background:
+    radial-gradient(circle at 28% 30%,rgba(255,255,255,.42),transparent 18%),
+    radial-gradient(circle at 72% 36%,rgba(92,230,255,.38),transparent 26%),
+    radial-gradient(circle at 44% 78%,rgba(111,98,255,.34),transparent 28%)!important;
+  filter:blur(8px) saturate(1.18)!important;
+  opacity:.54!important;
   mix-blend-mode:screen;
-  transform:translate3d(-6%,-5%,0) rotate(0deg) scale(1.03)!important;
-  animation:reflectionAuroraVisible 7.2s linear infinite!important;
+  transform:translate3d(-4%,-3%,0) scale(1.03)!important;
+  animation:reflectionAuroraVisible 7.6s ease-in-out infinite alternate!important;
   will-change:transform,opacity;
 }
 
 #reflection .reflection-visual:hover::before{
-  opacity:.88!important;
-  animation-duration:5.8s!important;
+  opacity:.68!important;
+  animation-duration:6.2s!important;
 }
 
 #reflection .reflection-visual::after{
-  background:radial-gradient(circle at center,rgba(255,255,255,.36),rgba(255,255,255,.07) 42%,transparent 74%)!important;
-  opacity:.90!important;
-  animation:reflectionGlowVisible 6.8s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+  background:radial-gradient(circle at center,rgba(255,255,255,.28),rgba(255,255,255,.05) 42%,transparent 74%)!important;
+  opacity:.72!important;
+  animation:reflectionGlowVisible 7.2s cubic-bezier(.45,0,.2,1) infinite alternate!important;
 }
 
 #reflection .reflection-point{
@@ -36,7 +60,7 @@
 }
 
 #reflection .reflection-point::before{
-  background:radial-gradient(circle at 18% 12%,rgba(255,255,255,.84),transparent 34%),linear-gradient(135deg,rgba(255,255,255,.60),rgba(236,249,255,.72) 46%,rgba(255,255,255,.42))!important;
+  background:radial-gradient(circle at 18% 12%,rgba(255,255,255,.82),transparent 34%),linear-gradient(135deg,rgba(255,255,255,.58),rgba(236,249,255,.72) 46%,rgba(255,255,255,.42))!important;
   backdrop-filter:blur(24px) saturate(175%)!important;
   -webkit-backdrop-filter:blur(24px) saturate(175%)!important;
   transition:opacity .46s cubic-bezier(.22,1,.36,1)!important;
@@ -46,7 +70,7 @@
 #reflection .reflection-point:focus-within{
   transform:translate3d(5px,-2px,0)!important;
   border-color:rgba(0,122,255,.12)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.86),0 20px 46px rgba(0,122,255,.09)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.86),0 18px 40px rgba(0,122,255,.075)!important;
 }
 
 #reflection .reflection-marker::before,
@@ -54,19 +78,34 @@
   transition:opacity .30s ease,transform .52s cubic-bezier(.16,1,.3,1),height .52s cubic-bezier(.16,1,.3,1),box-shadow .36s ease!important;
 }
 
+@keyframes reflectionBaseColorDrift{
+  0%{
+    background-position:0 0,0% 28%,100% 72%,0% 50%;
+    filter:saturate(1.02) brightness(1);
+  }
+  50%{
+    background-position:0 0,62% 44%,34% 58%,72% 50%;
+    filter:saturate(1.09) brightness(1.015);
+  }
+  100%{
+    background-position:0 0,100% 36%,0% 68%,100% 50%;
+    filter:saturate(1.05) brightness(1.005);
+  }
+}
+
 @keyframes reflectionAuroraVisible{
-  0%{transform:translate3d(-7%,-5%,0) rotate(0deg) scale(1.03);opacity:.58;}
-  35%{transform:translate3d(3%,-2%,0) rotate(28deg) scale(1.07);opacity:.80;}
-  70%{transform:translate3d(6%,5%,0) rotate(54deg) scale(1.04);opacity:.70;}
-  100%{transform:translate3d(-3%,7%,0) rotate(82deg) scale(1.08);opacity:.86;}
+  0%{transform:translate3d(-5%,-4%,0) scale(1.03);opacity:.46;}
+  45%{transform:translate3d(4%,-1%,0) scale(1.07);opacity:.68;}
+  100%{transform:translate3d(6%,6%,0) scale(1.04);opacity:.58;}
 }
 
 @keyframes reflectionGlowVisible{
-  0%{transform:translate3d(8px,10px,0) scale(.98);opacity:.76;}
-  100%{transform:translate3d(-12px,-8px,0) scale(1.05);opacity:.96;}
+  0%{transform:translate3d(6px,8px,0) scale(.98);opacity:.62;}
+  100%{transform:translate3d(-10px,-7px,0) scale(1.04);opacity:.82;}
 }
 
 @media(prefers-reduced-motion:reduce){
+  #reflection .reflection-visual,
   #reflection .reflection-visual::before,
   #reflection .reflection-visual::after{animation:none!important;}
 }
