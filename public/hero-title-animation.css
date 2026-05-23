@@ -1,15 +1,23 @@
 /* Premium hero title: clear blue gradient + slow continuous diagonal light sweep, no JS */
+.hero-copy{
+  top:-18px!important;
+}
+
 h1{
-  max-width:min(100%, 850px);
-  font-size:clamp(46px,5.35vw,78px)!important;
-  line-height:1.02!important;
-  letter-spacing:-.072em!important;
+  max-width:min(100%, 900px);
+  font-size:clamp(50px,5.85vw,85px)!important;
+  line-height:1.095!important;
+  letter-spacing:-.074em!important;
+  margin:20px 0 34px!important;
+  overflow:visible!important;
 }
 
 .gradient-text{
   position:relative;
   display:inline-block;
   max-width:100%;
+  padding-bottom:.075em;
+  margin-bottom:-.075em;
   color:transparent!important;
   background-image:
     linear-gradient(118deg,
@@ -46,6 +54,10 @@ h1{
   animation:heroTitleLightSweep 12.5s linear infinite;
 }
 
+.lead{
+  margin-top:4px!important;
+}
+
 .hero-copy:hover .gradient-text{
   animation-duration:10.5s;
   filter:saturate(1.28) contrast(1.065);
@@ -61,11 +73,13 @@ h1{
 }
 
 @media (max-width:1050px){
-  h1{font-size:clamp(44px,9vw,68px)!important;max-width:100%;}
+  .hero-copy{top:-8px!important;}
+  h1{font-size:clamp(44px,9vw,72px)!important;max-width:100%;line-height:1.085!important;margin-bottom:30px!important;}
 }
 
 @media (max-width:720px){
-  h1{font-size:clamp(39px,11vw,58px)!important;letter-spacing:-.062em!important;}
+  .hero-copy{top:0!important;}
+  h1{font-size:clamp(39px,11vw,58px)!important;letter-spacing:-.062em!important;line-height:1.08!important;margin-bottom:26px!important;}
 }
 
 @media (prefers-reduced-motion:reduce){
