@@ -1,58 +1,59 @@
-/* Reflection aurora fix v2: lighter shadow + clearly visible color drift on the left card. */
+/* Reflection aurora fix v3: visible slow color motion + softer Apple-like shadow. */
 #reflection .reflection-visual{
-  border-color:rgba(255,255,255,.42)!important;
+  border-color:rgba(255,255,255,.44)!important;
   background:
-    radial-gradient(circle at 16% 12%,rgba(255,255,255,.36),transparent 22%),
-    radial-gradient(circle at var(--aurora-x,72%) var(--aurora-y,34%),rgba(93,231,255,.42),transparent 25%),
-    radial-gradient(circle at calc(100% - var(--aurora-x,72%)) 78%,rgba(117,104,255,.38),transparent 29%),
-    linear-gradient(135deg,#0a74ff 0%,#11c7ef 44%,#4188ff 68%,#6872ff 100%)!important;
-  background-size:100% 100%,140% 140%,150% 150%,185% 185%!important;
-  background-position:0 0,0% 30%,100% 70%,0% 50%!important;
+    radial-gradient(circle at 16% 12%,rgba(255,255,255,.34),transparent 24%),
+    radial-gradient(circle at 24% 30%,rgba(95,225,255,.46),transparent 27%),
+    radial-gradient(circle at 78% 72%,rgba(105,112,255,.40),transparent 31%),
+    linear-gradient(125deg,#0a72ff 0%,#12d2e9 34%,#19b8ff 58%,#6472ff 100%)!important;
+  background-size:100% 100%,145% 145%,155% 155%,240% 240%!important;
+  background-position:0 0,0% 28%,100% 70%,0% 50%!important;
   box-shadow:
-    0 22px 54px rgba(0,122,255,.16),
-    0 8px 20px rgba(12,79,180,.075),
-    inset 0 1px 0 rgba(255,255,255,.46),
-    inset 0 -18px 36px rgba(255,255,255,.08)!important;
-  animation:reflectionBaseColorDrift 6.8s ease-in-out infinite alternate!important;
+    0 18px 46px rgba(0,122,255,.105),
+    0 6px 16px rgba(12,79,180,.045),
+    inset 0 1px 0 rgba(255,255,255,.44),
+    inset 0 -16px 34px rgba(255,255,255,.07)!important;
+  animation:reflectionCardColorFlow 9.5s cubic-bezier(.45,0,.2,1) infinite!important;
   will-change:background-position,filter;
 }
 
 #reflection .reflection-visual:hover{
   box-shadow:
-    0 28px 68px rgba(0,122,255,.19),
-    0 10px 24px rgba(12,79,180,.085),
+    0 22px 54px rgba(0,122,255,.13),
+    0 8px 18px rgba(12,79,180,.055),
     inset 0 1px 0 rgba(255,255,255,.52),
-    inset 0 -18px 36px rgba(255,255,255,.09)!important;
+    inset 0 -16px 34px rgba(255,255,255,.08)!important;
 }
 
+/* Large low-opacity aurora veil. It moves enough to be visible, but stays soft. */
 #reflection .reflection-visual::before{
   content:""!important;
   position:absolute!important;
-  inset:-34%!important;
+  inset:-42%!important;
   z-index:0!important;
   pointer-events:none!important;
   border-radius:999px!important;
   background:
-    radial-gradient(circle at 28% 30%,rgba(255,255,255,.42),transparent 18%),
-    radial-gradient(circle at 72% 36%,rgba(92,230,255,.38),transparent 26%),
-    radial-gradient(circle at 44% 78%,rgba(111,98,255,.34),transparent 28%)!important;
-  filter:blur(8px) saturate(1.18)!important;
-  opacity:.54!important;
-  mix-blend-mode:screen;
-  transform:translate3d(-4%,-3%,0) scale(1.03)!important;
-  animation:reflectionAuroraVisible 7.6s ease-in-out infinite alternate!important;
+    radial-gradient(circle at 24% 34%,rgba(255,255,255,.34),transparent 18%),
+    radial-gradient(circle at 70% 32%,rgba(80,234,255,.36),transparent 27%),
+    radial-gradient(circle at 44% 78%,rgba(108,102,255,.34),transparent 29%),
+    conic-gradient(from 160deg at 50% 50%,rgba(0,122,255,0),rgba(34,211,238,.30),rgba(99,102,241,.26),rgba(255,255,255,.18),rgba(0,122,255,0))!important;
+  filter:blur(10px) saturate(1.14)!important;
+  opacity:.48!important;
+  mix-blend-mode:soft-light;
+  transform:translate3d(-4%,-4%,0) rotate(0deg) scale(1.04)!important;
+  animation:reflectionAuroraFloat 12s linear infinite!important;
   will-change:transform,opacity;
 }
 
 #reflection .reflection-visual:hover::before{
-  opacity:.68!important;
-  animation-duration:6.2s!important;
+  opacity:.62!important;
 }
 
 #reflection .reflection-visual::after{
-  background:radial-gradient(circle at center,rgba(255,255,255,.28),rgba(255,255,255,.05) 42%,transparent 74%)!important;
-  opacity:.72!important;
-  animation:reflectionGlowVisible 7.2s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+  background:radial-gradient(circle at center,rgba(255,255,255,.22),rgba(255,255,255,.045) 44%,transparent 74%)!important;
+  opacity:.60!important;
+  animation:reflectionGlowVisible 8.8s cubic-bezier(.45,0,.2,1) infinite alternate!important;
 }
 
 #reflection .reflection-point{
@@ -78,30 +79,35 @@
   transition:opacity .30s ease,transform .52s cubic-bezier(.16,1,.3,1),height .52s cubic-bezier(.16,1,.3,1),box-shadow .36s ease!important;
 }
 
-@keyframes reflectionBaseColorDrift{
+@keyframes reflectionCardColorFlow{
   0%{
-    background-position:0 0,0% 28%,100% 72%,0% 50%;
-    filter:saturate(1.02) brightness(1);
+    background-position:0 0,0% 28%,100% 70%,0% 50%;
+    filter:saturate(1.04) brightness(1);
   }
-  50%{
-    background-position:0 0,62% 44%,34% 58%,72% 50%;
-    filter:saturate(1.09) brightness(1.015);
+  33%{
+    background-position:0 0,58% 38%,48% 58%,54% 46%;
+    filter:saturate(1.12) brightness(1.012);
+  }
+  66%{
+    background-position:0 0,100% 54%,12% 42%,100% 54%;
+    filter:saturate(1.08) brightness(1.006);
   }
   100%{
-    background-position:0 0,100% 36%,0% 68%,100% 50%;
-    filter:saturate(1.05) brightness(1.005);
+    background-position:0 0,0% 28%,100% 70%,0% 50%;
+    filter:saturate(1.04) brightness(1);
   }
 }
 
-@keyframes reflectionAuroraVisible{
-  0%{transform:translate3d(-5%,-4%,0) scale(1.03);opacity:.46;}
-  45%{transform:translate3d(4%,-1%,0) scale(1.07);opacity:.68;}
-  100%{transform:translate3d(6%,6%,0) scale(1.04);opacity:.58;}
+@keyframes reflectionAuroraFloat{
+  0%{transform:translate3d(-5%,-4%,0) rotate(0deg) scale(1.04);opacity:.42;}
+  35%{transform:translate3d(4%,-2%,0) rotate(24deg) scale(1.08);opacity:.58;}
+  70%{transform:translate3d(7%,5%,0) rotate(52deg) scale(1.05);opacity:.50;}
+  100%{transform:translate3d(-5%,-4%,0) rotate(0deg) scale(1.04);opacity:.42;}
 }
 
 @keyframes reflectionGlowVisible{
-  0%{transform:translate3d(6px,8px,0) scale(.98);opacity:.62;}
-  100%{transform:translate3d(-10px,-7px,0) scale(1.04);opacity:.82;}
+  0%{transform:translate3d(5px,7px,0) scale(.99);opacity:.52;}
+  100%{transform:translate3d(-8px,-6px,0) scale(1.035);opacity:.72;}
 }
 
 @media(prefers-reduced-motion:reduce){
