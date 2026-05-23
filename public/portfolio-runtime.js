@@ -165,7 +165,9 @@
     stabilizeAnchorLayout();
 
     const TOP_GAP = 22;
-    const anchorMap = new Map();
+    const TITLEBAR_SHIFT_RATIO = 0.125;
+    const navMap = new Map();
+    const contentMap = new Map();
     const topbar = () => document.querySelector('.topbar');
     const navLinks = () => [...document.querySelectorAll('.nav a')];
 
@@ -179,7 +181,20 @@
       }
     };
 
+    const clampY = (y) => {
+      const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      return Math.min(max, Math.max(0, Math.round(y)));
+    };
+
     const chromeOffset = () => Math.ceil((topbar()?.getBoundingClientRect().height || 70) + TOP_GAP);
+    const titlebarShift = () => Math.round(window.innerHeight * TITLEBAR_SHIFT_RATIO);
+
+    const contentAlignmentY = () => {
+      const toc = document.querySelector('.toc');
+      const stickyTop = toc ? parseFloat(getComputedStyle(toc).top) : NaN;
+      const safeTop = chromeOffset() + 6;
+      return Math.max(safeTop, Number.isFinite(stickyTop) ? stickyTop : safeTop);
+    };
 
     const allAnchorHashes = () => {
       const hashes = new Set(['#top']);
@@ -192,30 +207,47 @@
 
     const absoluteDocumentTop = (target) => Math.round(target.getBoundingClientRect().top + window.scrollY);
 
-    const buildAnchorMap = () => {
-      const offset = chromeOffset();
-      anchorMap.clear();
+    const buildAnchorMaps = () => {
+      const navOffset = chromeOffset();
+      const contentY = contentAlignmentY();
+      const shift = titlebarShift();
+      navMap.clear();
+      contentMap.clear();
+
       allAnchorHashes().forEach((hash) => {
         const target = targetFor(hash);
         if (!target) return;
-        const y = hash === '#top' ? 0 : Math.max(0, absoluteDocumentTop(target) - offset);
-        anchorMap.set(hash, y);
+        const top = absoluteDocumentTop(target);
+        navMap.set(hash, hash === '#top' ? 0 : clampY(top - navOffset + shift));
+        contentMap.set(hash, hash === '#top' ? 0 : clampY(top - contentY));
       });
-      window.__anchorTeleportMap = () => Object.fromEntries(anchorMap.entries());
+
+      window.__anchorTeleportMap = () => ({
+        nav: Object.fromEntries(navMap.entries()),
+        content: Object.fromEntries(contentMap.entries()),
+        meta: {
+          chromeOffset: navOffset,
+          titlebarShift: shift,
+          contentAlignmentY: contentY
+        }
+      });
     };
 
     const rebuildAfterLayoutSettles = () => {
-      requestAnimationFrame(() => requestAnimationFrame(buildAnchorMap));
+      requestAnimationFrame(() => requestAnimationFrame(buildAnchorMaps));
     };
 
-    const coordinateForHash = (hash) => {
-      if (!anchorMap.size || !anchorMap.has(hash)) buildAnchorMap();
-      return anchorMap.get(hash) ?? 0;
+    const mapForSource = (source) => source?.closest?.('.toc') ? contentMap : navMap;
+
+    const coordinateForHash = (hash, source = null) => {
+      const map = mapForSource(source);
+      if (!map.size || !map.has(hash)) buildAnchorMaps();
+      return map.get(hash) ?? 0;
     };
 
-    const scrollToHash = (hash, updateUrl = true) => {
+    const scrollToHash = (hash, updateUrl = true, source = null) => {
       if (!targetFor(hash)) return false;
-      const y = coordinateForHash(hash);
+      const y = coordinateForHash(hash, source);
       window.scrollTo({ top: y, behavior: 'smooth' });
       if (updateUrl) history.replaceState(null, '', hash);
       return true;
@@ -229,7 +261,7 @@
       event.preventDefault();
       event.stopPropagation();
       event.stopImmediatePropagation();
-      scrollToHash(hash, true);
+      scrollToHash(hash, true, anchor);
     }, true);
 
     const updateActive = () => {
@@ -238,7 +270,7 @@
       let current = links[0];
       for (const link of links) {
         const hash = link.getAttribute('href');
-        const y = anchorMap.has(hash) ? anchorMap.get(hash) : null;
+        const y = navMap.has(hash) ? navMap.get(hash) : null;
         if (typeof y === 'number' && probe >= y) current = link;
       }
       for (const link of links) link.classList.toggle('is-active', link === current);
@@ -249,7 +281,7 @@
       if (!raf) raf = requestAnimationFrame(() => { raf = 0; updateActive(); });
     };
 
-    buildAnchorMap();
+    buildAnchorMaps();
     rebuildAfterLayoutSettles();
     window.addEventListener('load', rebuildAfterLayoutSettles, { once: true });
     window.addEventListener('resize', rebuildAfterLayoutSettles, { passive: true });
@@ -264,8 +296,8 @@
 
     if (window.location.hash) {
       requestAnimationFrame(() => {
-        buildAnchorMap();
-        window.scrollTo({ top: coordinateForHash(window.location.hash), behavior: 'auto' });
+        buildAnchorMaps();
+        window.scrollTo({ top: coordinateForHash(window.location.hash, null), behavior: 'auto' });
       });
     }
   };
