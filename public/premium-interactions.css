@@ -1,4 +1,4 @@
-/* Premium interaction layer v5: crisp button zoom, restored GitHub icon, no text blur */
+/* Premium interaction layer v6: crisp button zoom, single GitHub icon, no text blur */
 :root{
   --hover-ring:rgba(0,122,255,.24);
   --ease-premium:cubic-bezier(.22,1,.36,1);
@@ -114,9 +114,9 @@ a,button,[role="button"],summary,
   transform:rotate(18deg);
   transition:left .82s var(--ease-spring),opacity .32s ease;
 }
-.btn > *,.action-link > *,.panel-cta > *,.top-action > *{position:relative;z-index:1;}
+.btn > *,.action-link > *,.panel-cta > *{position:relative;z-index:1;}
 
-/* GitHub button: pure CSS icon + clean label. The original text contains an arrow, so hide it and render a crisp replacement. */
+/* GitHub button: one rendered icon + one rendered label. Hide all original text/children to prevent duplicate icons/arrows. */
 .top-action{
   display:inline-flex!important;
   align-items:center!important;
@@ -126,6 +126,9 @@ a,button,[role="button"],summary,
   padding-right:18px!important;
   font-size:0!important;
   line-height:1!important;
+}
+.top-action > *{
+  display:none!important;
 }
 .top-action::before{
   content:""!important;
@@ -164,7 +167,8 @@ a,button,[role="button"],summary,
   transition:none!important;
 }
 
-.github-btn-icon{width:18.5px;height:18.5px;flex:0 0 auto;display:block;color:#fff;transform:translateZ(0);filter:drop-shadow(0 2px 5px rgba(0,55,130,.12));}
+.github-btn-icon{display:none!important;}
+.top-action .premium-external-icon{display:none!important;}
 .premium-external-icon,.premium-toc-icon{width:16px;height:16px;flex:0 0 auto;display:block;stroke:currentColor;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;fill:none;transform:translateZ(0);opacity:.94;transition:transform .34s var(--ease-spring),opacity .24s ease;}
 .action-link .premium-external-icon,.panel-cta .premium-external-icon{margin-left:2px;}.toc a .premium-toc-icon{justify-self:end;width:15px;height:15px;opacity:.58;}:where(.action-link,.panel-cta):hover .premium-external-icon{transform:translate3d(2px,-2px,0);opacity:1;}.toc a:hover .premium-toc-icon{transform:translate3d(2px,0,0);opacity:.95;}
 .action-link{min-height:50px!important;padding:14px 20px!important;font-size:14.4px!important;letter-spacing:-.01em;gap:8px!important;}.panel-cta{padding:10px 14px!important;font-size:12.2px!important;gap:7px!important;}
