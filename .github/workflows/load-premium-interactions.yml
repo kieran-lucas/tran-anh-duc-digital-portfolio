@@ -1,0 +1,38 @@
+name: Load premium interactions
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert premium interaction assets
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('src/pages/index.astro')
+          s = p.read_text(encoding='utf-8')
+          if '/premium-interactions.css' not in s:
+              s = s.replace('</head>', '    <link rel="stylesheet" href="/premium-interactions.css" />\n  </head>')
+          if '/premium-interactions.js' not in s:
+              s = s.replace('</body>', '    <script src="/premium-interactions.js" defer></script>\n  </body>')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/pages/index.astro
+            git commit -m "feat: load premium interaction effects"
+            git push
+          fi
