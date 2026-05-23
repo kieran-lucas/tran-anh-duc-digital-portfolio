@@ -1,4 +1,4 @@
-/* Premium hero title: clear blue gradient + continuous diagonal light sweep, no JS */
+/* Premium hero title: fixed blue gradient + seamless diagonal light sweep, no JS */
 .hero-copy{
   top:-18px!important;
 }
@@ -20,17 +20,17 @@ h1{
   margin-bottom:-.075em;
   color:transparent!important;
   background-image:
-    linear-gradient(132deg,
+    linear-gradient(135deg,
       transparent 0%,
-      transparent 38%,
-      rgba(255,255,255,.04) 42%,
-      rgba(255,255,255,.20) 45%,
-      rgba(255,255,255,.58) 48.5%,
-      rgba(239,253,255,.96) 50%,
-      rgba(161,236,255,.62) 51.5%,
-      rgba(255,255,255,.22) 55%,
-      rgba(255,255,255,.05) 58%,
-      transparent 63%,
+      transparent 36%,
+      rgba(255,255,255,.035) 40%,
+      rgba(255,255,255,.16) 44%,
+      rgba(255,255,255,.46) 47.8%,
+      rgba(244,253,255,.92) 50%,
+      rgba(153,232,255,.56) 52.2%,
+      rgba(255,255,255,.18) 56%,
+      rgba(255,255,255,.04) 60%,
+      transparent 64%,
       transparent 100%
     ),
     linear-gradient(112deg,
@@ -42,8 +42,8 @@ h1{
       #237aff 78%,
       #5b61ff 100%
     );
-  background-size:240% 240%,100% 100%;
-  background-position:-145% -145%,0 50%;
+  background-size:320% 320%,100% 100%;
+  background-position:145% 145%,0 50%;
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -53,7 +53,7 @@ h1{
     0 28px 74px rgba(11,216,255,.075);
   transform:translateZ(0);
   will-change:background-position,filter;
-  animation:heroTitleLightSweep 10.8s linear infinite;
+  animation:heroTitleLightSweep 13.2s linear infinite;
 }
 
 .lead{
@@ -61,16 +61,16 @@ h1{
 }
 
 .hero-copy:hover .gradient-text{
-  animation-duration:9.2s;
+  animation-duration:11.6s;
   filter:saturate(1.32) contrast(1.07);
 }
 
 @keyframes heroTitleLightSweep{
-  from{
-    background-position:-145% -145%,0 50%;
-  }
-  to{
+  0%{
     background-position:145% 145%,0 50%;
+  }
+  100%{
+    background-position:-145% -145%,0 50%;
   }
 }
 
