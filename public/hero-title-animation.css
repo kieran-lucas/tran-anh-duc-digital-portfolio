@@ -85,7 +85,7 @@ h1{
   opacity:.9;
   transform:translateZ(0);
   will-change:background-position;
-  animation:heroTitleSweep 10s linear infinite;
+  animation:heroTitleSweep 8.5s linear infinite;
 }
 
 .lead{
