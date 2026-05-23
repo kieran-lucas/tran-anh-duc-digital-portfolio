@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
+const reflectionMotionStylesheet = '<link rel="stylesheet" href="/reflection-motion.css?v=20260524-visible-v1" data-reflection-motion="true" />';
 const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-refactor-v1" defer data-portfolio-runtime="true"></script>';
 
 const legacyAssetPatterns = [
@@ -12,6 +13,7 @@ const legacyAssetPatterns = [
   /\s*<link[^>]+href=["']\/profile-card-hover-fix\.css[^"']*["'][^>]*>\s*/gi,
   /\s*<link[^>]+href=["']\/reflection-luxury\.css[^"']*["'][^>]*>\s*/gi,
   /\s*<link[^>]+href=["']\/reflection-aurora-fix\.css[^"']*["'][^>]*>\s*/gi,
+  /\s*<link[^>]+href=["']\/reflection-motion\.css[^"']*["'][^>]*>\s*/gi,
   /\s*<script[^>]+src=["']\/reflection-luxury\.js[^"']*["'][^>]*><\/script>\s*/gi,
   /\s*<style\s+data-final-cursor-policy=["']true["'][\s\S]*?<\/style>\s*/gi,
   /\s*<script\s+data-final-cursor-policy=["']true["'][\s\S]*?<\/script>\s*/gi,
@@ -28,6 +30,7 @@ const injectOnce = (html, marker, closingTag, asset) => {
 const enhance = (html) => {
   let next = removeLegacyAssets(html);
   next = injectOnce(next, 'data-portfolio-ui="true"', '</head>', portfolioUiStylesheet);
+  next = injectOnce(next, 'data-reflection-motion="true"', '</head>', reflectionMotionStylesheet);
   next = injectOnce(next, 'data-portfolio-runtime="true"', '</body>', portfolioRuntimeScript);
   return next;
 };
