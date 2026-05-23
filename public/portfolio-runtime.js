@@ -149,39 +149,34 @@
   };
 
   const calibrateAnchors = () => {
-    const SHIFT_RATIO = 0.125;
     const TOP_GAP = 22;
     const topbar = () => document.querySelector('.topbar');
     const navLinks = () => [...document.querySelectorAll('.nav a')];
+
     const targetFor = (hash) => {
       if (!hash || hash === '#') return null;
       if (hash === '#top') return document.getElementById('top') || document.body;
-      return document.querySelector(hash);
+      try {
+        return document.querySelector(hash);
+      } catch {
+        return null;
+      }
     };
+
     const chromeOffset = () => Math.ceil((topbar()?.getBoundingClientRect().height || 70) + TOP_GAP);
-    const upwardShift = () => Math.round(window.innerHeight * SHIFT_RATIO);
-    const contentsTargetY = () => {
-      const toc = document.querySelector('.toc');
-      const tocTop = toc?.getBoundingClientRect?.().top;
-      const safeTop = chromeOffset() + 18;
-      return Math.max(safeTop, Number.isFinite(tocTop) ? tocTop : safeTop);
-    };
-    const targetScrollY = (target, hash, source) => {
+
+    const targetScrollY = (target, hash) => {
       if (!target || hash === '#top') return 0;
       const targetTop = target.getBoundingClientRect().top + window.scrollY;
-      if (source?.closest?.('.toc')) return Math.max(0, targetTop - contentsTargetY());
-      return Math.max(0, targetTop - chromeOffset() + upwardShift());
+      return Math.max(0, Math.round(targetTop - chromeOffset()));
     };
-    const scrollToHash = (hash, updateUrl = true, source = null) => {
+
+    const scrollToHash = (hash, updateUrl = true) => {
       const target = targetFor(hash);
       if (!target) return false;
-      const y = targetScrollY(target, hash, source);
+      const y = targetScrollY(target, hash);
       window.scrollTo({ top: y, behavior: 'smooth' });
       if (updateUrl) history.replaceState(null, '', hash);
-      window.setTimeout(() => {
-        const corrected = targetScrollY(target, hash, source);
-        if (Math.abs(window.scrollY - corrected) > 4) window.scrollTo({ top: corrected, behavior: 'auto' });
-      }, 620);
       return true;
     };
 
@@ -193,12 +188,12 @@
       event.preventDefault();
       event.stopPropagation();
       event.stopImmediatePropagation();
-      scrollToHash(hash, true, anchor);
+      scrollToHash(hash, true);
     }, true);
 
     const updateActive = () => {
       const links = navLinks();
-      const probe = window.scrollY + chromeOffset() - upwardShift() + 8;
+      const probe = window.scrollY + chromeOffset() + 8;
       let current = links[0];
       for (const link of links) {
         const target = targetFor(link.getAttribute('href'));
@@ -211,14 +206,21 @@
     const schedule = () => {
       if (!raf) raf = requestAnimationFrame(() => { raf = 0; updateActive(); });
     };
+
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule, { passive: true });
     schedule();
-    if (window.location.hash) window.setTimeout(() => scrollToHash(window.location.hash, false), 160);
+
+    if (window.location.hash) {
+      requestAnimationFrame(() => {
+        const target = targetFor(window.location.hash);
+        if (target) window.scrollTo({ top: targetScrollY(target, window.location.hash), behavior: 'auto' });
+      });
+    }
   };
 
   const applyCursorPolicy = () => {
-    const interactiveSelector = 'a,button,[role="button"],summary,.brand,.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.terminal-card .mini-stat';
+    const interactiveSelector = 'a,button,[role="button"],summary,.brand,.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.terminal-card .mini-stat,.evidence-window .evidence-item';
     document.querySelectorAll('body *').forEach((node) => node.style.setProperty('cursor', 'default', 'important'));
     document.querySelectorAll(interactiveSelector).forEach((root) => {
       root.style.setProperty('cursor', 'pointer', 'important');
