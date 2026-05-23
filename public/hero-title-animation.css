@@ -2,7 +2,7 @@
    Hero title animation
    - Base text gradient: blue -> cyan -> violet, never flat
    - ONE soft diagonal light sweep, top-left -> bottom-right
-   - CSS only, single non-repeating band, linear timing
+   - CSS only, single non-repeating band, hover-independent
    ============================================================ */
 
 .hero-copy{
@@ -24,6 +24,7 @@ h1{
   max-width:100%;
   padding-bottom:.14em;
   margin-bottom:-.08em;
+  pointer-events:none;
 
   color:transparent!important;
   background-image:linear-gradient(112deg,
@@ -46,6 +47,7 @@ h1{
     0 14px 36px rgba(0,122,255,.11),
     0 28px 74px rgba(11,216,255,.075);
   transform:translateZ(0);
+  animation:none!important;
 }
 
 .gradient-text::after{
@@ -90,14 +92,6 @@ h1{
 
 .lead{
   margin-top:4px!important;
-}
-
-.hero-copy:hover .gradient-text{
-  filter:saturate(1.23) contrast(1.055);
-}
-
-.hero-copy:hover .gradient-text::after{
-  animation-duration:9.8s;
 }
 
 @keyframes heroTitleSweep{
