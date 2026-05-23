@@ -166,6 +166,7 @@
 
     const TOP_GAP = 22;
     const TITLEBAR_SHIFT_RATIO = 0.125;
+    const CONTENT_DOWN_SHIFT = 28;
     const navMap = new Map();
     const contentMap = new Map();
     const topbar = () => document.querySelector('.topbar');
@@ -193,7 +194,7 @@
       const toc = document.querySelector('.toc');
       const stickyTop = toc ? parseFloat(getComputedStyle(toc).top) : NaN;
       const safeTop = chromeOffset() + 6;
-      return Math.max(safeTop, Number.isFinite(stickyTop) ? stickyTop : safeTop);
+      return Math.max(safeTop, Number.isFinite(stickyTop) ? stickyTop : safeTop) + CONTENT_DOWN_SHIFT;
     };
 
     const allAnchorHashes = () => {
@@ -228,7 +229,8 @@
         meta: {
           chromeOffset: navOffset,
           titlebarShift: shift,
-          contentAlignmentY: contentY
+          contentAlignmentY: contentY,
+          contentDownShift: CONTENT_DOWN_SHIFT
         }
       });
     };
