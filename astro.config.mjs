@@ -126,31 +126,47 @@ const heroInteractionStyle = `<style data-hero-interaction-polish="true">
 .mini-stats{
   overflow:visible!important;
 }
+.terminal-body{
+  contain:none!important;
+  isolation:isolate!important;
+}
+.mini-stats{
+  position:relative!important;
+  z-index:5!important;
+}
 .terminal-card .mini-stat{
   position:relative!important;
+  z-index:1!important;
   isolation:isolate!important;
+  display:block!important;
+  cursor:pointer!important;
   transform:translate3d(0,0,0) scale(1)!important;
   transform-origin:center center!important;
   backface-visibility:hidden!important;
-  transition:transform .54s cubic-bezier(.16,1,.3,1),box-shadow .50s cubic-bezier(.22,1,.36,1),border-color .34s ease,background .34s ease!important;
+  transition:transform .46s cubic-bezier(.16,1,.3,1),box-shadow .46s cubic-bezier(.22,1,.36,1),border-color .28s ease,background .28s ease!important;
   will-change:transform!important;
 }
 .terminal-card .mini-stat:hover,
 .terminal-card .mini-stat:focus-within{
-  transform:translate3d(0,-6px,0) scale(1.022)!important;
-  border-color:rgba(0,122,255,.22)!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(223,246,255,.70))!important;
-  box-shadow:0 18px 42px rgba(0,122,255,.13),0 7px 16px rgba(20,90,180,.055),inset 0 1px 0 rgba(255,255,255,.94)!important;
+  z-index:20!important;
+  transform:translate3d(0,-10px,0) scale(1.07)!important;
+  border-color:rgba(0,122,255,.32)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(218,244,255,.78))!important;
+  box-shadow:0 22px 50px rgba(0,122,255,.18),0 9px 22px rgba(20,90,180,.075),inset 0 1px 0 rgba(255,255,255,.98)!important;
 }
 .terminal-card .mini-stat strong,
 .terminal-card .mini-stat span,
 .terminal-card .mini-stat em{
-  transition:color .26s ease,transform .42s cubic-bezier(.16,1,.3,1)!important;
+  transition:color .24s ease,transform .38s cubic-bezier(.16,1,.3,1)!important;
 }
 .terminal-card .mini-stat:hover strong,
 .terminal-card .mini-stat:focus-within strong{
   color:#061a33!important;
-  transform:translate3d(0,-1px,0)!important;
+  transform:translate3d(0,-2px,0)!important;
+}
+.terminal-card .mini-stat:hover span,
+.terminal-card .mini-stat:focus-within span{
+  color:#365f85!important;
 }
 .hero-actions .btn-primary{
   transform:translate3d(0,0,0) scale(1)!important;
