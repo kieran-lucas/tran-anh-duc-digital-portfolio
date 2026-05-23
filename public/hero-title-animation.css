@@ -1,4 +1,4 @@
-/* Premium hero title: fixed blue gradient + seamless diagonal light sweep, no JS */
+/* Premium hero title: fixed blue gradient + seamless diagonal light conveyor, no JS */
 .hero-copy{
   top:-18px!important;
 }
@@ -20,17 +20,17 @@ h1{
   margin-bottom:-.075em;
   color:transparent!important;
   background-image:
-    linear-gradient(135deg,
+    repeating-linear-gradient(135deg,
       transparent 0%,
-      transparent 37%,
-      rgba(255,255,255,.035) 41%,
-      rgba(255,255,255,.14) 44%,
-      rgba(255,255,255,.42) 47.8%,
-      rgba(246,253,255,.88) 50%,
-      rgba(145,230,255,.54) 52.2%,
-      rgba(255,255,255,.16) 56%,
-      rgba(255,255,255,.04) 59%,
-      transparent 63%,
+      transparent 41.5%,
+      rgba(255,255,255,.035) 43.5%,
+      rgba(255,255,255,.14) 45.5%,
+      rgba(255,255,255,.42) 48.3%,
+      rgba(246,253,255,.86) 50%,
+      rgba(145,230,255,.52) 51.7%,
+      rgba(255,255,255,.16) 54.5%,
+      rgba(255,255,255,.04) 56.5%,
+      transparent 58.5%,
       transparent 100%
     ),
     linear-gradient(112deg,
@@ -42,9 +42,9 @@ h1{
       #237aff 78%,
       #5b61ff 100%
     );
-  background-size:240% 240%,100% 100%;
-  background-position:104% 104%,0 50%;
-  background-repeat:no-repeat,no-repeat;
+  background-size:220% 220%,100% 100%;
+  background-position:-110% -110%,0 50%;
+  background-repeat:repeat,no-repeat;
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -54,7 +54,7 @@ h1{
     0 28px 74px rgba(11,216,255,.075);
   transform:translateZ(0);
   will-change:background-position,filter;
-  animation:heroTitleLightSweep 11.8s linear infinite;
+  animation:heroTitleLightSweep 12.8s linear infinite;
 }
 
 .lead{
@@ -62,16 +62,16 @@ h1{
 }
 
 .hero-copy:hover .gradient-text{
-  animation-duration:10.4s;
+  animation-duration:11.2s;
   filter:saturate(1.32) contrast(1.07);
 }
 
 @keyframes heroTitleLightSweep{
-  0%{
-    background-position:104% 104%,0 50%;
+  from{
+    background-position:-110% -110%,0 50%;
   }
-  100%{
-    background-position:-4% -4%,0 50%;
+  to{
+    background-position:110% 110%,0 50%;
   }
 }
 
