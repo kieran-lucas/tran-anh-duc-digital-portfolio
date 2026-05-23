@@ -42,21 +42,26 @@
     let running = false;
     const start = performance.now();
 
+    const setPct = (name, value) => {
+      visual.style.setProperty(name, `${value.toFixed(2)}%`);
+    };
+
     const render = (now) => {
       if (!running) return;
       const t = (now - start) / 1000;
-      const p1x = 18 + Math.sin(t * 0.34) * 30;
-      const p1y = 76 + Math.cos(t * 0.29) * 12;
-      const p2x = 82 + Math.cos(t * 0.31 + 0.7) * 18;
-      const p2y = 22 + Math.sin(t * 0.36 + 0.4) * 18;
-      const p3x = 78 + Math.sin(t * 0.27 + 1.6) * 20;
-      const p3y = 86 + Math.cos(t * 0.24 + 1.1) * 12;
+      const p1x = 18 + Math.sin(t * 0.42) * 22;
+      const p1y = 76 + Math.cos(t * 0.36) * 10;
+      const p2x = 82 + Math.cos(t * 0.38 + 0.7) * 16;
+      const p2y = 22 + Math.sin(t * 0.44 + 0.4) * 14;
+      const p3x = 78 + Math.sin(t * 0.33 + 1.6) * 16;
+      const p3y = 86 + Math.cos(t * 0.30 + 1.1) * 10;
 
-      visual.style.setProperty(
-        'background-position',
-        `${p1x.toFixed(2)}% ${p1y.toFixed(2)}%, ${p2x.toFixed(2)}% ${p2y.toFixed(2)}%, ${p3x.toFixed(2)}% ${p3y.toFixed(2)}%, 0 0`,
-        'important'
-      );
+      setPct('--aurora-1x', p1x);
+      setPct('--aurora-1y', p1y);
+      setPct('--aurora-2x', p2x);
+      setPct('--aurora-2y', p2y);
+      setPct('--aurora-3x', p3x);
+      setPct('--aurora-3y', p3y);
       rafId = requestAnimationFrame(render);
     };
 
