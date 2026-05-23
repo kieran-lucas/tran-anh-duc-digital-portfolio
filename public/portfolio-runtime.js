@@ -24,6 +24,7 @@
     if (!visual || visual.dataset.reflectionEnhanced === 'true') return;
     visual.dataset.reflectionEnhanced = 'true';
     visual.classList.add('reflection-real-aurora');
+    visual.insertAdjacentHTML('afterbegin', '<span class="reflection-ambient-sheet" aria-hidden="true"></span>');
   };
 
   const calibrateAnchors = () => {
