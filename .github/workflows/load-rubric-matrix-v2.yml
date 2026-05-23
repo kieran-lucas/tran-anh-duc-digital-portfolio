@@ -1,0 +1,37 @@
+name: Load rubric matrix v2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert rubric matrix v2 stylesheet
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('src/pages/index.astro')
+          s = p.read_text(encoding='utf-8')
+          tag = '<link rel="stylesheet" href="/rubric-matrix-v2.css?v=20260524-1" />'
+          if '/rubric-matrix-v2.css' not in s:
+              s = s.replace('</head>', f'    {tag}\n  </head>')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/pages/index.astro
+            git commit -m "feat: load rubric matrix v2 override"
+            git push
+          fi
