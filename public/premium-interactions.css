@@ -9,6 +9,7 @@
 html,body,body *{cursor:default!important;}
 a,button,[role="button"],summary,
 :where(.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.brand){cursor:pointer!important;}
+:where(a,button,[role="button"],summary,.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.brand) *{cursor:pointer!important;}
 
 :where(.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.tool,.pill){
   position:relative;
