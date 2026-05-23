@@ -3,7 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
 const reflectionMotionStylesheet = '<link rel="stylesheet" href="/reflection-motion.css?v=20260524-variable-aurora-v8" data-reflection-motion="true" />';
-const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-no-repaint-v5" defer data-portfolio-runtime="true"></script>';
+const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-ambient-sheet-v6" defer data-portfolio-runtime="true"></script>';
 
 const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 #reflection{
@@ -24,36 +24,50 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   position:relative!important;
   overflow:hidden!important;
   isolation:isolate!important;
-  transform-origin:65% 50%!important;
+  transform:none!important;
+  transform-origin:center center!important;
   background:linear-gradient(135deg,#0a6dff 0%,#10baf2 46%,#3979ff 72%,#675cff 100%)!important;
   animation:none!important;
-  transition:transform .72s cubic-bezier(.16,1,.3,1),box-shadow .56s cubic-bezier(.22,1,.36,1),border-color .36s ease!important;
-  will-change:transform!important;
+  transition:box-shadow .56s cubic-bezier(.22,1,.36,1),border-color .36s ease,filter .42s ease!important;
+  will-change:auto!important;
 }
 #reflection .reflection-visual:hover,
 #reflection .reflection-visual:focus-within{
-  transform:translate3d(5px,-3px,0) scale(1.006)!important;
-  border-color:rgba(255,255,255,.64)!important;
-  box-shadow:0 15px 34px rgba(0,122,255,.125),0 7px 16px rgba(20,90,180,.055),inset 0 1px 0 rgba(255,255,255,.60),inset 0 -14px 30px rgba(255,255,255,.075)!important;
+  transform:none!important;
+  filter:saturate(1.035) brightness(1.015)!important;
+  border-color:rgba(255,255,255,.66)!important;
+  box-shadow:0 18px 42px rgba(0,122,255,.14),0 8px 18px rgba(20,90,180,.06),inset 0 1px 0 rgba(255,255,255,.62),inset 0 -14px 30px rgba(255,255,255,.08)!important;
 }
 #reflection .reflection-color-field{display:none!important;}
+#reflection .reflection-ambient-sheet{
+  position:absolute!important;
+  inset:-72%!important;
+  z-index:0!important;
+  display:block!important;
+  pointer-events:none!important;
+  border-radius:38%!important;
+  opacity:.82!important;
+  mix-blend-mode:screen!important;
+  background:
+    radial-gradient(ellipse at 16% 72%,rgba(0,70,255,.68),transparent 28%),
+    radial-gradient(ellipse at 80% 20%,rgba(72,238,255,.74),transparent 27%),
+    radial-gradient(ellipse at 82% 84%,rgba(142,92,255,.62),transparent 30%),
+    radial-gradient(ellipse at 44% 48%,rgba(0,180,255,.42),transparent 32%)!important;
+  transform:translate3d(-8%,-4%,0) scale(1.04) rotate(0deg)!important;
+  animation:reflectionAmbientSheetDrift 9.5s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+  will-change:transform,opacity!important;
+}
 #reflection .reflection-visual::before{
   content:""!important;
   position:absolute!important;
-  inset:-55%!important;
-  z-index:0!important;
+  inset:0!important;
+  z-index:1!important;
   pointer-events:none!important;
-  border-radius:42%!important;
-  opacity:.72!important;
-  mix-blend-mode:screen!important;
-  background:
-    radial-gradient(ellipse at 18% 72%,rgba(0,78,255,.52),transparent 31%),
-    radial-gradient(ellipse at 78% 22%,rgba(64,232,255,.58),transparent 30%),
-    radial-gradient(ellipse at 78% 82%,rgba(132,94,255,.48),transparent 32%),
-    radial-gradient(ellipse at 42% 48%,rgba(0,180,255,.34),transparent 34%)!important;
-  transform:translate3d(-4%,-2%,0) scale(1.02) rotate(0deg)!important;
-  animation:reflectionSheetDrift 13s cubic-bezier(.45,0,.2,1) infinite alternate!important;
-  will-change:transform,opacity!important;
+  border-radius:inherit!important;
+  opacity:.22!important;
+  background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.07) 30%,rgba(255,255,255,0) 62%),radial-gradient(ellipse at 76% 8%,rgba(255,255,255,.16),transparent 44%),radial-gradient(ellipse at 18% 98%,rgba(255,255,255,.08),transparent 50%)!important;
+  transform:none!important;
+  animation:none!important;
 }
 #reflection .reflection-visual::after{
   content:""!important;
@@ -62,22 +76,27 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   z-index:1!important;
   pointer-events:none!important;
   border-radius:inherit!important;
-  opacity:.24!important;
-  background:linear-gradient(135deg,rgba(255,255,255,.27),rgba(255,255,255,.07) 30%,rgba(255,255,255,0) 62%),radial-gradient(ellipse at 76% 8%,rgba(255,255,255,.17),transparent 44%),radial-gradient(ellipse at 18% 98%,rgba(255,255,255,.09),transparent 50%)!important;
+  opacity:.14!important;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.16),transparent 62%)!important;
+  animation:reflectionSoftBreath 7s ease-in-out infinite alternate!important;
 }
 #reflection .reflection-visual .mono,
 #reflection .reflection-visual h3{
   position:relative!important;
   z-index:2!important;
 }
-@keyframes reflectionSheetDrift{
-  0%{transform:translate3d(-6%,-3%,0) scale(1.02) rotate(0deg);opacity:.58;}
-  40%{transform:translate3d(4%,3%,0) scale(1.07) rotate(4deg);opacity:.78;}
-  100%{transform:translate3d(11%,-1%,0) scale(1.04) rotate(-3deg);opacity:.64;}
+@keyframes reflectionAmbientSheetDrift{
+  0%{transform:translate3d(-10%,-5%,0) scale(1.04) rotate(0deg);opacity:.70;}
+  38%{transform:translate3d(1%,3%,0) scale(1.08) rotate(5deg);opacity:.88;}
+  72%{transform:translate3d(9%,1%,0) scale(1.06) rotate(-4deg);opacity:.78;}
+  100%{transform:translate3d(14%,-3%,0) scale(1.05) rotate(3deg);opacity:.84;}
+}
+@keyframes reflectionSoftBreath{
+  0%{opacity:.10;}
+  100%{opacity:.18;}
 }
 @media(max-width:720px){
   #reflection .reflection-layout{padding:8px!important;margin:-8px!important;}
-  #reflection .reflection-visual:hover,#reflection .reflection-visual:focus-within{transform:translate3d(2px,-2px,0) scale(1.003)!important;}
 }
 </style>`;
 
