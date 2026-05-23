@@ -1,0 +1,105 @@
+name: Fix cursor hit area
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply high-specificity cursor policy
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          css_path = Path('public/premium-interactions.css')
+          css = css_path.read_text(encoding='utf-8')
+          marker = '/* Cursor hit-area hard override v4 */'
+          patch = r'''
+
+/* Cursor hit-area hard override v4 */
+html,
+body,
+body * {
+  cursor: default !important;
+}
+
+body :is(
+  a,
+  button,
+  [role="button"],
+  summary,
+  .btn,
+  .top-action,
+  .action-link,
+  .panel-cta,
+  .nav a,
+  .toc a,
+  .brand
+),
+body :is(
+  a,
+  button,
+  [role="button"],
+  summary,
+  .btn,
+  .top-action,
+  .action-link,
+  .panel-cta,
+  .nav a,
+  .toc a,
+  .brand
+) *,
+body :is(
+  a,
+  button,
+  [role="button"],
+  summary,
+  .btn,
+  .top-action,
+  .action-link,
+  .panel-cta,
+  .nav a,
+  .toc a,
+  .brand
+)::before,
+body :is(
+  a,
+  button,
+  [role="button"],
+  summary,
+  .btn,
+  .top-action,
+  .action-link,
+  .panel-cta,
+  .nav a,
+  .toc a,
+  .brand
+)::after {
+  cursor: pointer !important;
+}
+'''
+          if marker not in css:
+              css = css.rstrip() + patch + '\n'
+              css_path.write_text(css, encoding='utf-8')
+              print('cursor hard override appended')
+          else:
+              print('cursor hard override already present')
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add public/premium-interactions.css
+            git commit -m "fix: make entire interactive hit areas use pointer cursor"
+            git push
+          fi
