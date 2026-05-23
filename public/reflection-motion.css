@@ -1,18 +1,17 @@
 /* ============================================================
-   Reflection Motion Hard Fix v4
-   Purpose: make the left Reflection card visibly dynamic.
-   Important fix: animated properties must NOT be locked with !important.
+   Reflection Motion v5 — Calm Ambient Aurora
+   Goal: soft, premium, slow color breathing. No visible balls. No cutting sheen.
    ============================================================ */
 
 #reflection .reflection-visual{
   position:relative!important;
   overflow:hidden!important;
   isolation:isolate!important;
-  background:#0f8fff!important;
+  background:
+    linear-gradient(135deg,#0a6dff 0%,#10baf2 46%,#3979ff 72%,#675cff 100%)!important;
   animation:none!important;
 }
 
-/* Keep only a subtle glass overlay; moving color comes from real DOM fields. */
 #reflection .reflection-visual::before,
 #reflection .reflection-visual::after{
   content:""!important;
@@ -21,24 +20,21 @@
   z-index:1!important;
   pointer-events:none!important;
   border-radius:inherit!important;
-  filter:none!important;
 }
 
 #reflection .reflection-visual::before{
-  opacity:.26!important;
-  transform:none!important;
-  animation:none!important;
+  opacity:.32!important;
   background:
-    linear-gradient(135deg,rgba(255,255,255,.34),rgba(255,255,255,.08) 28%,rgba(255,255,255,0) 56%),
-    radial-gradient(ellipse at 78% 8%,rgba(255,255,255,.26),transparent 44%)!important;
+    linear-gradient(135deg,rgba(255,255,255,.30),rgba(255,255,255,.075) 32%,rgba(255,255,255,0) 62%),
+    radial-gradient(ellipse at 76% 8%,rgba(255,255,255,.22),transparent 46%)!important;
 }
 
 #reflection .reflection-visual::after{
-  opacity:.40;
+  opacity:.24!important;
   background:
-    linear-gradient(115deg,transparent 0 32%,rgba(255,255,255,.32) 48%,rgba(255,255,255,.06) 60%,transparent 74%)!important;
-  transform:translate3d(-18%,0,0);
-  animation:reflectionVisibleGlassSweep 3.6s ease-in-out infinite alternate!important;
+    radial-gradient(ellipse at 18% 14%,rgba(255,255,255,.18),transparent 42%),
+    radial-gradient(ellipse at 84% 92%,rgba(255,255,255,.12),transparent 48%)!important;
+  animation:reflectionGlassBreathSoft 9s ease-in-out infinite alternate!important;
 }
 
 #reflection .reflection-color-field{
@@ -46,61 +42,54 @@
   z-index:0!important;
   display:block!important;
   pointer-events:none!important;
-  border-radius:999px!important;
-  mix-blend-mode:normal!important;
-  filter:blur(18px) saturate(1.45) contrast(1.12);
-  opacity:.92;
+  border-radius:45%!important;
+  mix-blend-mode:screen!important;
+  filter:blur(64px) saturate(1.14);
+  opacity:.36;
   transform:translate3d(0,0,0) scale(1);
-  will-change:transform,left,top,right,bottom,opacity,filter!important;
+  will-change:transform,opacity,filter!important;
 }
 
 #reflection .field-blue{
-  width:54%!important;
-  height:48%!important;
-  left:-12%;
-  top:36%;
-  background:rgba(0,72,255,.92)!important;
-  animation:reflectionBlobBlue 3.7s ease-in-out infinite alternate!important;
+  width:138%!important;
+  height:118%!important;
+  left:-64%;
+  top:4%;
+  background:radial-gradient(ellipse at center,rgba(0,82,255,.72),rgba(0,82,255,.36) 34%,transparent 68%)!important;
+  animation:reflectionAmbientBlue 18s cubic-bezier(.45,0,.2,1) infinite alternate!important;
 }
 
 #reflection .field-cyan{
-  width:52%!important;
-  height:46%!important;
-  right:-10%;
-  top:-8%;
-  background:rgba(24,238,255,.96)!important;
-  animation:reflectionBlobCyan 3.25s ease-in-out infinite alternate!important;
+  width:130%!important;
+  height:112%!important;
+  right:-62%;
+  top:-30%;
+  background:radial-gradient(ellipse at center,rgba(49,235,255,.78),rgba(49,235,255,.34) 34%,transparent 70%)!important;
+  animation:reflectionAmbientCyan 16s cubic-bezier(.45,0,.2,1) infinite alternate!important;
 }
 
 #reflection .field-violet{
-  width:54%!important;
-  height:48%!important;
-  right:-12%;
-  bottom:-12%;
-  background:rgba(125,84,255,.92)!important;
-  animation:reflectionBlobViolet 4.1s ease-in-out infinite alternate!important;
+  width:132%!important;
+  height:116%!important;
+  right:-58%;
+  bottom:-46%;
+  background:radial-gradient(ellipse at center,rgba(133,98,255,.72),rgba(133,98,255,.30) 36%,transparent 72%)!important;
+  animation:reflectionAmbientViolet 20s cubic-bezier(.45,0,.2,1) infinite alternate!important;
 }
 
 #reflection .field-aqua{
-  width:44%!important;
-  height:42%!important;
-  left:28%;
-  top:38%;
-  background:rgba(0,205,255,.86)!important;
-  animation:reflectionBlobAqua 3.55s ease-in-out infinite alternate!important;
+  width:118%!important;
+  height:104%!important;
+  left:8%;
+  top:18%;
+  background:radial-gradient(ellipse at center,rgba(0,198,255,.56),rgba(0,198,255,.20) 36%,transparent 72%)!important;
+  filter:blur(78px) saturate(1.10);
+  opacity:.28;
+  animation:reflectionAmbientAqua 22s cubic-bezier(.45,0,.2,1) infinite alternate!important;
 }
 
 #reflection .field-sheen{
-  width:38%!important;
-  height:150%!important;
-  left:-40%;
-  top:-24%;
-  border-radius:36%!important;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.52),transparent)!important;
-  filter:blur(12px);
-  opacity:.54;
-  transform:rotate(18deg);
-  animation:reflectionSheenTravel 3.2s linear infinite!important;
+  display:none!important;
 }
 
 #reflection .reflection-visual .mono,
@@ -109,113 +98,79 @@
   z-index:2!important;
 }
 
-@keyframes reflectionBlobBlue{
+@keyframes reflectionAmbientBlue{
   0%{
-    left:-16%;
-    top:42%;
-    transform:translate3d(-8%,4%,0) scale(1.02);
-    opacity:.78;
-    filter:blur(18px) saturate(1.35) hue-rotate(0deg);
-  }
-  45%{
-    left:18%;
-    top:24%;
-    transform:translate3d(16%,-20%,0) scale(1.18);
-    opacity:.96;
-    filter:blur(14px) saturate(1.58) hue-rotate(-12deg);
-  }
-  100%{
-    left:42%;
-    top:54%;
-    transform:translate3d(10%,-8%,0) scale(1.08);
-    opacity:.86;
-    filter:blur(17px) saturate(1.44) hue-rotate(8deg);
-  }
-}
-
-@keyframes reflectionBlobCyan{
-  0%{
-    right:-14%;
-    top:-10%;
-    transform:translate3d(6%,-4%,0) scale(1.02);
-    opacity:.86;
-    filter:blur(17px) saturate(1.40) hue-rotate(0deg);
+    transform:translate3d(-4%,3%,0) scale(1.02) rotate(0deg);
+    opacity:.28;
+    filter:blur(68px) saturate(1.08) hue-rotate(0deg);
   }
   50%{
-    right:30%;
-    top:18%;
-    transform:translate3d(-18%,20%,0) scale(1.22);
-    opacity:1;
-    filter:blur(13px) saturate(1.68) hue-rotate(16deg);
+    transform:translate3d(18%,-5%,0) scale(1.12) rotate(8deg);
+    opacity:.42;
+    filter:blur(62px) saturate(1.18) hue-rotate(-5deg);
   }
   100%{
-    right:2%;
-    top:52%;
-    transform:translate3d(-8%,8%,0) scale(1.08);
-    opacity:.90;
-    filter:blur(16px) saturate(1.48) hue-rotate(-8deg);
+    transform:translate3d(32%,7%,0) scale(1.06) rotate(14deg);
+    opacity:.32;
+    filter:blur(70px) saturate(1.12) hue-rotate(4deg);
   }
 }
 
-@keyframes reflectionBlobViolet{
+@keyframes reflectionAmbientCyan{
   0%{
-    right:-14%;
-    bottom:-16%;
-    transform:translate3d(4%,8%,0) scale(1.02);
-    opacity:.76;
-    filter:blur(19px) saturate(1.34) hue-rotate(0deg);
+    transform:translate3d(4%,-2%,0) scale(1.02) rotate(0deg);
+    opacity:.30;
+    filter:blur(66px) saturate(1.10) hue-rotate(0deg);
   }
-  48%{
-    right:34%;
-    bottom:18%;
-    transform:translate3d(-16%,-22%,0) scale(1.20);
-    opacity:.98;
-    filter:blur(14px) saturate(1.62) hue-rotate(20deg);
+  50%{
+    transform:translate3d(-20%,14%,0) scale(1.14) rotate(-7deg);
+    opacity:.46;
+    filter:blur(60px) saturate(1.20) hue-rotate(5deg);
   }
   100%{
-    right:6%;
-    bottom:52%;
-    transform:translate3d(-8%,-10%,0) scale(1.10);
-    opacity:.88;
-    filter:blur(17px) saturate(1.46) hue-rotate(-10deg);
+    transform:translate3d(-34%,24%,0) scale(1.08) rotate(-13deg);
+    opacity:.34;
+    filter:blur(72px) saturate(1.12) hue-rotate(-4deg);
   }
 }
 
-@keyframes reflectionBlobAqua{
+@keyframes reflectionAmbientViolet{
   0%{
-    left:26%;
-    top:44%;
-    transform:translate3d(0,0,0) scale(.90);
-    opacity:.54;
-    filter:blur(22px) saturate(1.24) hue-rotate(0deg);
+    transform:translate3d(4%,8%,0) scale(1.02) rotate(0deg);
+    opacity:.24;
+    filter:blur(72px) saturate(1.08) hue-rotate(0deg);
   }
   52%{
-    left:4%;
-    top:8%;
-    transform:translate3d(-12%,-10%,0) scale(1.20);
-    opacity:.90;
-    filter:blur(15px) saturate(1.52) hue-rotate(-16deg);
+    transform:translate3d(-18%,-16%,0) scale(1.13) rotate(6deg);
+    opacity:.38;
+    filter:blur(64px) saturate(1.16) hue-rotate(7deg);
   }
   100%{
-    left:52%;
-    top:24%;
-    transform:translate3d(8%,-12%,0) scale(1.00);
-    opacity:.72;
-    filter:blur(19px) saturate(1.38) hue-rotate(10deg);
+    transform:translate3d(-30%,-28%,0) scale(1.06) rotate(12deg);
+    opacity:.30;
+    filter:blur(76px) saturate(1.10) hue-rotate(-5deg);
   }
 }
 
-@keyframes reflectionSheenTravel{
-  0%{transform:translate3d(-24%,0,0) rotate(18deg);opacity:0;}
-  14%{opacity:.58;}
-  48%{opacity:.44;}
-  100%{transform:translate3d(380%,0,0) rotate(18deg);opacity:0;}
+@keyframes reflectionAmbientAqua{
+  0%{
+    transform:translate3d(0,0,0) scale(.98) rotate(0deg);
+    opacity:.18;
+    filter:blur(84px) saturate(1.04) hue-rotate(0deg);
+  }
+  50%{
+    transform:translate3d(-12%,-10%,0) scale(1.12) rotate(-5deg);
+    opacity:.30;
+    filter:blur(76px) saturate(1.12) hue-rotate(-6deg);
+  }
+  100%{
+    transform:translate3d(10%,-18%,0) scale(1.04) rotate(8deg);
+    opacity:.22;
+    filter:blur(88px) saturate(1.06) hue-rotate(4deg);
+  }
 }
 
-@keyframes reflectionVisibleGlassSweep{
-  0%{transform:translate3d(-18%,0,0);opacity:.26;}
-  100%{transform:translate3d(18%,0,0);opacity:.46;}
+@keyframes reflectionGlassBreathSoft{
+  0%{opacity:.18;}
+  100%{opacity:.32;}
 }
-
-/* Do not disable this requested visual effect here. If the browser globally disables animations,
-   DevTools will show animation-play-state/duration accordingly. */
