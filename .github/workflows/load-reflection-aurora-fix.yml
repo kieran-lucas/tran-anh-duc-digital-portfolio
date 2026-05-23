@@ -1,0 +1,40 @@
+name: Load reflection aurora fix
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert reflection aurora stylesheet directly
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('src/pages/index.astro')
+          s = p.read_text(encoding='utf-8')
+          tag = '<link rel="stylesheet" href="/reflection-aurora-fix.css?v=20260524-3" />'
+          if '/reflection-aurora-fix.css' not in s:
+              s = s.replace('</head>', f'    {tag}\n  </head>')
+          else:
+              import re
+              s = re.sub(r'<link rel="stylesheet" href="/reflection-aurora-fix\.css\?v=[^"]+"\s*/>', tag, s)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/pages/index.astro
+            git commit -m "feat: load reflection aurora fix directly"
+            git push
+          fi
