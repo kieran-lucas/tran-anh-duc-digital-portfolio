@@ -1,0 +1,58 @@
+name: Add GitHub button icon
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add GitHub icon to top action
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          path = Path('src/pages/index.astro')
+          text = path.read_text(encoding='utf-8')
+          original = text
+
+          old = '<a class="top-action" href={student.github} target="_blank" rel="noreferrer">GitHub ↗</a>'
+          new = '''<a class="top-action" href={student.github} target="_blank" rel="noreferrer" aria-label="Mở GitHub của Trần Anh Đức">
+        <svg class="github-btn-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.1c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.34-1.75-1.34-1.75-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.31-5.47-1.34-5.47-5.94 0-1.31.47-2.39 1.24-3.23-.12-.3-.54-1.53.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.23 0 4.61-2.81 5.62-5.48 5.92.43.38.81 1.1.81 2.22v3.3c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
+        <span>GitHub</span><span class="github-arrow">↗</span>
+      </a>'''
+
+          if 'github-btn-icon' not in text:
+              text = text.replace(old, new)
+
+          css = '''
+      .top-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+      .github-btn-icon{width:18px;height:18px;flex:0 0 auto;filter:drop-shadow(0 2px 7px rgba(255,255,255,.22));}
+      .github-arrow{font-size:14px;line-height:1;transform:translateY(-1px);}
+'''
+          if '.github-btn-icon' not in text:
+              text = text.replace('      @media (max-width:1050px)', css + '      @media (max-width:1050px)')
+
+          if text != original:
+              path.write_text(text, encoding='utf-8')
+              print('GitHub button icon added')
+          else:
+              print('No changes needed')
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/pages/index.astro
+            git commit -m "feat: add GitHub icon to header button"
+            git push
+          fi
