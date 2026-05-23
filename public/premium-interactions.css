@@ -1,4 +1,4 @@
-/* Premium interaction layer v4: refined iconography, fluid glass nav, smoother zoom */
+/* Premium interaction layer v5: crisp button zoom, restored GitHub icon, no text blur */
 :root{
   --hover-ring:rgba(0,122,255,.24);
   --ease-premium:cubic-bezier(.22,1,.36,1);
@@ -16,12 +16,17 @@ a,button,[role="button"],summary,
   isolation:isolate;
   overflow:hidden;
   transform:translate3d(var(--move-x,0),var(--move-y,0),0) scale(1);
-  will-change:transform,box-shadow,filter,background,border-color;
+  transform-origin:center;
+  transform-style:flat;
+  backface-visibility:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision;
+  will-change:transform,box-shadow,background-position,border-color;
   transition:
-    transform .46s var(--ease-spring),
-    box-shadow .46s var(--ease-premium),
-    filter .36s var(--ease-premium),
-    background .36s var(--ease-premium),
+    transform .50s var(--ease-spring),
+    box-shadow .50s var(--ease-premium),
+    background-position .64s var(--ease-spring),
+    background-color .36s var(--ease-premium),
     border-color .32s var(--ease-premium),
     color .24s ease;
 }
@@ -77,53 +82,120 @@ a,button,[role="button"],summary,
 .nav a:hover::after{opacity:1;transform:translateX(96%) skewX(-16deg);}
 .nav a.is-active{background:linear-gradient(180deg,rgba(220,244,255,.86),rgba(255,255,255,.58))!important;}
 
-.btn,.top-action,.action-link,.panel-cta{backface-visibility:hidden;}
+/* Button baseline: do not use CSS filter on the whole button; it rasterizes text and makes zoom look blurry. */
+.btn,.top-action,.action-link,.panel-cta{
+  backface-visibility:hidden;
+  transform-style:flat;
+  background-size:180% 180%!important;
+  background-position:0% 50%!important;
+  text-shadow:0 1px 0 rgba(0,35,90,.10);
+}
 .btn::before,.action-link::before,.panel-cta::before{
   content:"";
   position:absolute;
   inset:-1px;
-  z-index:-1;
+  z-index:0;
   pointer-events:none;
   opacity:0;
-  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.56),transparent 0 34%);
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.40),transparent 0 34%);
   transition:opacity .36s var(--ease-premium);
 }
-.btn::after,.top-action::after,.action-link::after,.panel-cta::after{
+.btn::after,.action-link::after,.panel-cta::after{
   content:"";
   position:absolute;
-  width:72px;
-  height:190%;
-  top:-45%;
-  left:-110px;
+  width:64px;
+  height:170%;
+  top:-35%;
+  left:-100px;
+  z-index:0;
   pointer-events:none;
   opacity:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.44),transparent);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.30),transparent);
   transform:rotate(18deg);
-  transition:left .78s var(--ease-spring),opacity .32s ease;
+  transition:left .82s var(--ease-spring),opacity .32s ease;
+}
+.btn > *,.action-link > *,.panel-cta > *,.top-action > *{position:relative;z-index:1;}
+
+/* GitHub button: pure CSS icon + clean label. The original text contains an arrow, so hide it and render a crisp replacement. */
+.top-action{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding-left:18px!important;
+  padding-right:18px!important;
+  font-size:0!important;
+  line-height:1!important;
+}
+.top-action::before{
+  content:""!important;
+  position:relative!important;
+  z-index:1!important;
+  display:block!important;
+  width:18.5px!important;
+  height:18.5px!important;
+  flex:0 0 auto!important;
+  color:#fff!important;
+  background:currentColor!important;
+  filter:drop-shadow(0 2px 5px rgba(0,55,130,.12));
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 3.87c.68 0 1.36.09 2 .26 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z'/%3E%3C/svg%3E") center/contain no-repeat!important;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 3.87c.68 0 1.36.09 2 .26 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z'/%3E%3C/svg%3E") center/contain no-repeat!important;
+}
+.top-action::after{
+  content:"GitHub"!important;
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  top:auto!important;
+  z-index:1!important;
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  opacity:1!important;
+  pointer-events:none!important;
+  background:none!important;
+  transform:none!important;
+  color:#fff!important;
+  font-size:13.6px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  letter-spacing:-.015em!important;
+  text-shadow:0 1px 0 rgba(0,35,90,.12)!important;
+  transition:none!important;
 }
 
-/* Clean icon system: inline SVG, not text glyphs */
-.top-action{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;padding-left:18px!important;padding-right:18px!important;}
-.top-action::before{display:none!important;}
 .github-btn-icon{width:18.5px;height:18.5px;flex:0 0 auto;display:block;color:#fff;transform:translateZ(0);filter:drop-shadow(0 2px 5px rgba(0,55,130,.12));}
 .premium-external-icon,.premium-toc-icon{width:16px;height:16px;flex:0 0 auto;display:block;stroke:currentColor;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;fill:none;transform:translateZ(0);opacity:.94;transition:transform .34s var(--ease-spring),opacity .24s ease;}
-.top-action .premium-external-icon{width:15px;height:15px;stroke-width:2.4;}.action-link .premium-external-icon,.panel-cta .premium-external-icon{margin-left:2px;}.toc a .premium-toc-icon{justify-self:end;width:15px;height:15px;opacity:.58;}:where(.top-action,.action-link,.panel-cta):hover .premium-external-icon{transform:translate3d(2px,-2px,0);opacity:1;}.toc a:hover .premium-toc-icon{transform:translate3d(2px,0,0);opacity:.95;}
+.action-link .premium-external-icon,.panel-cta .premium-external-icon{margin-left:2px;}.toc a .premium-toc-icon{justify-self:end;width:15px;height:15px;opacity:.58;}:where(.action-link,.panel-cta):hover .premium-external-icon{transform:translate3d(2px,-2px,0);opacity:1;}.toc a:hover .premium-toc-icon{transform:translate3d(2px,0,0);opacity:.95;}
 .action-link{min-height:50px!important;padding:14px 20px!important;font-size:14.4px!important;letter-spacing:-.01em;gap:8px!important;}.panel-cta{padding:10px 14px!important;font-size:12.2px!important;gap:7px!important;}
-:where(.btn,.top-action,.action-link,.panel-cta):hover{transform:translate3d(var(--move-x,0),calc(var(--move-y,0) - 3px),0) scale(1.045);filter:saturate(1.08) brightness(1.03);box-shadow:0 22px 52px rgba(0,122,255,.24),0 8px 20px rgba(11,216,255,.13),inset 0 1px 0 rgba(255,255,255,.58);}
-:where(.btn,.action-link,.panel-cta):hover::before{opacity:1;}:where(.btn,.top-action,.action-link,.panel-cta):hover::after{left:124%;opacity:1;}:where(.btn,.top-action,.action-link,.panel-cta):active{transform:translate3d(0,-1px,0) scale(.985);transition-duration:.12s;}
+
+/* Strong but crisp zoom: transform only, no filter. */
+:where(.btn,.top-action,.action-link,.panel-cta):hover{
+  transform:translate3d(var(--move-x,0),calc(var(--move-y,0) - 3px),0) scale(1.035)!important;
+  background-position:100% 50%!important;
+  box-shadow:
+    0 22px 52px rgba(0,122,255,.22),
+    0 8px 20px rgba(11,216,255,.11),
+    inset 0 1px 0 rgba(255,255,255,.60)!important;
+}
+:where(.btn,.action-link,.panel-cta):hover::before{opacity:1;}:where(.btn,.action-link,.panel-cta):hover::after{left:124%;opacity:1;}:where(.btn,.top-action,.action-link,.panel-cta):active{transform:translate3d(0,-1px,0) scale(.985)!important;transition-duration:.12s;}
 
 :where(.toc a,.tool,.pill):hover{transform:translateY(-2px) scale(1.012);border-color:var(--hover-ring)!important;background:rgba(255,255,255,.80)!important;box-shadow:0 12px 28px rgba(0,122,255,.10),inset 0 1px 0 rgba(255,255,255,.85);}
 
-:where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card,.mini-stat,.quality-item,.copy-note,.mission-panel,.reflection-visual){position:relative;overflow:hidden;transform:perspective(900px) translate3d(0,0,0) scale(1) rotateX(0deg) rotateY(0deg);transform-style:preserve-3d;will-change:transform,box-shadow,filter,border-color;transition:transform .58s var(--ease-spring),box-shadow .50s var(--ease-premium),border-color .38s var(--ease-premium),filter .38s var(--ease-premium),background .38s var(--ease-premium);}
+:where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card,.mini-stat,.quality-item,.copy-note,.mission-panel,.reflection-visual){position:relative;overflow:hidden;transform:perspective(900px) translate3d(0,0,0) scale(1) rotateX(0deg) rotateY(0deg);transform-style:preserve-3d;will-change:transform,box-shadow,border-color;transition:transform .58s var(--ease-spring),box-shadow .50s var(--ease-premium),border-color .38s var(--ease-premium),background .38s var(--ease-premium);}
 :where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card,.mini-stat,.quality-item,.copy-note,.mission-panel)::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.48),rgba(125,211,252,.09) 28%,transparent 55%);transition:opacity .36s var(--ease-premium);}
 :where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card,.mini-stat,.quality-item,.copy-note,.mission-panel)::after{content:"";position:absolute;inset:1px;z-index:0;pointer-events:none;border-radius:inherit;opacity:0;background:linear-gradient(135deg,rgba(255,255,255,.24),transparent 34%,rgba(11,216,255,.055) 66%);transition:opacity .36s var(--ease-premium);}
 :where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card,.mini-stat,.quality-item,.copy-note,.mission-panel)>*{position:relative;z-index:1;}
-:where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card):hover{transform:perspective(900px) translate3d(var(--card-x,0),-9px,0) scale(1.022) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));border-color:rgba(0,122,255,.25)!important;filter:saturate(1.035) brightness(1.01);box-shadow:0 32px 84px rgba(0,122,255,.145),0 10px 28px rgba(11,216,255,.075),inset 0 1px 0 rgba(255,255,255,.92);}
+:where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card):hover{transform:perspective(900px) translate3d(var(--card-x,0),-9px,0) scale(1.022) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));border-color:rgba(0,122,255,.25)!important;box-shadow:0 32px 84px rgba(0,122,255,.145),0 10px 28px rgba(11,216,255,.075),inset 0 1px 0 rgba(255,255,255,.92);}
 :where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card):hover::before,:where(.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card):hover::after{opacity:1;}
 .mission-number,.check,.avatar-frame{transition:transform .48s var(--ease-spring),filter .36s ease,box-shadow .36s ease;will-change:transform,filter;}.mission-card:hover .mission-number,.principle:hover .check,.profile-card:hover .avatar-frame{transform:translate3d(0,-3px,24px) scale(1.022);filter:saturate(1.055) brightness(1.02);}.profile-card:hover .avatar-frame{box-shadow:0 18px 44px rgba(0,122,255,.14);}
 .mission-card:hover .mission-title,.glass:hover h3,.principle:hover strong,.rubric-row:hover .rubric-name{color:#005bd8;}.mission-title,.glass h3,.principle strong,.rubric-name{transition:color .24s ease;}
 .mini-stat:hover,.quality-item:hover,.copy-note:hover,.mission-panel:hover{transform:perspective(720px) translate3d(0,-5px,0) scale(1.015) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));border-color:rgba(0,122,255,.20)!important;box-shadow:0 16px 38px rgba(0,122,255,.10),inset 0 1px 0 rgba(255,255,255,.86);}
 .evidence-window .evidence-item{transition:transform .46s var(--ease-spring),box-shadow .40s var(--ease-premium),border-color .32s ease,filter .32s ease;will-change:transform,box-shadow;}.evidence-window .evidence-item:hover{transform:translate3d(0,-5px,0) scale(1.018);border-color:rgba(0,122,255,.22);box-shadow:0 16px 38px rgba(0,122,255,.12);filter:saturate(1.05);}
 :where(.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card):focus-visible{outline:3px solid rgba(0,122,255,.26);outline-offset:4px;}
-@media (hover:none){:where(.btn,.top-action,.action-link,.panel-cta,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card):hover{transform:none;}}
-@media (prefers-reduced-motion:reduce){:where(.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.tool,.pill,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card,.mini-stat,.quality-item,.copy-note,.mission-panel,.reflection-visual,.mission-number,.check,.avatar-frame){transition:none!important;transform:none!important;will-change:auto!important;}:where(.btn,.top-action,.action-link,.panel-cta,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card)::before,:where(.btn,.top-action,.action-link,.panel-cta,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card)::after{display:none!important;}}
+@media (hover:none){:where(.btn,.top-action,.action-link,.panel-cta,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card):hover{transform:none!important;}}
+@media (prefers-reduced-motion:reduce){
+  :where(.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.tool,.pill,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card,.mini-stat,.quality-item,.copy-note,.mission-panel,.reflection-visual,.mission-number,.check,.avatar-frame){transition:none!important;transform:none!important;will-change:auto!important;}
+  :where(.btn,.action-link,.panel-cta,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card)::before,
+  :where(.btn,.action-link,.panel-cta,.glass,.mission-card,.principle,.rubric-row,.profile-card,.terminal-card)::after{display:none!important;}
+}
