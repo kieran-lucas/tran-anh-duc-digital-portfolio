@@ -1,22 +1,14 @@
 (() => {
   const enhanceFooter = () => {
     const footerInner = document.querySelector('.footer-inner');
-    if (!footerInner || footerInner.dataset.redesigned === 'true') return;
-    footerInner.dataset.redesigned = 'true';
+    if (!footerInner || footerInner.dataset.redesigned === 'simple') return;
+    footerInner.dataset.redesigned = 'simple';
     footerInner.innerHTML = `
-      <div class="footer-brand">
-        <div class="footer-mark" aria-hidden="true">Đ</div>
-        <div class="footer-copy">
-          <strong>Trần Anh Đức · Digital Portfolio</strong>
-          <span>Hoàn thiện 7/7 bài thực hành chính · minh chứng PDF đầy đủ · trình bày theo hướng sản phẩm học tập số.</span>
-        </div>
+      <div class="footer-main">
+        <span class="footer-dot" aria-hidden="true"></span>
+        <span>© 2026 · Trần Anh Đức · Digital Portfolio</span>
       </div>
-      <div class="footer-badges" aria-label="Tóm tắt portfolio">
-        <span class="footer-badge accent">7/7 artifacts</span>
-        <span class="footer-badge">PDF gốc</span>
-        <span class="footer-badge">AI minh bạch</span>
-        <span class="footer-badge">UET.A11</span>
-      </div>
+      <div class="footer-note">Designed as a clean learning portfolio · UET.A11</div>
     `;
   };
 
