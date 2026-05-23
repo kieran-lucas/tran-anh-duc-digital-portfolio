@@ -1,61 +1,79 @@
-/* Premium hero title: fixed blue gradient + soft diagonal light sweep, no JS */
+/* Premium hero title: clear blue gradient + slow continuous diagonal light sweep, no JS */
+h1{
+  max-width:min(100%, 850px);
+  font-size:clamp(46px,5.35vw,78px)!important;
+  line-height:1.02!important;
+  letter-spacing:-.072em!important;
+}
+
 .gradient-text{
   position:relative;
   display:inline-block;
+  max-width:100%;
   color:transparent!important;
   background-image:
-    linear-gradient(108deg,
+    linear-gradient(118deg,
       transparent 0%,
-      transparent 42%,
-      rgba(255,255,255,.18) 46%,
-      rgba(255,255,255,.88) 49%,
-      rgba(196,242,255,.78) 51%,
-      rgba(255,255,255,.26) 54%,
-      transparent 59%,
+      transparent 40%,
+      rgba(255,255,255,.06) 44%,
+      rgba(255,255,255,.42) 47.5%,
+      rgba(235,252,255,.94) 50%,
+      rgba(116,223,255,.58) 52.5%,
+      rgba(255,255,255,.12) 56%,
+      transparent 61%,
       transparent 100%
     ),
     linear-gradient(112deg,
-      #055de8 0%,
-      #0877ff 21%,
-      #08b6ff 42%,
-      #19cfff 56%,
-      #2388ff 75%,
-      #4f6dff 100%
+      #064fdc 0%,
+      #006eff 18%,
+      #039cff 34%,
+      #03d4ff 48%,
+      #00b9e8 58%,
+      #247cff 75%,
+      #5a62ff 100%
     );
-  background-size:240% 180%,100% 100%;
-  background-position:-145% 50%,0 50%;
+  background-size:300% 220%,100% 100%;
+  background-position:-185% 50%,0 50%;
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
-  filter:saturate(1.11) contrast(1.03);
+  filter:saturate(1.22) contrast(1.055);
   text-shadow:
-    0 16px 42px rgba(0,122,255,.12),
-    0 32px 86px rgba(11,216,255,.09);
+    0 14px 36px rgba(0,122,255,.11),
+    0 28px 74px rgba(11,216,255,.075);
   transform:translateZ(0);
   will-change:background-position,filter;
-  animation:heroTitleLightSweep 5.8s cubic-bezier(.22,1,.36,1) infinite;
+  animation:heroTitleLightSweep 12.5s linear infinite;
 }
 
 .hero-copy:hover .gradient-text{
-  animation-duration:4.2s;
-  filter:saturate(1.16) contrast(1.04);
+  animation-duration:10.5s;
+  filter:saturate(1.28) contrast(1.065);
 }
 
 @keyframes heroTitleLightSweep{
-  0%,18%{
-    background-position:-145% 50%,0 50%;
+  0%{
+    background-position:-185% 50%,0 50%;
   }
-  58%,100%{
-    background-position:155% 50%,0 50%;
+  100%{
+    background-position:185% 50%,0 50%;
   }
+}
+
+@media (max-width:1050px){
+  h1{font-size:clamp(44px,9vw,68px)!important;max-width:100%;}
+}
+
+@media (max-width:720px){
+  h1{font-size:clamp(39px,11vw,58px)!important;letter-spacing:-.062em!important;}
 }
 
 @media (prefers-reduced-motion:reduce){
   .gradient-text{
     animation:none!important;
-    background-image:linear-gradient(112deg,#055de8 0%,#0877ff 21%,#08b6ff 42%,#19cfff 56%,#2388ff 75%,#4f6dff 100%);
+    background-image:linear-gradient(112deg,#064fdc 0%,#006eff 18%,#039cff 34%,#03d4ff 48%,#00b9e8 58%,#247cff 75%,#5a62ff 100%);
     background-size:100% 100%;
     background-position:0 50%;
-    filter:saturate(1.08) contrast(1.02);
+    filter:saturate(1.14) contrast(1.03);
   }
 }
