@@ -1,0 +1,195 @@
+/* Final sections polish: subtle premium motion for reflection, rubric and footer */
+#reflection,
+#rubric{
+  position:relative;
+  overflow:visible;
+}
+
+#reflection::before,
+#rubric::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  border-radius:999px;
+  filter:blur(44px);
+  opacity:.46;
+  transform:translateZ(0);
+}
+
+#reflection::before{
+  width:420px;
+  height:220px;
+  right:-80px;
+  top:18%;
+  background:radial-gradient(circle,rgba(11,216,255,.20),rgba(0,122,255,.08) 46%,transparent 70%);
+}
+
+#rubric::before{
+  width:380px;
+  height:210px;
+  left:-70px;
+  top:22%;
+  background:radial-gradient(circle,rgba(95,92,255,.13),rgba(11,216,255,.10) 48%,transparent 70%);
+}
+
+.reflection-visual{
+  overflow:hidden!important;
+  isolation:isolate;
+}
+
+.reflection-visual::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  z-index:0;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg,transparent 0 42%,rgba(255,255,255,.32) 48%,rgba(255,255,255,.08) 55%,transparent 62%);
+  transform:translate3d(-36%,-16%,0) rotate(0deg);
+  opacity:.72;
+  animation:reflectionSoftSweep 9.5s linear infinite;
+}
+
+.reflection-visual::after{
+  content:"";
+  position:absolute;
+  inset:1px;
+  z-index:0;
+  pointer-events:none;
+  border-radius:inherit;
+  background:
+    radial-gradient(circle at 18% 16%,rgba(255,255,255,.30),transparent 28%),
+    radial-gradient(circle at 82% 86%,rgba(255,255,255,.14),transparent 32%);
+  opacity:.9;
+}
+
+.reflection-visual > *{
+  position:relative;
+  z-index:1;
+}
+
+@keyframes reflectionSoftSweep{
+  from{transform:translate3d(-38%,-18%,0);}
+  to{transform:translate3d(38%,18%,0);}
+}
+
+.reflection-copy{
+  overflow:hidden!important;
+}
+
+.reflection-copy p{
+  position:relative;
+  padding-left:0;
+  transition:transform .42s cubic-bezier(.16,1,.3,1),color .28s ease;
+}
+
+.reflection-copy p::before{
+  content:"";
+  position:absolute;
+  left:-14px;
+  top:.42em;
+  width:4px;
+  height:0;
+  border-radius:999px;
+  background:linear-gradient(180deg,#007aff,#0bd8ff);
+  opacity:0;
+  transition:height .42s cubic-bezier(.16,1,.3,1),opacity .28s ease;
+}
+
+.reflection-copy:hover p{
+  color:#213f5d;
+}
+
+.reflection-copy:hover p::before{
+  height:1.35em;
+  opacity:.75;
+}
+
+.rubric-table{
+  counter-reset:rubricItem;
+}
+
+.rubric-row{
+  overflow:hidden!important;
+  isolation:isolate;
+  transform-origin:center;
+}
+
+.rubric-row::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  z-index:0;
+  opacity:0;
+  background:linear-gradient(180deg,#007aff,#0bd8ff,#5f5cff);
+  transition:opacity .35s ease,width .42s cubic-bezier(.16,1,.3,1);
+}
+
+.rubric-row::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:0;
+  background:radial-gradient(circle at var(--mx,22%) var(--my,50%),rgba(255,255,255,.68),rgba(208,243,255,.18) 28%,transparent 58%);
+  transition:opacity .35s ease;
+}
+
+.rubric-row:hover::before{
+  opacity:1;
+  width:7px;
+}
+
+.rubric-row:hover::after{
+  opacity:1;
+}
+
+.rubric-name,
+.rubric-note{
+  position:relative;
+  z-index:1;
+}
+
+.rubric-name::before{
+  counter-increment:rubricItem;
+  content:"0" counter(rubricItem);
+  display:inline-grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  margin-right:10px;
+  border-radius:12px;
+  color:#0072ff;
+  background:rgba(255,255,255,.66);
+  border:1px solid rgba(0,122,255,.12);
+  font-family:var(--mono);
+  font-size:10.5px;
+  font-weight:800;
+  vertical-align:middle;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+.footer-inner{
+  transition:transform .48s cubic-bezier(.16,1,.3,1),box-shadow .44s ease,border-color .34s ease!important;
+}
+
+.footer-inner:hover{
+  transform:translateY(-3px);
+  border-color:rgba(0,122,255,.24)!important;
+  box-shadow:0 22px 58px rgba(0,122,255,.10),inset 0 1px 0 rgba(255,255,255,.94)!important;
+}
+
+@media(max-width:720px){
+  .reflection-copy p::before{left:-10px;}
+  .rubric-name::before{width:28px;height:28px;margin-right:8px;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #reflection::before,#rubric::before,.reflection-visual::before{display:none!important;}
+  .reflection-copy p,.rubric-row,.footer-inner{transition:none!important;transform:none!important;}
+}
