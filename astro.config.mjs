@@ -76,7 +76,7 @@ const anchorCalibrationScript = `
 </script>
 `;
 
-const heroTitleStylesheet = `<link rel="stylesheet" href="/hero-title-animation.css?v=20260523-aurora" data-hero-title-animation="true" />`;
+const heroTitleStylesheet = `<link rel="stylesheet" href="/hero-title-animation.css?v=20260524-sweep-v3" data-hero-title-animation="true" />`;
 const profileCardHoverFixStylesheet = `<link rel="stylesheet" href="/profile-card-hover-fix.css?v=20260523-clipfix" data-profile-card-hover-fix="true" />`;
 const reflectionLuxuryStylesheet = `<link rel="stylesheet" href="/reflection-luxury.css?v=20260524-1" data-reflection-luxury="true" />`;
 const reflectionAuroraFixStylesheet = `<link rel="stylesheet" href="/reflection-aurora-fix.css?v=20260524-aurora-v5" data-reflection-aurora-fix="true" />`;
