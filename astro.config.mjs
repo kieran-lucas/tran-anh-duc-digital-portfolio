@@ -79,6 +79,7 @@ const anchorCalibrationScript = `
 const heroTitleStylesheet = `<link rel="stylesheet" href="/hero-title-animation.css?v=20260523-aurora" data-hero-title-animation="true" />`;
 const profileCardHoverFixStylesheet = `<link rel="stylesheet" href="/profile-card-hover-fix.css?v=20260523-clipfix" data-profile-card-hover-fix="true" />`;
 const reflectionLuxuryStylesheet = `<link rel="stylesheet" href="/reflection-luxury.css?v=20260524-1" data-reflection-luxury="true" />`;
+const reflectionAuroraFixStylesheet = `<link rel="stylesheet" href="/reflection-aurora-fix.css?v=20260524-2" data-reflection-aurora-fix="true" />`;
 const reflectionLuxuryScript = `<script src="/reflection-luxury.js?v=20260524-1" defer data-reflection-luxury="true"></script>`;
 
 const cursorPolicy = `
@@ -124,6 +125,9 @@ const enhance = (html) => {
   if (!next.includes('data-reflection-luxury="true"')) {
     next = next.replace('</head>', `${reflectionLuxuryStylesheet}\n  </head>`);
     next = next.replace('</body>', `${reflectionLuxuryScript}\n  </body>`);
+  }
+  if (!next.includes('data-reflection-aurora-fix="true"')) {
+    next = next.replace('</head>', `${reflectionAuroraFixStylesheet}\n  </head>`);
   }
   if (!next.includes('data-final-cursor-policy="true"')) {
     next = next.replace('</body>', `${cursorPolicy}\n  </body>`);
