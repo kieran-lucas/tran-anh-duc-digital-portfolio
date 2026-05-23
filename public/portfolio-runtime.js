@@ -27,6 +27,77 @@
     visual.insertAdjacentHTML('afterbegin', '<span class="reflection-ambient-sheet" aria-hidden="true"></span>');
   };
 
+  const enhanceHeroInteractions = () => {
+    const terminalBody = document.querySelector('.terminal-body');
+    const terminalWindow = document.querySelector('.terminal-window');
+    const terminalCard = document.querySelector('.terminal-card');
+    const miniStats = document.querySelector('.mini-stats');
+    [terminalCard, terminalWindow, terminalBody, miniStats].forEach((node) => {
+      if (!node) return;
+      node.style.setProperty('overflow', 'visible', 'important');
+    });
+    if (terminalBody) {
+      terminalBody.style.setProperty('contain', 'none', 'important');
+      terminalBody.style.setProperty('isolation', 'isolate', 'important');
+    }
+    if (miniStats) {
+      miniStats.style.setProperty('position', 'relative', 'important');
+      miniStats.style.setProperty('z-index', '10', 'important');
+    }
+
+    const lift = (card) => {
+      card.style.setProperty('z-index', '30', 'important');
+      card.style.setProperty('transform', 'translate3d(0,-10px,0) scale(1.07)', 'important');
+      card.style.setProperty('border-color', 'rgba(0,122,255,.34)', 'important');
+      card.style.setProperty('background', 'linear-gradient(180deg,rgba(255,255,255,.96),rgba(218,244,255,.78))', 'important');
+      card.style.setProperty('box-shadow', '0 22px 50px rgba(0,122,255,.18),0 9px 22px rgba(20,90,180,.075),inset 0 1px 0 rgba(255,255,255,.98)', 'important');
+    };
+
+    const settle = (card) => {
+      card.style.removeProperty('z-index');
+      card.style.removeProperty('transform');
+      card.style.removeProperty('border-color');
+      card.style.removeProperty('background');
+      card.style.removeProperty('box-shadow');
+    };
+
+    document.querySelectorAll('.terminal-card .mini-stat').forEach((card) => {
+      if (card.dataset.heroHoverBound === 'true') return;
+      card.dataset.heroHoverBound = 'true';
+      card.style.setProperty('position', 'relative', 'important');
+      card.style.setProperty('cursor', 'pointer', 'important');
+      card.style.setProperty('transform', 'translate3d(0,0,0) scale(1)', 'important');
+      card.style.setProperty('transform-origin', 'center center', 'important');
+      card.style.setProperty('transition', 'transform .46s cubic-bezier(.16,1,.3,1),box-shadow .46s cubic-bezier(.22,1,.36,1),border-color .28s ease,background .28s ease', 'important');
+      card.style.setProperty('will-change', 'transform', 'important');
+      card.addEventListener('pointerenter', () => lift(card), { passive: true });
+      card.addEventListener('pointerleave', () => settle(card), { passive: true });
+      card.addEventListener('focusin', () => lift(card));
+      card.addEventListener('focusout', () => settle(card));
+    });
+
+    const cta = document.querySelector('.hero-actions .btn-primary');
+    if (cta && cta.dataset.heroCtaBound !== 'true') {
+      cta.dataset.heroCtaBound = 'true';
+      cta.style.setProperty('transition', 'transform .58s cubic-bezier(.16,1,.3,1),box-shadow .54s cubic-bezier(.22,1,.36,1),filter .36s ease', 'important');
+      cta.style.setProperty('will-change', 'transform', 'important');
+      const ctaLift = () => {
+        cta.style.setProperty('transform', 'translate3d(0,-4px,0) scale(1.026)', 'important');
+        cta.style.setProperty('filter', 'saturate(1.05) brightness(1.02)', 'important');
+        cta.style.setProperty('box-shadow', '0 24px 56px rgba(0,122,255,.24),0 8px 22px rgba(11,216,255,.12),inset 0 1px 0 rgba(255,255,255,.62)', 'important');
+      };
+      const ctaSettle = () => {
+        cta.style.removeProperty('transform');
+        cta.style.removeProperty('filter');
+        cta.style.removeProperty('box-shadow');
+      };
+      cta.addEventListener('pointerenter', ctaLift, { passive: true });
+      cta.addEventListener('pointerleave', ctaSettle, { passive: true });
+      cta.addEventListener('focusin', ctaLift);
+      cta.addEventListener('focusout', ctaSettle);
+    }
+  };
+
   const calibrateAnchors = () => {
     const SHIFT_RATIO = 0.125;
     const TOP_GAP = 22;
@@ -97,7 +168,7 @@
   };
 
   const applyCursorPolicy = () => {
-    const interactiveSelector = 'a,button,[role="button"],summary,.brand,.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a';
+    const interactiveSelector = 'a,button,[role="button"],summary,.brand,.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.terminal-card .mini-stat';
     document.querySelectorAll('body *').forEach((node) => node.style.setProperty('cursor', 'default', 'important'));
     document.querySelectorAll(interactiveSelector).forEach((root) => {
       root.style.setProperty('cursor', 'pointer', 'important');
@@ -107,6 +178,7 @@
 
   const init = () => {
     enhanceReflection();
+    enhanceHeroInteractions();
     calibrateAnchors();
     applyCursorPolicy();
     new MutationObserver(applyCursorPolicy).observe(document.documentElement, { childList: true, subtree: true });
