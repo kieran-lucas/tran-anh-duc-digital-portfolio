@@ -28,10 +28,19 @@
   };
 
   const enhanceHeroInteractions = () => {
+    const hoverFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const selector = '.terminal-card .mini-stat';
+    let activeCard = null;
+    let pointerX = -1;
+    let pointerY = -1;
+    let raf = 0;
+
     const terminalBody = document.querySelector('.terminal-body');
     const terminalWindow = document.querySelector('.terminal-window');
     const terminalCard = document.querySelector('.terminal-card');
     const miniStats = document.querySelector('.mini-stats');
+
     [terminalCard, terminalWindow, terminalBody, miniStats].forEach((node) => {
       if (!node) return;
       node.style.setProperty('overflow', 'visible', 'important');
@@ -42,39 +51,74 @@
     }
     if (miniStats) {
       miniStats.style.setProperty('position', 'relative', 'important');
-      miniStats.style.setProperty('z-index', '10', 'important');
+      miniStats.style.setProperty('z-index', '80', 'important');
     }
 
-    const lift = (card) => {
-      card.style.setProperty('z-index', '30', 'important');
-      card.style.setProperty('transform', 'translate3d(0,-10px,0) scale(1.07)', 'important');
-      card.style.setProperty('border-color', 'rgba(0,122,255,.34)', 'important');
-      card.style.setProperty('background', 'linear-gradient(180deg,rgba(255,255,255,.96),rgba(218,244,255,.78))', 'important');
-      card.style.setProperty('box-shadow', '0 22px 50px rgba(0,122,255,.18),0 9px 22px rgba(20,90,180,.075),inset 0 1px 0 rgba(255,255,255,.98)', 'important');
-    };
-
-    const settle = (card) => {
-      card.style.removeProperty('z-index');
-      card.style.removeProperty('transform');
-      card.style.removeProperty('border-color');
-      card.style.removeProperty('background');
-      card.style.removeProperty('box-shadow');
-    };
-
-    document.querySelectorAll('.terminal-card .mini-stat').forEach((card) => {
-      if (card.dataset.heroHoverBound === 'true') return;
+    const cards = [...document.querySelectorAll(selector)];
+    cards.forEach((card) => {
       card.dataset.heroHoverBound = 'true';
       card.style.setProperty('position', 'relative', 'important');
+      card.style.setProperty('z-index', '1', 'important');
       card.style.setProperty('cursor', 'pointer', 'important');
       card.style.setProperty('transform', 'translate3d(0,0,0) scale(1)', 'important');
       card.style.setProperty('transform-origin', 'center center', 'important');
-      card.style.setProperty('transition', 'transform .46s cubic-bezier(.16,1,.3,1),box-shadow .46s cubic-bezier(.22,1,.36,1),border-color .28s ease,background .28s ease', 'important');
+      card.style.setProperty('backface-visibility', 'hidden', 'important');
+      card.style.setProperty('transition', 'transform .42s cubic-bezier(.16,1,.3,1),box-shadow .42s cubic-bezier(.22,1,.36,1),border-color .26s ease,background .26s ease', 'important');
       card.style.setProperty('will-change', 'transform', 'important');
-      card.addEventListener('pointerenter', () => lift(card), { passive: true });
-      card.addEventListener('pointerleave', () => settle(card), { passive: true });
-      card.addEventListener('focusin', () => lift(card));
-      card.addEventListener('focusout', () => settle(card));
     });
+
+    const lift = (card) => {
+      if (!card || activeCard === card) return;
+      if (activeCard) settle(activeCard);
+      activeCard = card;
+      card.style.setProperty('z-index', '100', 'important');
+      card.style.setProperty('transform', 'translate3d(0,-12px,0) scale(1.085)', 'important');
+      card.style.setProperty('border-color', 'rgba(0,122,255,.42)', 'important');
+      card.style.setProperty('background', 'linear-gradient(180deg,rgba(255,255,255,.98),rgba(214,244,255,.82))', 'important');
+      card.style.setProperty('box-shadow', '0 26px 58px rgba(0,122,255,.20),0 10px 24px rgba(20,90,180,.08),inset 0 1px 0 rgba(255,255,255,1)', 'important');
+    };
+
+    function settle(card) {
+      if (!card) return;
+      card.style.setProperty('z-index', '1', 'important');
+      card.style.setProperty('transform', 'translate3d(0,0,0) scale(1)', 'important');
+      card.style.removeProperty('border-color');
+      card.style.removeProperty('background');
+      card.style.removeProperty('box-shadow');
+      if (activeCard === card) activeCard = null;
+    }
+
+    const findCardAt = (x, y) => cards.find((card) => {
+      const rect = card.getBoundingClientRect();
+      return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+    }) || null;
+
+    const tick = () => {
+      raf = 0;
+      const card = findCardAt(pointerX, pointerY);
+      if (card) lift(card);
+      else if (activeCard) settle(activeCard);
+    };
+
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    if (hoverFine && !prefersReduced && cards.length) {
+      document.addEventListener('pointermove', (event) => {
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        schedule();
+      }, { passive: true });
+
+      document.addEventListener('scroll', () => {
+        if (activeCard) settle(activeCard);
+      }, { passive: true });
+
+      window.addEventListener('blur', () => {
+        if (activeCard) settle(activeCard);
+      }, { passive: true });
+    }
 
     const cta = document.querySelector('.hero-actions .btn-primary');
     if (cta && cta.dataset.heroCtaBound !== 'true') {
@@ -96,6 +140,12 @@
       cta.addEventListener('focusin', ctaLift);
       cta.addEventListener('focusout', ctaSettle);
     }
+
+    window.__heroMiniHoverDebug = () => ({
+      cards: cards.length,
+      active: activeCard?.textContent?.trim() || null,
+      runtime: 'coordinate-hit-test'
+    });
   };
 
   const calibrateAnchors = () => {
