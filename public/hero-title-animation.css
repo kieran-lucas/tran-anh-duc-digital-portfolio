@@ -1,8 +1,8 @@
 /* ============================================================
-   Hero title animation
-   - Base text gradient: blue -> cyan -> violet, never flat
-   - ONE soft diagonal light sweep, top-left -> bottom-right
-   - CSS only, single non-repeating band, hover-independent
+   Hero title animation v2
+   - Single text rendering layer: no duplicated pseudo-text
+   - Static blue/cyan/violet base gradient
+   - One diagonal sweep as a background layer clipped to text
    ============================================================ */
 
 .hero-copy{
@@ -27,76 +27,55 @@ h1{
   pointer-events:none;
 
   color:transparent!important;
-  background-image:linear-gradient(112deg,
-    #2563eb 0%,
-    #0b7dff 18%,
-    #06b6ff 36%,
-    #22d3ee 52%,
-    #3b82f6 72%,
-    #8b5cf6 100%
-  );
-  background-repeat:no-repeat;
-  background-size:100% 100%;
-  background-position:0 50%;
+  -webkit-text-fill-color:transparent;
   -webkit-background-clip:text;
   background-clip:text;
-  -webkit-text-fill-color:transparent;
 
-  filter:saturate(1.18) contrast(1.045);
-  text-shadow:
-    0 14px 36px rgba(0,122,255,.11),
-    0 28px 74px rgba(11,216,255,.075);
-  transform:translateZ(0);
-  animation:none!important;
-}
+  background-image:
+    linear-gradient(135deg,
+      transparent 0%,
+      transparent 40%,
+      rgba(255,255,255,.06) 44%,
+      rgba(255,255,255,.30) 47.5%,
+      rgba(255,255,255,.70) 50%,
+      rgba(169,237,255,.42) 52.5%,
+      rgba(255,255,255,.14) 56%,
+      transparent 60%,
+      transparent 100%
+    ),
+    linear-gradient(112deg,
+      #2563eb 0%,
+      #0b7dff 18%,
+      #06b6ff 36%,
+      #22d3ee 52%,
+      #3b82f6 72%,
+      #8b5cf6 100%
+    );
+  background-repeat:no-repeat,no-repeat;
+  background-size:250% 250%,100% 100%;
+  background-position:106.67% 106.67%,0 50%;
 
-.gradient-text::after{
-  content:"Hành trình học tập số và ứng dụng AI";
-  position:absolute;
-  inset:0;
-  padding-bottom:inherit;
-  pointer-events:none;
-
-  font:inherit;
-  font-size:inherit;
-  font-weight:inherit;
-  line-height:inherit;
-  letter-spacing:inherit;
-  text-align:inherit;
-  white-space:normal;
-
-  color:transparent;
-  background-image:linear-gradient(135deg,
-    transparent 0%,
-    transparent 40%,
-    rgba(255,255,255,.08) 44%,
-    rgba(255,255,255,.36) 47.5%,
-    rgba(255,255,255,.82) 50%,
-    rgba(169,237,255,.52) 52.5%,
-    rgba(255,255,255,.18) 56%,
-    transparent 60%,
-    transparent 100%
-  );
-  background-size:250% 250%;
-  background-repeat:no-repeat;
-  background-position:106.67% 106.67%;
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  opacity:.9;
+  filter:saturate(1.14) contrast(1.025);
+  text-shadow:none!important;
   transform:translateZ(0);
   will-change:background-position;
-  animation:heroTitleSweep 8.5s linear infinite;
+  animation:heroTitleSweepLayered 8.5s linear infinite!important;
+}
+
+/* Important: do not duplicate the title text in ::after. On tilted screens,
+   duplicate text layers create a visible stacked/ghosted underside. */
+.gradient-text::after{
+  content:none!important;
+  display:none!important;
 }
 
 .lead{
   margin-top:4px!important;
 }
 
-@keyframes heroTitleSweep{
-  from{background-position:106.67% 106.67%;}
-  to{background-position:-6.67% -6.67%;}
+@keyframes heroTitleSweepLayered{
+  from{background-position:106.67% 106.67%,0 50%;}
+  to{background-position:-6.67% -6.67%,0 50%;}
 }
 
 @media (max-width:1050px){
@@ -110,8 +89,8 @@ h1{
 }
 
 @media (prefers-reduced-motion:reduce){
-  .gradient-text::after{
+  .gradient-text{
     animation:none!important;
-    opacity:0;
+    background-position:-140% -140%,0 50%;
   }
 }
