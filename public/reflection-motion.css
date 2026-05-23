@@ -1,7 +1,7 @@
 /* ============================================================
-   Reflection Motion Hard Fix v3
+   Reflection Motion Hard Fix v4
    Purpose: make the left Reflection card visibly dynamic.
-   Uses real DOM color fields injected by portfolio-runtime.js.
+   Important fix: animated properties must NOT be locked with !important.
    ============================================================ */
 
 #reflection .reflection-visual{
@@ -21,23 +21,23 @@
   z-index:1!important;
   pointer-events:none!important;
   border-radius:inherit!important;
-  animation:none!important;
-  transform:none!important;
   filter:none!important;
 }
 
 #reflection .reflection-visual::before{
   opacity:.26!important;
+  transform:none!important;
+  animation:none!important;
   background:
     linear-gradient(135deg,rgba(255,255,255,.34),rgba(255,255,255,.08) 28%,rgba(255,255,255,0) 56%),
     radial-gradient(ellipse at 78% 8%,rgba(255,255,255,.26),transparent 44%)!important;
 }
 
 #reflection .reflection-visual::after{
-  opacity:.40!important;
+  opacity:.40;
   background:
     linear-gradient(115deg,transparent 0 32%,rgba(255,255,255,.32) 48%,rgba(255,255,255,.06) 60%,transparent 74%)!important;
-  transform:translate3d(-18%,0,0)!important;
+  transform:translate3d(-18%,0,0);
   animation:reflectionVisibleGlassSweep 3.6s ease-in-out infinite alternate!important;
 }
 
@@ -47,18 +47,18 @@
   display:block!important;
   pointer-events:none!important;
   border-radius:999px!important;
-  filter:blur(18px) saturate(1.45) contrast(1.12)!important;
-  opacity:.92!important;
   mix-blend-mode:normal!important;
-  transform:translate3d(0,0,0) scale(1)!important;
+  filter:blur(18px) saturate(1.45) contrast(1.12);
+  opacity:.92;
+  transform:translate3d(0,0,0) scale(1);
   will-change:transform,left,top,right,bottom,opacity,filter!important;
 }
 
 #reflection .field-blue{
   width:54%!important;
   height:48%!important;
-  left:-12%!important;
-  top:36%!important;
+  left:-12%;
+  top:36%;
   background:rgba(0,72,255,.92)!important;
   animation:reflectionBlobBlue 3.7s ease-in-out infinite alternate!important;
 }
@@ -66,8 +66,8 @@
 #reflection .field-cyan{
   width:52%!important;
   height:46%!important;
-  right:-10%!important;
-  top:-8%!important;
+  right:-10%;
+  top:-8%;
   background:rgba(24,238,255,.96)!important;
   animation:reflectionBlobCyan 3.25s ease-in-out infinite alternate!important;
 }
@@ -75,8 +75,8 @@
 #reflection .field-violet{
   width:54%!important;
   height:48%!important;
-  right:-12%!important;
-  bottom:-12%!important;
+  right:-12%;
+  bottom:-12%;
   background:rgba(125,84,255,.92)!important;
   animation:reflectionBlobViolet 4.1s ease-in-out infinite alternate!important;
 }
@@ -84,8 +84,8 @@
 #reflection .field-aqua{
   width:44%!important;
   height:42%!important;
-  left:28%!important;
-  top:38%!important;
+  left:28%;
+  top:38%;
   background:rgba(0,205,255,.86)!important;
   animation:reflectionBlobAqua 3.55s ease-in-out infinite alternate!important;
 }
@@ -93,13 +93,13 @@
 #reflection .field-sheen{
   width:38%!important;
   height:150%!important;
-  left:-40%!important;
-  top:-24%!important;
+  left:-40%;
+  top:-24%;
   border-radius:36%!important;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.52),transparent)!important;
-  filter:blur(12px)!important;
-  opacity:.54!important;
-  transform:rotate(18deg)!important;
+  filter:blur(12px);
+  opacity:.54;
+  transform:rotate(18deg);
   animation:reflectionSheenTravel 3.2s linear infinite!important;
 }
 
@@ -213,13 +213,9 @@
 }
 
 @keyframes reflectionVisibleGlassSweep{
-  0%{transform:translate3d(-18%,0,0)!important;opacity:.26!important;}
-  100%{transform:translate3d(18%,0,0)!important;opacity:.46!important;}
+  0%{transform:translate3d(-18%,0,0);opacity:.26;}
+  100%{transform:translate3d(18%,0,0);opacity:.46;}
 }
 
-@media(prefers-reduced-motion:reduce){
-  #reflection .reflection-color-field,
-  #reflection .reflection-visual::after{
-    animation:none!important;
-  }
-}
+/* Do not disable this requested visual effect here. If the browser globally disables animations,
+   DevTools will show animation-play-state/duration accordingly. */
