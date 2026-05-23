@@ -1,65 +1,61 @@
-/* Premium animated hero title: aurora/prism gradient, no JS, reduced-motion safe */
+/* Premium hero title: fixed blue gradient + soft diagonal light sweep, no JS */
 .gradient-text{
   position:relative;
   display:inline-block;
   color:transparent!important;
-  background:
-    radial-gradient(circle at 18% 18%,rgba(255,255,255,.96) 0 3.5%,transparent 9%),
+  background-image:
+    linear-gradient(108deg,
+      transparent 0%,
+      transparent 42%,
+      rgba(255,255,255,.18) 46%,
+      rgba(255,255,255,.88) 49%,
+      rgba(196,242,255,.78) 51%,
+      rgba(255,255,255,.26) 54%,
+      transparent 59%,
+      transparent 100%
+    ),
     linear-gradient(112deg,
-      #071426 0%,
-      #005dff 15%,
-      #08baff 31%,
-      #26e7ff 43%,
-      #6f5cff 57%,
-      #2098ff 72%,
-      #00d2ff 86%,
-      #071426 100%
+      #055de8 0%,
+      #0877ff 21%,
+      #08b6ff 42%,
+      #19cfff 56%,
+      #2388ff 75%,
+      #4f6dff 100%
     );
-  background-size:260% 260%,420% 420%;
-  background-position:0% 48%,0% 50%;
+  background-size:240% 180%,100% 100%;
+  background-position:-145% 50%,0 50%;
   -webkit-background-clip:text;
   background-clip:text;
-  filter:saturate(1.16) contrast(1.02);
+  -webkit-text-fill-color:transparent;
+  filter:saturate(1.11) contrast(1.03);
   text-shadow:
-    0 18px 44px rgba(0,122,255,.13),
-    0 34px 88px rgba(11,216,255,.10);
+    0 16px 42px rgba(0,122,255,.12),
+    0 32px 86px rgba(11,216,255,.09);
   transform:translateZ(0);
-  will-change:background-position,filter,text-shadow;
-  animation:
-    heroTitleAurora 9.5s cubic-bezier(.22,1,.36,1) infinite alternate,
-    heroTitleBreath 7.2s ease-in-out infinite;
+  will-change:background-position,filter;
+  animation:heroTitleLightSweep 5.8s cubic-bezier(.22,1,.36,1) infinite;
 }
 
 .hero-copy:hover .gradient-text{
-  animation-duration:6.2s,5.2s;
-  filter:saturate(1.24) contrast(1.035);
+  animation-duration:4.2s;
+  filter:saturate(1.16) contrast(1.04);
 }
 
-@keyframes heroTitleAurora{
-  0%{background-position:0% 48%,0% 50%;}
-  28%{background-position:38% 36%,42% 52%;}
-  57%{background-position:82% 58%,76% 48%;}
-  100%{background-position:120% 42%,100% 50%;}
-}
-
-@keyframes heroTitleBreath{
-  0%,100%{
-    text-shadow:
-      0 18px 44px rgba(0,122,255,.13),
-      0 34px 88px rgba(11,216,255,.10);
+@keyframes heroTitleLightSweep{
+  0%,18%{
+    background-position:-145% 50%,0 50%;
   }
-  50%{
-    text-shadow:
-      0 20px 54px rgba(0,122,255,.20),
-      0 38px 108px rgba(11,216,255,.16),
-      0 8px 28px rgba(95,92,255,.10);
+  58%,100%{
+    background-position:155% 50%,0 50%;
   }
 }
 
 @media (prefers-reduced-motion:reduce){
   .gradient-text{
     animation:none!important;
-    background-position:54% 48%,48% 50%;
-    filter:saturate(1.08) contrast(1.01);
+    background-image:linear-gradient(112deg,#055de8 0%,#0877ff 21%,#08b6ff 42%,#19cfff 56%,#2388ff 75%,#4f6dff 100%);
+    background-size:100% 100%;
+    background-position:0 50%;
+    filter:saturate(1.08) contrast(1.02);
   }
 }
