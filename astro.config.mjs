@@ -67,6 +67,7 @@ const anchorCalibrationScript = `
 `;
 
 const heroTitleStylesheet = `<link rel="stylesheet" href="/hero-title-animation.css?v=20260523-aurora" data-hero-title-animation="true" />`;
+const profileCardHoverFixStylesheet = `<link rel="stylesheet" href="/profile-card-hover-fix.css?v=20260523-clipfix" data-profile-card-hover-fix="true" />`;
 
 const cursorPolicy = `
 <style data-final-cursor-policy="true">
@@ -104,6 +105,9 @@ const enhance = (html) => {
   let next = html;
   if (!next.includes('data-hero-title-animation="true"')) {
     next = next.replace('</head>', `${heroTitleStylesheet}\n  </head>`);
+  }
+  if (!next.includes('data-profile-card-hover-fix="true"')) {
+    next = next.replace('</head>', `${profileCardHoverFixStylesheet}\n  </head>`);
   }
   if (!next.includes('data-final-cursor-policy="true"')) {
     next = next.replace('</body>', `${cursorPolicy}\n  </body>`);
