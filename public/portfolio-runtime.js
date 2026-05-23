@@ -21,71 +21,9 @@
     }
 
     const visual = document.querySelector('#reflection .reflection-visual');
-    if (!visual || visual.dataset.realAurora === 'true') return;
-    visual.dataset.realAurora = 'true';
+    if (!visual || visual.dataset.reflectionEnhanced === 'true') return;
+    visual.dataset.reflectionEnhanced = 'true';
     visual.classList.add('reflection-real-aurora');
-    visual.insertAdjacentHTML('afterbegin', `
-      <span class="reflection-color-field field-blue" aria-hidden="true"></span>
-      <span class="reflection-color-field field-cyan" aria-hidden="true"></span>
-      <span class="reflection-color-field field-violet" aria-hidden="true"></span>
-      <span class="reflection-color-field field-aqua" aria-hidden="true"></span>
-      <span class="reflection-color-field field-sheen" aria-hidden="true"></span>
-    `);
-  };
-
-  const startReflectionAuroraMotion = () => {
-    const visual = document.querySelector('#reflection .reflection-visual');
-    if (!visual || visual.dataset.runtimeAurora === 'true') return;
-    visual.dataset.runtimeAurora = 'true';
-
-    let rafId = 0;
-    let running = false;
-    const start = performance.now();
-
-    const setPct = (name, value) => {
-      visual.style.setProperty(name, `${value.toFixed(2)}%`);
-    };
-
-    const render = (now) => {
-      if (!running) return;
-      const t = (now - start) / 1000;
-      const p1x = 18 + Math.sin(t * 0.42) * 22;
-      const p1y = 76 + Math.cos(t * 0.36) * 10;
-      const p2x = 82 + Math.cos(t * 0.38 + 0.7) * 16;
-      const p2y = 22 + Math.sin(t * 0.44 + 0.4) * 14;
-      const p3x = 78 + Math.sin(t * 0.33 + 1.6) * 16;
-      const p3y = 86 + Math.cos(t * 0.30 + 1.1) * 10;
-
-      setPct('--aurora-1x', p1x);
-      setPct('--aurora-1y', p1y);
-      setPct('--aurora-2x', p2x);
-      setPct('--aurora-2y', p2y);
-      setPct('--aurora-3x', p3x);
-      setPct('--aurora-3y', p3y);
-      rafId = requestAnimationFrame(render);
-    };
-
-    const play = () => {
-      if (running) return;
-      running = true;
-      rafId = requestAnimationFrame(render);
-    };
-
-    const pause = () => {
-      running = false;
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = 0;
-    };
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) play();
-        else pause();
-      }, { threshold: 0.08 });
-      observer.observe(visual);
-    } else {
-      play();
-    }
   };
 
   const calibrateAnchors = () => {
@@ -168,7 +106,6 @@
 
   const init = () => {
     enhanceReflection();
-    startReflectionAuroraMotion();
     calibrateAnchors();
     applyCursorPolicy();
     new MutationObserver(applyCursorPolicy).observe(document.documentElement, { childList: true, subtree: true });
