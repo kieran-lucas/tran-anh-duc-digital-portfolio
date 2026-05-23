@@ -22,15 +22,15 @@ h1{
   background-image:
     linear-gradient(135deg,
       transparent 0%,
-      transparent 36%,
-      rgba(255,255,255,.035) 40%,
-      rgba(255,255,255,.16) 44%,
-      rgba(255,255,255,.46) 47.8%,
-      rgba(244,253,255,.92) 50%,
-      rgba(153,232,255,.56) 52.2%,
-      rgba(255,255,255,.18) 56%,
-      rgba(255,255,255,.04) 60%,
-      transparent 64%,
+      transparent 37%,
+      rgba(255,255,255,.035) 41%,
+      rgba(255,255,255,.14) 44%,
+      rgba(255,255,255,.42) 47.8%,
+      rgba(246,253,255,.88) 50%,
+      rgba(145,230,255,.54) 52.2%,
+      rgba(255,255,255,.16) 56%,
+      rgba(255,255,255,.04) 59%,
+      transparent 63%,
       transparent 100%
     ),
     linear-gradient(112deg,
@@ -42,8 +42,9 @@ h1{
       #237aff 78%,
       #5b61ff 100%
     );
-  background-size:320% 320%,100% 100%;
-  background-position:145% 145%,0 50%;
+  background-size:240% 240%,100% 100%;
+  background-position:104% 104%,0 50%;
+  background-repeat:no-repeat,no-repeat;
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -53,7 +54,7 @@ h1{
     0 28px 74px rgba(11,216,255,.075);
   transform:translateZ(0);
   will-change:background-position,filter;
-  animation:heroTitleLightSweep 13.2s linear infinite;
+  animation:heroTitleLightSweep 11.8s linear infinite;
 }
 
 .lead{
@@ -61,16 +62,16 @@ h1{
 }
 
 .hero-copy:hover .gradient-text{
-  animation-duration:11.6s;
+  animation-duration:10.4s;
   filter:saturate(1.32) contrast(1.07);
 }
 
 @keyframes heroTitleLightSweep{
   0%{
-    background-position:145% 145%,0 50%;
+    background-position:104% 104%,0 50%;
   }
   100%{
-    background-position:-145% -145%,0 50%;
+    background-position:-4% -4%,0 50%;
   }
 }
 
@@ -90,6 +91,7 @@ h1{
     background-image:linear-gradient(112deg,#044fdc 0%,#006fff 16%,#0299ff 31%,#04d7ff 48%,#00b7e8 60%,#237aff 78%,#5b61ff 100%);
     background-size:100% 100%;
     background-position:0 50%;
+    background-repeat:no-repeat;
     filter:saturate(1.16) contrast(1.035);
   }
 }
