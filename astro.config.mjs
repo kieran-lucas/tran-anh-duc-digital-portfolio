@@ -2,8 +2,8 @@ import { defineConfig } from 'astro/config';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
-const reflectionMotionStylesheet = '<link rel="stylesheet" href="/reflection-motion.css?v=20260524-lightweight-aurora-v6" data-reflection-motion="true" />';
-const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-real-aurora-v2" defer data-portfolio-runtime="true"></script>';
+const reflectionMotionStylesheet = '<link rel="stylesheet" href="/reflection-motion.css?v=20260524-runtime-zoom-v7" data-reflection-motion="true" />';
+const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-runtime-aurora-v3" defer data-portfolio-runtime="true"></script>';
 
 const legacyAssetPatterns = [
   /\s*<link[^>]+href=["']\/premium-interactions\.css[^"']*["'][^>]*>\s*/gi,
