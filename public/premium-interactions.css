@@ -5,6 +5,11 @@
   --ease-spring:cubic-bezier(.16,1,.3,1);
 }
 
+/* Cursor policy: only arrow and hand. No text/I-beam cursor anywhere. */
+html,body,body *{cursor:default!important;}
+a,button,[role="button"],summary,
+:where(.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.brand){cursor:pointer!important;}
+
 :where(.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.tool,.pill){
   position:relative;
   isolation:isolate;
