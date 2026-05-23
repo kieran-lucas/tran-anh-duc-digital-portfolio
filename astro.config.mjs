@@ -3,7 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
 const reflectionMotionStylesheet = '<link rel="stylesheet" href="/reflection-motion.css?v=20260524-variable-aurora-v8" data-reflection-motion="true" />';
-const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-variable-aurora-v4" defer data-portfolio-runtime="true"></script>';
+const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-no-repaint-v5" defer data-portfolio-runtime="true"></script>';
 
 const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 #reflection{
@@ -25,13 +25,7 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   overflow:hidden!important;
   isolation:isolate!important;
   transform-origin:65% 50%!important;
-  background-image:
-    radial-gradient(ellipse at 18% 76%,rgba(0,92,255,.50),transparent 43%),
-    radial-gradient(ellipse at 82% 22%,rgba(40,220,255,.52),transparent 41%),
-    radial-gradient(ellipse at 78% 86%,rgba(118,92,255,.42),transparent 43%),
-    linear-gradient(135deg,#0a6dff 0%,#10baf2 46%,#3979ff 72%,#675cff 100%)!important;
-  background-size:100% 100%!important;
-  background-position:0 0!important;
+  background:linear-gradient(135deg,#0a6dff 0%,#10baf2 46%,#3979ff 72%,#675cff 100%)!important;
   animation:none!important;
   transition:transform .72s cubic-bezier(.16,1,.3,1),box-shadow .56s cubic-bezier(.22,1,.36,1),border-color .36s ease!important;
   will-change:transform!important;
@@ -46,15 +40,20 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 #reflection .reflection-visual::before{
   content:""!important;
   position:absolute!important;
-  inset:-10%!important;
+  inset:-55%!important;
   z-index:0!important;
   pointer-events:none!important;
-  border-radius:inherit!important;
-  opacity:.24!important;
+  border-radius:42%!important;
+  opacity:.72!important;
   mix-blend-mode:screen!important;
-  background:radial-gradient(ellipse at 24% 70%,rgba(0,92,255,.26),transparent 54%),radial-gradient(ellipse at 74% 24%,rgba(58,232,255,.28),transparent 54%),radial-gradient(ellipse at 78% 78%,rgba(130,100,255,.20),transparent 58%)!important;
-  transform:translate3d(0,0,0) scale(1.02)!important;
-  animation:reflectionStabilizedVeil 18s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+  background:
+    radial-gradient(ellipse at 18% 72%,rgba(0,78,255,.52),transparent 31%),
+    radial-gradient(ellipse at 78% 22%,rgba(64,232,255,.58),transparent 30%),
+    radial-gradient(ellipse at 78% 82%,rgba(132,94,255,.48),transparent 32%),
+    radial-gradient(ellipse at 42% 48%,rgba(0,180,255,.34),transparent 34%)!important;
+  transform:translate3d(-4%,-2%,0) scale(1.02) rotate(0deg)!important;
+  animation:reflectionSheetDrift 13s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+  will-change:transform,opacity!important;
 }
 #reflection .reflection-visual::after{
   content:""!important;
@@ -71,55 +70,16 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   position:relative!important;
   z-index:2!important;
 }
-@keyframes reflectionStabilizedVeil{
-  0%{transform:translate3d(-1%,-1%,0) scale(1.02);opacity:.21;}
-  50%{transform:translate3d(2%,2%,0) scale(1.04);opacity:.29;}
-  100%{transform:translate3d(4%,-1%,0) scale(1.025);opacity:.24;}
+@keyframes reflectionSheetDrift{
+  0%{transform:translate3d(-6%,-3%,0) scale(1.02) rotate(0deg);opacity:.58;}
+  40%{transform:translate3d(4%,3%,0) scale(1.07) rotate(4deg);opacity:.78;}
+  100%{transform:translate3d(11%,-1%,0) scale(1.04) rotate(-3deg);opacity:.64;}
 }
 @media(max-width:720px){
   #reflection .reflection-layout{padding:8px!important;margin:-8px!important;}
   #reflection .reflection-visual:hover,#reflection .reflection-visual:focus-within{transform:translate3d(2px,-2px,0) scale(1.003)!important;}
 }
 </style>`;
-
-const reflectionStabilizerScript = `<script data-reflection-stabilizer="true">
-(() => {
-  const visual = document.querySelector('#reflection .reflection-visual');
-  if (!visual || visual.dataset.stabilizedAurora === 'true') return;
-  visual.dataset.stabilizedAurora = 'true';
-  visual.dataset.runtimeAurora = 'true';
-
-  let raf = 0;
-  let last = 0;
-  const start = performance.now();
-  const pct = (value) => value.toFixed(2) + '%';
-
-  const tick = (now) => {
-    raf = requestAnimationFrame(tick);
-    if (document.hidden || now - last < 42) return;
-    last = now;
-    const t = (now - start) / 1000;
-
-    const p1x = 18 + Math.sin(t * 0.48) * 30;
-    const p1y = 76 + Math.cos(t * 0.40) * 13;
-    const p2x = 82 + Math.cos(t * 0.46 + 0.7) * 23;
-    const p2y = 22 + Math.sin(t * 0.52 + 0.4) * 18;
-    const p3x = 78 + Math.sin(t * 0.42 + 1.6) * 22;
-    const p3y = 86 + Math.cos(t * 0.36 + 1.1) * 13;
-
-    visual.style.setProperty('background-image',
-      'radial-gradient(ellipse at ' + pct(p1x) + ' ' + pct(p1y) + ',rgba(0,92,255,.50),transparent 43%),' +
-      'radial-gradient(ellipse at ' + pct(p2x) + ' ' + pct(p2y) + ',rgba(40,220,255,.52),transparent 41%),' +
-      'radial-gradient(ellipse at ' + pct(p3x) + ' ' + pct(p3y) + ',rgba(118,92,255,.42),transparent 43%),' +
-      'linear-gradient(135deg,#0a6dff 0%,#10baf2 46%,#3979ff 72%,#675cff 100%)',
-      'important'
-    );
-  };
-
-  raf = requestAnimationFrame(tick);
-  window.addEventListener('pagehide', () => cancelAnimationFrame(raf), { once:true });
-})();
-</script>`;
 
 const cleanupPatterns = [
   /\s*<style\s+data-reflection-stabilizer=["']true["'][\s\S]*?<\/style>\s*/gi,
@@ -155,7 +115,6 @@ const enhance = (html) => {
   next = injectOnce(next, 'data-reflection-motion="true"', '</head>', reflectionMotionStylesheet);
   next = next.replace('</head>', `${reflectionStabilizerStyle}\n  </head>`);
   next = injectOnce(next, 'data-portfolio-runtime="true"', '</body>', portfolioRuntimeScript);
-  next = next.replace('</body>', `${reflectionStabilizerScript}\n  </body>`);
   return next;
 };
 
