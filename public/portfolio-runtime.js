@@ -7,17 +7,30 @@
 
   const enhanceReflection = () => {
     const copy = document.querySelector('#reflection .reflection-copy');
-    if (!copy || copy.dataset.luxuryReflection === 'true') return;
-    copy.dataset.luxuryReflection = 'true';
-    copy.classList.add('reflection-copy-luxury');
-    copy.innerHTML = reflectionNotes.map((note) => `
-      <article class="reflection-point" tabindex="0">
-        <span class="reflection-marker" aria-hidden="true"></span>
-        <div class="reflection-point-body">
-          <p>${note}</p>
-        </div>
-      </article>
-    `).join('');
+    if (copy && copy.dataset.luxuryReflection !== 'true') {
+      copy.dataset.luxuryReflection = 'true';
+      copy.classList.add('reflection-copy-luxury');
+      copy.innerHTML = reflectionNotes.map((note) => `
+        <article class="reflection-point" tabindex="0">
+          <span class="reflection-marker" aria-hidden="true"></span>
+          <div class="reflection-point-body">
+            <p>${note}</p>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    const visual = document.querySelector('#reflection .reflection-visual');
+    if (!visual || visual.dataset.realAurora === 'true') return;
+    visual.dataset.realAurora = 'true';
+    visual.classList.add('reflection-real-aurora');
+    visual.insertAdjacentHTML('afterbegin', `
+      <span class="reflection-color-field field-blue" aria-hidden="true"></span>
+      <span class="reflection-color-field field-cyan" aria-hidden="true"></span>
+      <span class="reflection-color-field field-violet" aria-hidden="true"></span>
+      <span class="reflection-color-field field-aqua" aria-hidden="true"></span>
+      <span class="reflection-color-field field-sheen" aria-hidden="true"></span>
+    `);
   };
 
   const calibrateAnchors = () => {
