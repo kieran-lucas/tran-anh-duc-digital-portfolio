@@ -66,44 +66,78 @@ const anchorCalibrationScript = `
 </script>
 `;
 
-const heroTitleStylesheet = `<link rel="stylesheet" href="/hero-title-animation.css" data-hero-title-animation="true" />`;
+const heroTitleStylesheet = `<link rel="stylesheet" href="/hero-title-animation.css?v=20260523-aurora" data-hero-title-animation="true" />`;
 
-const anchorCalibrationIntegration = () => ({
-  name: 'anchor-calibration-integration',
+const cursorPolicy = `
+<style data-final-cursor-policy="true">
+html,
+body,
+body * {
+  cursor: default !important;
+}
+
+:is(a, button, [role="button"], summary, .brand, .btn, .top-action, .action-link, .panel-cta, .nav a, .toc a),
+:is(a, button, [role="button"], summary, .brand, .btn, .top-action, .action-link, .panel-cta, .nav a, .toc a) *,
+:is(a, button, [role="button"], summary, .brand, .btn, .top-action, .action-link, .panel-cta, .nav a, .toc a)::before,
+:is(a, button, [role="button"], summary, .brand, .btn, .top-action, .action-link, .panel-cta, .nav a, .toc a)::after {
+  cursor: pointer !important;
+}
+</style>
+<script data-final-cursor-policy="true">
+(() => {
+  const interactiveSelector = 'a,button,[role="button"],summary,.brand,.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a';
+  const applyCursorPolicy = () => {
+    document.querySelectorAll('body *').forEach((node) => node.style.setProperty('cursor', 'default', 'important'));
+    document.querySelectorAll(interactiveSelector).forEach((root) => {
+      root.style.setProperty('cursor', 'pointer', 'important');
+      root.querySelectorAll('*').forEach((child) => child.style.setProperty('cursor', 'pointer', 'important'));
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', applyCursorPolicy, { once: true });
+  else applyCursorPolicy();
+  new MutationObserver(applyCursorPolicy).observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
+`;
+
+const enhance = (html) => {
+  let next = html;
+  if (!next.includes('data-hero-title-animation="true"')) {
+    next = next.replace('</head>', `${heroTitleStylesheet}\n  </head>`);
+  }
+  if (!next.includes('data-final-cursor-policy="true"')) {
+    next = next.replace('</body>', `${cursorPolicy}\n  </body>`);
+  }
+  if (!next.includes('data-anchor-calibration="true"')) {
+    next = next.replace('</body>', `${anchorCalibrationScript}\n  </body>`);
+  }
+  return next;
+};
+
+const portfolioIntegration = () => ({
+  name: 'portfolio-runtime-integration',
   hooks: {
     'astro:build:done': async ({ dir }) => {
       const file = new URL('index.html', dir);
-      let html = await readFile(file, 'utf8');
-      if (!html.includes('data-hero-title-animation="true"')) {
-        html = html.replace('</head>', `${heroTitleStylesheet}\n  </head>`);
-      }
-      if (!html.includes('data-anchor-calibration="true"')) {
-        html = html.replace('</body>', `${anchorCalibrationScript}\n  </body>`);
-      }
-      await writeFile(file, html, 'utf8');
+      const html = await readFile(file, 'utf8');
+      const next = enhance(html);
+      if (next !== html) await writeFile(file, next, 'utf8');
     }
   }
 });
 
-const anchorCalibrationVitePlugin = () => ({
-  name: 'anchor-calibration-vite-plugin',
+const portfolioVitePlugin = () => ({
+  name: 'portfolio-runtime-vite-plugin',
   transformIndexHtml(html) {
-    let next = html;
-    if (!next.includes('data-hero-title-animation="true"')) {
-      next = next.replace('</head>', `${heroTitleStylesheet}\n  </head>`);
-    }
-    if (!next.includes('data-anchor-calibration="true"')) {
-      next = next.replace('</body>', `${anchorCalibrationScript}\n  </body>`);
-    }
-    return next;
+    return enhance(html);
   }
 });
 
 export default defineConfig({
   output: 'static',
   site: 'https://tran-anh-duc-portfolio.vercel.app',
-  integrations: [anchorCalibrationIntegration()],
+  integrations: [portfolioIntegration()],
   vite: {
-    plugins: [anchorCalibrationVitePlugin()]
+    plugins: [portfolioVitePlugin()]
   }
 });
