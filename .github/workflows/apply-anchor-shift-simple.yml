@@ -1,0 +1,23 @@
+name: Apply anchor shift simple
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply text replacements
+        run: |
+          perl -0pi -e 's/window\.scrollY-92/window.scrollY-92+Math.round(window.innerHeight\/8)/g' src/pages/index.astro
+          perl -0pi -e 's/top\+100>=s\.offsetTop/top+100+Math.round(window.innerHeight\/8)>=s.offsetTop/g' src/pages/index.astro
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: fix: shift titlebar anchor targets up
+          file_pattern: src/pages/index.astro
