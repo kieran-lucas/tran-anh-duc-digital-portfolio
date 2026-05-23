@@ -118,8 +118,69 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 }
 </style>`;
 
+const heroInteractionStyle = `<style data-hero-interaction-polish="true">
+.hero-visual,
+.terminal-card,
+.terminal-window,
+.terminal-body,
+.mini-stats{
+  overflow:visible!important;
+}
+.terminal-card .mini-stat{
+  position:relative!important;
+  isolation:isolate!important;
+  transform:translate3d(0,0,0) scale(1)!important;
+  transform-origin:center center!important;
+  backface-visibility:hidden!important;
+  transition:transform .54s cubic-bezier(.16,1,.3,1),box-shadow .50s cubic-bezier(.22,1,.36,1),border-color .34s ease,background .34s ease!important;
+  will-change:transform!important;
+}
+.terminal-card .mini-stat:hover,
+.terminal-card .mini-stat:focus-within{
+  transform:translate3d(0,-6px,0) scale(1.022)!important;
+  border-color:rgba(0,122,255,.22)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(223,246,255,.70))!important;
+  box-shadow:0 18px 42px rgba(0,122,255,.13),0 7px 16px rgba(20,90,180,.055),inset 0 1px 0 rgba(255,255,255,.94)!important;
+}
+.terminal-card .mini-stat strong,
+.terminal-card .mini-stat span,
+.terminal-card .mini-stat em{
+  transition:color .26s ease,transform .42s cubic-bezier(.16,1,.3,1)!important;
+}
+.terminal-card .mini-stat:hover strong,
+.terminal-card .mini-stat:focus-within strong{
+  color:#061a33!important;
+  transform:translate3d(0,-1px,0)!important;
+}
+.hero-actions .btn-primary{
+  transform:translate3d(0,0,0) scale(1)!important;
+  transform-origin:center center!important;
+  backface-visibility:hidden!important;
+  transition:transform .58s cubic-bezier(.16,1,.3,1),box-shadow .54s cubic-bezier(.22,1,.36,1),background-position .64s cubic-bezier(.16,1,.3,1),filter .36s ease!important;
+  will-change:transform!important;
+}
+.hero-actions .btn-primary:hover,
+.hero-actions .btn-primary:focus-visible{
+  transform:translate3d(0,-4px,0) scale(1.026)!important;
+  filter:saturate(1.05) brightness(1.02)!important;
+  box-shadow:0 24px 56px rgba(0,122,255,.24),0 8px 22px rgba(11,216,255,.12),inset 0 1px 0 rgba(255,255,255,.62)!important;
+}
+.hero-actions .btn-primary:active{
+  transform:translate3d(0,-1px,0) scale(.988)!important;
+  transition-duration:.12s!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .terminal-card .mini-stat,
+  .hero-actions .btn-primary{
+    transition:none!important;
+    transform:none!important;
+  }
+}
+</style>`;
+
 const cleanupPatterns = [
   /\s*<style\s+data-reflection-stabilizer=["']true["'][\s\S]*?<\/style>\s*/gi,
+  /\s*<style\s+data-hero-interaction-polish=["']true["'][\s\S]*?<\/style>\s*/gi,
   /\s*<script\s+data-reflection-stabilizer=["']true["'][\s\S]*?<\/script>\s*/gi,
   /\s*<link[^>]+data-portfolio-ui=["']true["'][^>]*>\s*/gi,
   /\s*<link[^>]+data-reflection-motion=["']true["'][^>]*>\s*/gi,
@@ -146,7 +207,7 @@ const removePatterns = (html, patterns) => patterns.reduce((next, pattern) => ne
 const enhance = (html) => {
   let next = removePatterns(html, cleanupPatterns);
   next = removePatterns(next, legacyAssetPatterns);
-  next = next.replace('</head>', `${portfolioUiStylesheet}\n${reflectionStabilizerStyle}\n  </head>`);
+  next = next.replace('</head>', `${portfolioUiStylesheet}\n${reflectionStabilizerStyle}\n${heroInteractionStyle}\n  </head>`);
   next = next.replace('</body>', `${portfolioRuntimeScript}\n  </body>`);
   return next;
 };
