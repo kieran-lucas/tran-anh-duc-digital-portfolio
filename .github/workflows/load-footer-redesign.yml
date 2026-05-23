@@ -1,0 +1,38 @@
+name: Load footer redesign
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert footer redesign assets
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('src/pages/index.astro')
+          s = p.read_text(encoding='utf-8')
+          if '/footer-redesign.css' not in s:
+              s = s.replace('</head>', '    <link rel="stylesheet" href="/footer-redesign.css" />\n  </head>')
+          if '/footer-redesign.js' not in s:
+              s = s.replace('</body>', '    <script src="/footer-redesign.js" defer></script>\n  </body>')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/pages/index.astro
+            git commit -m "feat: load premium footer redesign"
+            git push
+          fi
