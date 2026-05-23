@@ -15,7 +15,8 @@
       "Bash(curl -s -o NUL -w \"%{http_code}\\\\n\" http://localhost:4173/)",
       "Bash(node -e \"import\\('node:http'\\).then\\(\\({createServer}\\) => { import\\('node:fs/promises'\\).then\\(async \\({readFile,stat}\\) => { const path = await import\\('node:path'\\); const root='dist'; createServer\\(async \\(req,res\\)=>{ try{ let p=path.join\\(root,req.url==='/'?'/index.html':req.url\\); const data=await readFile\\(p\\); res.writeHead\\(200\\); res.end\\(data\\);}catch\\(e\\){res.writeHead\\(404\\);res.end\\(\\);} }\\).listen\\(4173,\\(\\)=>console.log\\('listening on 4173'\\)\\); }\\); }\\);\")",
       "Bash(node _serve.mjs)",
-      "Bash(curl -s -o NUL -w \"%{http_code}\\\\n\" http://127.0.0.1:5180/)"
+      "Bash(curl -s -o NUL -w \"%{http_code}\\\\n\" http://127.0.0.1:5180/)",
+      "Bash(npm uninstall *)"
     ]
   }
 }

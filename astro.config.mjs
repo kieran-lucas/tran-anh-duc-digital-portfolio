@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
-const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-ambient-v11" defer data-portfolio-runtime="true"></script>';
+const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-ambient-v12" defer data-portfolio-runtime="true"></script>';
 
 const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 #reflection{
@@ -42,35 +42,35 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 #reflection .reflection-visual::before{
   content:""!important;
   position:absolute!important;
-  inset:-22%!important;
+  inset:-28%!important;
   z-index:0!important;
   pointer-events:none!important;
-  opacity:.95!important;
+  opacity:1!important;
   mix-blend-mode:screen!important;
   background:
-    radial-gradient(42% 46% at 26% 28%,rgba(0,170,255,1),rgba(0,170,255,0) 58%),
-    radial-gradient(44% 46% at 76% 26%,rgba(80,230,255,1),rgba(80,230,255,0) 58%),
-    radial-gradient(40% 44% at 30% 80%,rgba(150,108,255,.96),rgba(150,108,255,0) 60%),
-    radial-gradient(38% 42% at 82% 74%,rgba(30,210,255,.94),rgba(30,210,255,0) 60%)!important;
-  transform:translate3d(0,0,0) scale(1.05);
-  animation:reflectionAmbientDriftA 13s cubic-bezier(.42,0,.58,1) infinite alternate!important;
+    radial-gradient(46% 50% at 24% 26%,rgba(80,230,255,1),rgba(80,230,255,0) 58%),
+    radial-gradient(48% 50% at 78% 24%,rgba(180,120,255,.98),rgba(180,120,255,0) 58%),
+    radial-gradient(44% 46% at 28% 80%,rgba(180,120,255,.94),rgba(180,120,255,0) 60%),
+    radial-gradient(42% 44% at 82% 78%,rgba(80,230,255,1),rgba(80,230,255,0) 60%)!important;
+  transform:translate3d(0,0,0) scale(1.06);
+  animation:reflectionAmbientDriftA 9s cubic-bezier(.42,0,.58,1) infinite alternate!important;
   will-change:transform,opacity!important;
   backface-visibility:hidden!important;
 }
 #reflection .reflection-ambient-sheet{
   position:absolute!important;
-  inset:-16%!important;
+  inset:-22%!important;
   z-index:0!important;
   display:block!important;
   pointer-events:none!important;
-  opacity:.86!important;
+  opacity:.92!important;
   mix-blend-mode:screen!important;
   background:
-    radial-gradient(40% 42% at 52% 48%,rgba(110,220,255,.88),rgba(110,220,255,0) 60%),
-    radial-gradient(36% 38% at 22% 64%,rgba(150,112,255,.82),rgba(150,112,255,0) 60%),
-    radial-gradient(38% 40% at 82% 22%,rgba(40,225,255,.80),rgba(40,225,255,0) 60%)!important;
-  transform:translate3d(0,0,0) scale(1.06);
-  animation:reflectionAmbientDriftB 21s cubic-bezier(.42,0,.58,1) infinite alternate!important;
+    radial-gradient(42% 46% at 50% 46%,rgba(150,240,255,.95),rgba(150,240,255,0) 60%),
+    radial-gradient(40% 42% at 20% 70%,rgba(190,130,255,.90),rgba(190,130,255,0) 60%),
+    radial-gradient(42% 44% at 84% 18%,rgba(60,235,255,.92),rgba(60,235,255,0) 60%)!important;
+  transform:translate3d(0,0,0) scale(1.08);
+  animation:reflectionAmbientDriftB 14s cubic-bezier(.42,0,.58,1) infinite alternate!important;
   will-change:transform,opacity!important;
   backface-visibility:hidden!important;
 }
@@ -91,17 +91,17 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   z-index:2!important;
 }
 @keyframes reflectionAmbientDriftA{
-  0%  {transform:translate3d(-8%,-5%,0) scale(1.05);opacity:.88;}
-  25% {transform:translate3d( 6%,-3%,0) scale(1.10);opacity:.98;}
-  50% {transform:translate3d( 9%, 6%,0) scale(1.07);opacity:.92;}
-  75% {transform:translate3d(-5%, 6%,0) scale(1.11);opacity:.96;}
-  100%{transform:translate3d( 4%,-2%,0) scale(1.08);opacity:.90;}
+  0%  {transform:translate3d(-14%,-9%,0) scale(1.04);opacity:.88;}
+  25% {transform:translate3d( 10%,-5%,0) scale(1.12);opacity:1;}
+  50% {transform:translate3d( 14%, 10%,0) scale(1.06);opacity:.92;}
+  75% {transform:translate3d(-9%, 11%,0) scale(1.14);opacity:.98;}
+  100%{transform:translate3d( 7%,-3%,0) scale(1.08);opacity:.90;}
 }
 @keyframes reflectionAmbientDriftB{
-  0%  {transform:translate3d( 6%, 5%,0) scale(1.06);opacity:.78;}
-  33% {transform:translate3d(-5%, 3%,0) scale(1.04);opacity:.92;}
-  66% {transform:translate3d(-7%,-6%,0) scale(1.09);opacity:.82;}
-  100%{transform:translate3d( 5%,-4%,0) scale(1.07);opacity:.86;}
+  0%  {transform:translate3d( 11%, 9%,0) scale(1.06);opacity:.78;}
+  33% {transform:translate3d(-8%, 5%,0) scale(1.03);opacity:.94;}
+  66% {transform:translate3d(-12%,-10%,0) scale(1.10);opacity:.82;}
+  100%{transform:translate3d( 9%,-7%,0) scale(1.08);opacity:.90;}
 }
 @keyframes reflectionSoftBreath{
   0%{opacity:.16;}
