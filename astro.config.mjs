@@ -16,18 +16,28 @@ const anchorCalibrationScript = `
   };
   const chromeOffset = () => Math.ceil((topbar()?.getBoundingClientRect().height || 70) + TOP_GAP);
   const upwardShift = () => Math.round(window.innerHeight * SHIFT_RATIO);
-  const targetScrollY = (target, hash) => {
-    if (!target || hash === '#top') return 0;
-    return Math.max(0, target.getBoundingClientRect().top + window.scrollY - chromeOffset() + upwardShift());
+  const contentsTargetY = () => {
+    const toc = document.querySelector('.toc');
+    const tocTop = toc?.getBoundingClientRect?.().top;
+    const safeTop = chromeOffset() + 18;
+    return Math.max(safeTop, Number.isFinite(tocTop) ? tocTop : safeTop);
   };
-  const scrollToHash = (hash, updateUrl = true) => {
+  const targetScrollY = (target, hash, source) => {
+    if (!target || hash === '#top') return 0;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY;
+    if (source?.closest?.('.toc')) {
+      return Math.max(0, targetTop - contentsTargetY());
+    }
+    return Math.max(0, targetTop - chromeOffset() + upwardShift());
+  };
+  const scrollToHash = (hash, updateUrl = true, source = null) => {
     const target = targetFor(hash);
     if (!target) return false;
-    const y = targetScrollY(target, hash);
+    const y = targetScrollY(target, hash, source);
     window.scrollTo({ top: y, behavior: 'smooth' });
     if (updateUrl) history.replaceState(null, '', hash);
     window.setTimeout(() => {
-      const corrected = targetScrollY(target, hash);
+      const corrected = targetScrollY(target, hash, source);
       if (Math.abs(window.scrollY - corrected) > 4) window.scrollTo({ top: corrected, behavior: 'auto' });
     }, 620);
     return true;
@@ -41,7 +51,7 @@ const anchorCalibrationScript = `
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
-    scrollToHash(hash, true);
+    scrollToHash(hash, true, anchor);
   }, true);
 
   const updateActive = () => {
