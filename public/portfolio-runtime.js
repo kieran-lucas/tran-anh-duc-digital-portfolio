@@ -148,8 +148,24 @@
     });
   };
 
+  const stabilizeAnchorLayout = () => {
+    if (document.querySelector('[data-anchor-layout-stability="true"]')) return;
+    const style = document.createElement('style');
+    style.dataset.anchorLayoutStability = 'true';
+    style.textContent = `
+      section[id], article[id], .section, .mission-card {
+        content-visibility: visible !important;
+        contain-intrinsic-size: auto !important;
+      }
+    `;
+    document.head.appendChild(style);
+  };
+
   const calibrateAnchors = () => {
+    stabilizeAnchorLayout();
+
     const TOP_GAP = 22;
+    const anchorMap = new Map();
     const topbar = () => document.querySelector('.topbar');
     const navLinks = () => [...document.querySelectorAll('.nav a')];
 
@@ -165,16 +181,41 @@
 
     const chromeOffset = () => Math.ceil((topbar()?.getBoundingClientRect().height || 70) + TOP_GAP);
 
-    const targetScrollY = (target, hash) => {
-      if (!target || hash === '#top') return 0;
-      const targetTop = target.getBoundingClientRect().top + window.scrollY;
-      return Math.max(0, Math.round(targetTop - chromeOffset()));
+    const allAnchorHashes = () => {
+      const hashes = new Set(['#top']);
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        const hash = anchor.getAttribute('href');
+        if (hash && hash !== '#') hashes.add(hash);
+      });
+      return hashes;
+    };
+
+    const absoluteDocumentTop = (target) => Math.round(target.getBoundingClientRect().top + window.scrollY);
+
+    const buildAnchorMap = () => {
+      const offset = chromeOffset();
+      anchorMap.clear();
+      allAnchorHashes().forEach((hash) => {
+        const target = targetFor(hash);
+        if (!target) return;
+        const y = hash === '#top' ? 0 : Math.max(0, absoluteDocumentTop(target) - offset);
+        anchorMap.set(hash, y);
+      });
+      window.__anchorTeleportMap = () => Object.fromEntries(anchorMap.entries());
+    };
+
+    const rebuildAfterLayoutSettles = () => {
+      requestAnimationFrame(() => requestAnimationFrame(buildAnchorMap));
+    };
+
+    const coordinateForHash = (hash) => {
+      if (!anchorMap.size || !anchorMap.has(hash)) buildAnchorMap();
+      return anchorMap.get(hash) ?? 0;
     };
 
     const scrollToHash = (hash, updateUrl = true) => {
-      const target = targetFor(hash);
-      if (!target) return false;
-      const y = targetScrollY(target, hash);
+      if (!targetFor(hash)) return false;
+      const y = coordinateForHash(hash);
       window.scrollTo({ top: y, behavior: 'smooth' });
       if (updateUrl) history.replaceState(null, '', hash);
       return true;
@@ -196,8 +237,9 @@
       const probe = window.scrollY + chromeOffset() + 8;
       let current = links[0];
       for (const link of links) {
-        const target = targetFor(link.getAttribute('href'));
-        if (target && probe >= target.offsetTop) current = link;
+        const hash = link.getAttribute('href');
+        const y = anchorMap.has(hash) ? anchorMap.get(hash) : null;
+        if (typeof y === 'number' && probe >= y) current = link;
       }
       for (const link of links) link.classList.toggle('is-active', link === current);
     };
@@ -207,14 +249,23 @@
       if (!raf) raf = requestAnimationFrame(() => { raf = 0; updateActive(); });
     };
 
+    buildAnchorMap();
+    rebuildAfterLayoutSettles();
+    window.addEventListener('load', rebuildAfterLayoutSettles, { once: true });
+    window.addEventListener('resize', rebuildAfterLayoutSettles, { passive: true });
+    window.addEventListener('orientationchange', rebuildAfterLayoutSettles, { passive: true });
+    document.fonts?.ready?.then(rebuildAfterLayoutSettles).catch(() => {});
+    window.setTimeout(rebuildAfterLayoutSettles, 250);
+    window.setTimeout(rebuildAfterLayoutSettles, 900);
+
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule, { passive: true });
     schedule();
 
     if (window.location.hash) {
       requestAnimationFrame(() => {
-        const target = targetFor(window.location.hash);
-        if (target) window.scrollTo({ top: targetScrollY(target, window.location.hash), behavior: 'auto' });
+        buildAnchorMap();
+        window.scrollTo({ top: coordinateForHash(window.location.hash), behavior: 'auto' });
       });
     }
   };
