@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
-const reflectionMotionStylesheet = '<link rel="stylesheet" href="/reflection-motion.css?v=20260524-final-sheet-v9" data-reflection-motion="true" />';
-const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-ambient-sheet-v7" defer data-portfolio-runtime="true"></script>';
+const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-ambient-v10" defer data-portfolio-runtime="true"></script>';
 
 const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 #reflection{
@@ -17,45 +16,45 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   overflow:visible!important;
 }
 #reflection .reflection-layout{
-  padding:18px!important;
-  margin:-18px!important;
+  padding:14px!important;
+  margin:-14px!important;
 }
 #reflection .reflection-visual{
   position:relative!important;
   overflow:hidden!important;
   isolation:isolate!important;
   transform:translate3d(0,0,0) scale(1)!important;
-  transform-origin:center center!important;
+  transform-origin:50% 50%!important;
   background:linear-gradient(135deg,#0a6dff 0%,#10baf2 46%,#3979ff 72%,#675cff 100%)!important;
   animation:none!important;
-  transition:transform .62s cubic-bezier(.16,1,.3,1),box-shadow .54s cubic-bezier(.22,1,.36,1),border-color .34s ease,filter .34s ease!important;
+  transition:transform .58s cubic-bezier(.16,1,.3,1),box-shadow .50s cubic-bezier(.22,1,.36,1),border-color .34s ease!important;
   will-change:transform!important;
+  backface-visibility:hidden!important;
 }
 #reflection .reflection-visual:hover,
 #reflection .reflection-visual:focus-within{
-  transform:translate3d(3px,-3px,0) scale(1.006)!important;
-  filter:saturate(1.025) brightness(1.01)!important;
-  border-color:rgba(255,255,255,.67)!important;
-  box-shadow:0 18px 42px rgba(0,122,255,.14),0 8px 18px rgba(20,90,180,.06),inset 0 1px 0 rgba(255,255,255,.62),inset 0 -14px 30px rgba(255,255,255,.08)!important;
+  transform:translate3d(0,-4px,0) scale(1.006)!important;
+  border-color:rgba(255,255,255,.66)!important;
+  box-shadow:0 22px 48px rgba(0,122,255,.16),0 8px 20px rgba(20,90,180,.08),inset 0 1px 0 rgba(255,255,255,.66),inset 0 -14px 30px rgba(255,255,255,.085)!important;
 }
 #reflection .reflection-color-field{display:none!important;}
 #reflection .reflection-ambient-sheet{
   position:absolute!important;
-  inset:-78%!important;
+  inset:-18%!important;
   z-index:0!important;
   display:block!important;
   pointer-events:none!important;
-  border-radius:36%!important;
-  opacity:.96!important;
+  opacity:.92!important;
   mix-blend-mode:screen!important;
   background:
-    conic-gradient(from 20deg at 50% 50%,rgba(0,78,255,.70),rgba(72,238,255,.76),rgba(142,92,255,.66),rgba(0,180,255,.46),rgba(0,78,255,.70)),
-    radial-gradient(ellipse at 20% 76%,rgba(0,70,255,.62),transparent 30%),
-    radial-gradient(ellipse at 84% 18%,rgba(72,238,255,.70),transparent 28%),
-    radial-gradient(ellipse at 82% 84%,rgba(142,92,255,.58),transparent 31%)!important;
-  transform:translate3d(-10%,-5%,0) scale(1.05) rotate(0deg)!important;
-  animation:reflectionAmbientSheetDrift 7.8s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+    radial-gradient(38% 42% at 26% 30%,rgba(40,150,255,.86),rgba(40,150,255,0) 70%),
+    radial-gradient(40% 42% at 74% 26%,rgba(64,224,255,.86),rgba(64,224,255,0) 70%),
+    radial-gradient(36% 40% at 30% 76%,rgba(120,96,255,.74),rgba(120,96,255,0) 70%),
+    radial-gradient(34% 38% at 78% 74%,rgba(20,196,255,.70),rgba(20,196,255,0) 70%)!important;
+  transform:translate3d(0,0,0) scale(1.06);
+  animation:reflectionAmbientSheetDrift 18s cubic-bezier(.42,0,.58,1) infinite alternate!important;
   will-change:transform,opacity!important;
+  backface-visibility:hidden!important;
 }
 #reflection .reflection-visual::before{
   content:""!important;
@@ -64,8 +63,8 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   z-index:1!important;
   pointer-events:none!important;
   border-radius:inherit!important;
-  opacity:.20!important;
-  background:linear-gradient(135deg,rgba(255,255,255,.25),rgba(255,255,255,.07) 30%,rgba(255,255,255,0) 62%),radial-gradient(ellipse at 76% 8%,rgba(255,255,255,.16),transparent 44%),radial-gradient(ellipse at 18% 98%,rgba(255,255,255,.08),transparent 50%)!important;
+  opacity:.22!important;
+  background:linear-gradient(135deg,rgba(255,255,255,.28),rgba(255,255,255,.06) 32%,rgba(255,255,255,0) 64%),radial-gradient(ellipse at 76% 8%,rgba(255,255,255,.18),transparent 44%),radial-gradient(ellipse at 18% 98%,rgba(255,255,255,.10),transparent 52%)!important;
   transform:none!important;
   animation:none!important;
 }
@@ -78,7 +77,7 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   border-radius:inherit!important;
   opacity:.12!important;
   background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.16),transparent 62%)!important;
-  animation:reflectionSoftBreath 7s ease-in-out infinite alternate!important;
+  animation:reflectionSoftBreath 9s ease-in-out infinite alternate!important;
 }
 #reflection .reflection-visual .mono,
 #reflection .reflection-visual h3{
@@ -86,18 +85,24 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   z-index:2!important;
 }
 @keyframes reflectionAmbientSheetDrift{
-  0%{transform:translate3d(-12%,-6%,0) scale(1.05) rotate(0deg);opacity:.74;}
-  32%{transform:translate3d(-1%,4%,0) scale(1.09) rotate(9deg);opacity:.98;}
-  66%{transform:translate3d(10%,1%,0) scale(1.07) rotate(-7deg);opacity:.86;}
-  100%{transform:translate3d(16%,-4%,0) scale(1.06) rotate(5deg);opacity:.94;}
+  0%  {transform:translate3d(-4%,-3%,0) scale(1.05);opacity:.84;}
+  25% {transform:translate3d( 3%,-2%,0) scale(1.08);opacity:.94;}
+  50% {transform:translate3d( 5%, 4%,0) scale(1.06);opacity:.88;}
+  75% {transform:translate3d(-3%, 3%,0) scale(1.09);opacity:.93;}
+  100%{transform:translate3d( 2%,-1%,0) scale(1.07);opacity:.86;}
 }
 @keyframes reflectionSoftBreath{
-  0%{opacity:.09;}
-  100%{opacity:.16;}
+  0%{opacity:.10;}
+  100%{opacity:.18;}
 }
 @media(max-width:720px){
-  #reflection .reflection-layout{padding:8px!important;margin:-8px!important;}
-  #reflection .reflection-visual:hover,#reflection .reflection-visual:focus-within{transform:translate3d(2px,-2px,0) scale(1.003)!important;}
+  #reflection .reflection-layout{padding:10px!important;margin:-10px!important;}
+  #reflection .reflection-visual:hover,#reflection .reflection-visual:focus-within{transform:translate3d(0,-3px,0) scale(1.004)!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #reflection .reflection-ambient-sheet,
+  #reflection .reflection-visual::after{animation:none!important;}
+  #reflection .reflection-ambient-sheet{transform:translate3d(0,0,0) scale(1.05)!important;opacity:.85!important;}
 }
 </style>`;
 
@@ -129,7 +134,7 @@ const removePatterns = (html, patterns) => patterns.reduce((next, pattern) => ne
 const enhance = (html) => {
   let next = removePatterns(html, cleanupPatterns);
   next = removePatterns(next, legacyAssetPatterns);
-  next = next.replace('</head>', `${portfolioUiStylesheet}\n${reflectionMotionStylesheet}\n${reflectionStabilizerStyle}\n  </head>`);
+  next = next.replace('</head>', `${portfolioUiStylesheet}\n${reflectionStabilizerStyle}\n  </head>`);
   next = next.replace('</body>', `${portfolioRuntimeScript}\n  </body>`);
   return next;
 };
