@@ -1,0 +1,79 @@
+name: Patch hero layout
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch index layout and anchor navigation
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('src/pages/index.astro')
+          text = path.read_text(encoding='utf-8')
+          original = text
+
+          # Navigation anchor lands slightly too low: reduce the virtual offset and add section margin.
+          text = re.sub(r'html\{scroll-behavior:smooth;scroll-padding-top:\d+px\}', 'html{scroll-behavior:smooth;scroll-padding-top:92px}', text)
+          marker = '.container{width:min(var(--container),calc(100% - 44px));margin:auto}.mono{font-family:var(--mono)}'
+          if marker in text and 'section[id],article[id]{scroll-margin-top:92px}' not in text:
+              text = text.replace(marker, marker + 'section[id],article[id]{scroll-margin-top:92px}', 1)
+
+          # Hero left side: stop the old terminal card from sitting underneath the new profile card.
+          text = text.replace(
+              '.hero-grid{display:grid;grid-template-columns:minmax(390px,.82fr) minmax(0,1.18fr);gap:clamp(48px,6vw,86px);align-items:center}.hero-visual{position:relative;min-height:660px;contain:layout paint}',
+              '.hero-grid{display:grid;grid-template-columns:minmax(360px,.76fr) minmax(0,1.24fr);gap:clamp(56px,7vw,96px);align-items:center}.hero-visual{display:grid;align-content:center;gap:20px;min-height:650px;contain:layout paint}'
+          )
+          text = text.replace(
+              '.profile-card{position:absolute;left:0;top:8px;z-index:3;width:min(318px,70%);',
+              '.profile-card{position:relative;z-index:3;width:min(356px,calc(100% - 32px));'
+          )
+          text = text.replace(
+              '.terminal-card{position:absolute;right:0;bottom:20px;z-index:2;width:min(432px,82%);',
+              '.terminal-card{position:relative;z-index:2;width:calc(100% - 42px);max-width:390px;margin-left:42px;'
+          )
+          text = text.replace(';transform:rotateX(1.5deg) rotateY(3deg) rotateZ(-1deg);transition:transform .25s ease}', ';transition:transform .25s ease}')
+          text = text.replace('.profile-card,.terminal-card{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:100%;transform:none}', '.profile-card,.terminal-card{width:100%;max-width:none;margin-left:0;transform:none}')
+
+          # Improve hero explanatory note after the visual fix.
+          text = text.replace(
+              'bố cục sạch, profile card gọn ở bên trái, tiêu đề lớn ở bên phải, glass có kiểm soát và không còn các lớp đè lên nhau.',
+              'profile card và terminal được xếp tầng riêng biệt ở bên trái, tiêu đề lớn ở bên phải, anchor điều hướng được căn lại để không còn nhảy lệch.'
+          )
+          text = text.replace('render design --layout profile-left title-right', 'render design --layout stacked-profile-no-overlap')
+          text = text.replace('ready_for_assessment # 7 artifact, PDF gốc, reflection rõ', 'anchor_offset calibrated # topbar-safe')
+
+          # Override native anchor behavior with a calibrated offset.
+          needle = "const sectionMap=navLinks.map((link)=>{const id=link.getAttribute('href')?.replace('#','');return id?[link,document.getElementById(id)]:null}).filter(Boolean);function tick(){"
+          insert = "const sectionMap=navLinks.map((link)=>{const id=link.getAttribute('href')?.replace('#','');return id?[link,document.getElementById(id)]:null}).filter(Boolean);document.querySelectorAll('a[href^=\"#\"]').forEach((a)=>a.addEventListener('click',(e)=>{const h=a.getAttribute('href');if(!h||h==='#')return;const t=h==='#top'?document.getElementById('top'):document.querySelector(h);if(!t)return;e.preventDefault();const y=h==='#top'?0:t.getBoundingClientRect().top+window.scrollY-92;window.scrollTo({top:Math.max(0,y),behavior:'smooth'});history.replaceState(null,'',h)}));function tick(){"
+          if needle in text and 'stacked-profile-no-overlap' in text and 'window.scrollY-92' not in text:
+              text = text.replace(needle, insert, 1)
+          text = text.replace('top+160>=s.offsetTop', 'top+100>=s.offsetTop')
+
+          if text != original:
+              path.write_text(text, encoding='utf-8')
+              print('Patched src/pages/index.astro')
+          else:
+              print('No patch needed')
+          PY
+      - name: Commit patch
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/pages/index.astro
+            git commit -m "fix: separate hero cards and calibrate anchors"
+            git push
+          fi
