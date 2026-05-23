@@ -1,6 +1,7 @@
 /* ============================================================
-   Reflection Motion v5 — Calm Ambient Aurora
-   Goal: soft, premium, slow color breathing. No visible balls. No cutting sheen.
+   Reflection Motion v6 — Lightweight Calm Aurora
+   Goal: soft dynamic color with no lag, no moving balls, no cutting sheen.
+   Performance rule: no animated blur/filter/left/top; transform + opacity only.
    ============================================================ */
 
 #reflection .reflection-visual{
@@ -8,8 +9,18 @@
   overflow:hidden!important;
   isolation:isolate!important;
   background:
+    radial-gradient(ellipse at 18% 76%,rgba(0,92,255,.44),transparent 42%),
+    radial-gradient(ellipse at 82% 22%,rgba(40,220,255,.46),transparent 40%),
+    radial-gradient(ellipse at 78% 86%,rgba(118,92,255,.38),transparent 42%),
     linear-gradient(135deg,#0a6dff 0%,#10baf2 46%,#3979ff 72%,#675cff 100%)!important;
-  animation:none!important;
+  background-size:145% 145%,140% 140%,150% 150%,100% 100%!important;
+  background-position:0% 88%,100% 0%,100% 100%,0 0!important;
+  animation:reflectionSoftBackgroundDrift 14s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+}
+
+/* Remove injected DOM blob fields from the render tree. They caused the lag. */
+#reflection .reflection-color-field{
+  display:none!important;
 }
 
 #reflection .reflection-visual::before,
@@ -17,79 +28,34 @@
   content:""!important;
   position:absolute!important;
   inset:0!important;
-  z-index:1!important;
   pointer-events:none!important;
   border-radius:inherit!important;
 }
 
+/* One soft color veil. No filter; only transform/opacity animation. */
 #reflection .reflection-visual::before{
-  opacity:.32!important;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.30),rgba(255,255,255,.075) 32%,rgba(255,255,255,0) 62%),
-    radial-gradient(ellipse at 76% 8%,rgba(255,255,255,.22),transparent 46%)!important;
-}
-
-#reflection .reflection-visual::after{
-  opacity:.24!important;
-  background:
-    radial-gradient(ellipse at 18% 14%,rgba(255,255,255,.18),transparent 42%),
-    radial-gradient(ellipse at 84% 92%,rgba(255,255,255,.12),transparent 48%)!important;
-  animation:reflectionGlassBreathSoft 9s ease-in-out infinite alternate!important;
-}
-
-#reflection .reflection-color-field{
-  position:absolute!important;
   z-index:0!important;
-  display:block!important;
-  pointer-events:none!important;
-  border-radius:45%!important;
+  inset:-18%!important;
+  opacity:.38!important;
   mix-blend-mode:screen!important;
-  filter:blur(64px) saturate(1.14);
-  opacity:.36;
-  transform:translate3d(0,0,0) scale(1);
-  will-change:transform,opacity,filter!important;
+  background:
+    radial-gradient(ellipse at 22% 70%,rgba(0,92,255,.40),transparent 48%),
+    radial-gradient(ellipse at 74% 24%,rgba(58,232,255,.42),transparent 48%),
+    radial-gradient(ellipse at 78% 78%,rgba(130,100,255,.34),transparent 52%)!important;
+  transform:translate3d(-3%,-2%,0) scale(1.04) rotate(0deg);
+  animation:reflectionSoftVeilDrift 12s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+  will-change:transform,opacity;
 }
 
-#reflection .field-blue{
-  width:138%!important;
-  height:118%!important;
-  left:-64%;
-  top:4%;
-  background:radial-gradient(ellipse at center,rgba(0,82,255,.72),rgba(0,82,255,.36) 34%,transparent 68%)!important;
-  animation:reflectionAmbientBlue 18s cubic-bezier(.45,0,.2,1) infinite alternate!important;
-}
-
-#reflection .field-cyan{
-  width:130%!important;
-  height:112%!important;
-  right:-62%;
-  top:-30%;
-  background:radial-gradient(ellipse at center,rgba(49,235,255,.78),rgba(49,235,255,.34) 34%,transparent 70%)!important;
-  animation:reflectionAmbientCyan 16s cubic-bezier(.45,0,.2,1) infinite alternate!important;
-}
-
-#reflection .field-violet{
-  width:132%!important;
-  height:116%!important;
-  right:-58%;
-  bottom:-46%;
-  background:radial-gradient(ellipse at center,rgba(133,98,255,.72),rgba(133,98,255,.30) 36%,transparent 72%)!important;
-  animation:reflectionAmbientViolet 20s cubic-bezier(.45,0,.2,1) infinite alternate!important;
-}
-
-#reflection .field-aqua{
-  width:118%!important;
-  height:104%!important;
-  left:8%;
-  top:18%;
-  background:radial-gradient(ellipse at center,rgba(0,198,255,.56),rgba(0,198,255,.20) 36%,transparent 72%)!important;
-  filter:blur(78px) saturate(1.10);
-  opacity:.28;
-  animation:reflectionAmbientAqua 22s cubic-bezier(.45,0,.2,1) infinite alternate!important;
-}
-
-#reflection .field-sheen{
-  display:none!important;
+/* Static/pulsing glass, not a traveling white slash. */
+#reflection .reflection-visual::after{
+  z-index:1!important;
+  opacity:.28!important;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,.30),rgba(255,255,255,.08) 30%,rgba(255,255,255,0) 62%),
+    radial-gradient(ellipse at 76% 8%,rgba(255,255,255,.20),transparent 44%),
+    radial-gradient(ellipse at 18% 98%,rgba(255,255,255,.10),transparent 50%)!important;
+  animation:reflectionGlassBreathSoft 8s ease-in-out infinite alternate!important;
 }
 
 #reflection .reflection-visual .mono,
@@ -98,79 +64,34 @@
   z-index:2!important;
 }
 
-@keyframes reflectionAmbientBlue{
+@keyframes reflectionSoftBackgroundDrift{
   0%{
-    transform:translate3d(-4%,3%,0) scale(1.02) rotate(0deg);
-    opacity:.28;
-    filter:blur(68px) saturate(1.08) hue-rotate(0deg);
+    background-position:0% 88%,100% 0%,100% 100%,0 0;
   }
   50%{
-    transform:translate3d(18%,-5%,0) scale(1.12) rotate(8deg);
-    opacity:.42;
-    filter:blur(62px) saturate(1.18) hue-rotate(-5deg);
+    background-position:36% 64%,68% 28%,74% 78%,0 0;
   }
   100%{
-    transform:translate3d(32%,7%,0) scale(1.06) rotate(14deg);
-    opacity:.32;
-    filter:blur(70px) saturate(1.12) hue-rotate(4deg);
+    background-position:62% 78%,42% 42%,48% 68%,0 0;
   }
 }
 
-@keyframes reflectionAmbientCyan{
+@keyframes reflectionSoftVeilDrift{
   0%{
-    transform:translate3d(4%,-2%,0) scale(1.02) rotate(0deg);
+    transform:translate3d(-3%,-2%,0) scale(1.04) rotate(0deg);
     opacity:.30;
-    filter:blur(66px) saturate(1.10) hue-rotate(0deg);
   }
   50%{
-    transform:translate3d(-20%,14%,0) scale(1.14) rotate(-7deg);
-    opacity:.46;
-    filter:blur(60px) saturate(1.20) hue-rotate(5deg);
+    transform:translate3d(4%,3%,0) scale(1.09) rotate(3deg);
+    opacity:.44;
   }
   100%{
-    transform:translate3d(-34%,24%,0) scale(1.08) rotate(-13deg);
+    transform:translate3d(8%,-1%,0) scale(1.05) rotate(-2deg);
     opacity:.34;
-    filter:blur(72px) saturate(1.12) hue-rotate(-4deg);
-  }
-}
-
-@keyframes reflectionAmbientViolet{
-  0%{
-    transform:translate3d(4%,8%,0) scale(1.02) rotate(0deg);
-    opacity:.24;
-    filter:blur(72px) saturate(1.08) hue-rotate(0deg);
-  }
-  52%{
-    transform:translate3d(-18%,-16%,0) scale(1.13) rotate(6deg);
-    opacity:.38;
-    filter:blur(64px) saturate(1.16) hue-rotate(7deg);
-  }
-  100%{
-    transform:translate3d(-30%,-28%,0) scale(1.06) rotate(12deg);
-    opacity:.30;
-    filter:blur(76px) saturate(1.10) hue-rotate(-5deg);
-  }
-}
-
-@keyframes reflectionAmbientAqua{
-  0%{
-    transform:translate3d(0,0,0) scale(.98) rotate(0deg);
-    opacity:.18;
-    filter:blur(84px) saturate(1.04) hue-rotate(0deg);
-  }
-  50%{
-    transform:translate3d(-12%,-10%,0) scale(1.12) rotate(-5deg);
-    opacity:.30;
-    filter:blur(76px) saturate(1.12) hue-rotate(-6deg);
-  }
-  100%{
-    transform:translate3d(10%,-18%,0) scale(1.04) rotate(8deg);
-    opacity:.22;
-    filter:blur(88px) saturate(1.06) hue-rotate(4deg);
   }
 }
 
 @keyframes reflectionGlassBreathSoft{
-  0%{opacity:.18;}
-  100%{opacity:.32;}
+  0%{opacity:.22;}
+  100%{opacity:.34;}
 }
