@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
-const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-ambient-v12" defer data-portfolio-runtime="true"></script>';
+const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-ambient-v13" defer data-portfolio-runtime="true"></script>';
 
 const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 #reflection{
@@ -53,7 +53,7 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
     radial-gradient(44% 46% at 28% 80%,rgba(180,120,255,.94),rgba(180,120,255,0) 60%),
     radial-gradient(42% 44% at 82% 78%,rgba(80,230,255,1),rgba(80,230,255,0) 60%)!important;
   transform:translate3d(0,0,0) scale(1.06);
-  animation:reflectionAmbientDriftA 9s cubic-bezier(.42,0,.58,1) infinite alternate!important;
+  animation:reflectionAmbientDriftA 3s cubic-bezier(.42,0,.58,1) infinite alternate!important;
   will-change:transform,opacity!important;
   backface-visibility:hidden!important;
 }
@@ -70,7 +70,7 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
     radial-gradient(40% 42% at 20% 70%,rgba(190,130,255,.90),rgba(190,130,255,0) 60%),
     radial-gradient(42% 44% at 84% 18%,rgba(60,235,255,.92),rgba(60,235,255,0) 60%)!important;
   transform:translate3d(0,0,0) scale(1.08);
-  animation:reflectionAmbientDriftB 14s cubic-bezier(.42,0,.58,1) infinite alternate!important;
+  animation:reflectionAmbientDriftB 4.7s cubic-bezier(.42,0,.58,1) infinite alternate!important;
   will-change:transform,opacity!important;
   backface-visibility:hidden!important;
 }
@@ -83,7 +83,7 @@ const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
   border-radius:inherit!important;
   opacity:.22!important;
   background:linear-gradient(135deg,rgba(255,255,255,.32),rgba(255,255,255,.06) 32%,rgba(255,255,255,0) 64%),radial-gradient(ellipse at 76% 8%,rgba(255,255,255,.20),transparent 44%),radial-gradient(ellipse at 18% 98%,rgba(255,255,255,.10),transparent 52%)!important;
-  animation:reflectionSoftBreath 9s ease-in-out infinite alternate!important;
+  animation:reflectionSoftBreath 3s ease-in-out infinite alternate!important;
 }
 #reflection .reflection-visual .mono,
 #reflection .reflection-visual h3{
