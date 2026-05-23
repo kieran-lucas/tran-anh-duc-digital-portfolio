@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
-const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-ambient-v13" defer data-portfolio-runtime="true"></script>';
+const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-hero-hover-v14" defer data-portfolio-runtime="true"></script>';
 
 const reflectionStabilizerStyle = `<style data-reflection-stabilizer="true">
 #reflection{
