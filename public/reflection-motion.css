@@ -1,7 +1,7 @@
 /* ============================================================
-   Reflection Motion v6 — Lightweight Calm Aurora
+   Reflection Motion v7 — Lightweight Runtime Aurora + Smooth Zoom
    Goal: soft dynamic color with no lag, no moving balls, no cutting sheen.
-   Performance rule: no animated blur/filter/left/top; transform + opacity only.
+   Background motion is driven by portfolio-runtime.js to avoid CSS conflicts.
    ============================================================ */
 
 #reflection .reflection-visual{
@@ -14,8 +14,25 @@
     radial-gradient(ellipse at 78% 86%,rgba(118,92,255,.38),transparent 42%),
     linear-gradient(135deg,#0a6dff 0%,#10baf2 46%,#3979ff 72%,#675cff 100%)!important;
   background-size:145% 145%,140% 140%,150% 150%,100% 100%!important;
-  background-position:0% 88%,100% 0%,100% 100%,0 0!important;
-  animation:reflectionSoftBackgroundDrift 14s cubic-bezier(.45,0,.2,1) infinite alternate!important;
+  background-position:18% 76%,82% 22%,78% 86%,0 0!important;
+  animation:none!important;
+  transform-origin:center center!important;
+  transition:
+    transform .58s cubic-bezier(.16,1,.3,1),
+    box-shadow .48s cubic-bezier(.22,1,.36,1),
+    border-color .34s ease!important;
+  will-change:transform,background-position;
+}
+
+#reflection .reflection-visual:hover,
+#reflection .reflection-visual:focus-within{
+  transform:translate3d(0,-7px,0) scale(1.028)!important;
+  border-color:rgba(255,255,255,.68)!important;
+  box-shadow:
+    0 24px 54px rgba(0,122,255,.18),
+    0 10px 24px rgba(20,90,180,.08),
+    inset 0 1px 0 rgba(255,255,255,.62),
+    inset 0 -14px 30px rgba(255,255,255,.08)!important;
 }
 
 /* Remove injected DOM blob fields from the render tree. They caused the lag. */
@@ -64,18 +81,6 @@
   z-index:2!important;
 }
 
-@keyframes reflectionSoftBackgroundDrift{
-  0%{
-    background-position:0% 88%,100% 0%,100% 100%,0 0;
-  }
-  50%{
-    background-position:36% 64%,68% 28%,74% 78%,0 0;
-  }
-  100%{
-    background-position:62% 78%,42% 42%,48% 68%,0 0;
-  }
-}
-
 @keyframes reflectionSoftVeilDrift{
   0%{
     transform:translate3d(-3%,-2%,0) scale(1.04) rotate(0deg);
@@ -94,4 +99,11 @@
 @keyframes reflectionGlassBreathSoft{
   0%{opacity:.22;}
   100%{opacity:.34;}
+}
+
+@media(max-width:720px){
+  #reflection .reflection-visual:hover,
+  #reflection .reflection-visual:focus-within{
+    transform:translate3d(0,-4px,0) scale(1.012)!important;
+  }
 }
