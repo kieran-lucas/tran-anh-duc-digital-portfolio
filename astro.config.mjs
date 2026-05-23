@@ -66,16 +66,21 @@ const anchorCalibrationScript = `
 </script>
 `;
 
+const heroTitleStylesheet = `<link rel="stylesheet" href="/hero-title-animation.css" data-hero-title-animation="true" />`;
+
 const anchorCalibrationIntegration = () => ({
   name: 'anchor-calibration-integration',
   hooks: {
     'astro:build:done': async ({ dir }) => {
       const file = new URL('index.html', dir);
       let html = await readFile(file, 'utf8');
+      if (!html.includes('data-hero-title-animation="true"')) {
+        html = html.replace('</head>', `${heroTitleStylesheet}\n  </head>`);
+      }
       if (!html.includes('data-anchor-calibration="true"')) {
         html = html.replace('</body>', `${anchorCalibrationScript}\n  </body>`);
-        await writeFile(file, html, 'utf8');
       }
+      await writeFile(file, html, 'utf8');
     }
   }
 });
@@ -83,8 +88,14 @@ const anchorCalibrationIntegration = () => ({
 const anchorCalibrationVitePlugin = () => ({
   name: 'anchor-calibration-vite-plugin',
   transformIndexHtml(html) {
-    if (html.includes('data-anchor-calibration="true"')) return html;
-    return html.replace('</body>', `${anchorCalibrationScript}\n  </body>`);
+    let next = html;
+    if (!next.includes('data-hero-title-animation="true"')) {
+      next = next.replace('</head>', `${heroTitleStylesheet}\n  </head>`);
+    }
+    if (!next.includes('data-anchor-calibration="true"')) {
+      next = next.replace('</body>', `${anchorCalibrationScript}\n  </body>`);
+    }
+    return next;
   }
 });
 
