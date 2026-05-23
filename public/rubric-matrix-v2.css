@@ -1,4 +1,4 @@
-/* Rubric Matrix v8 — stable geometry + slow glass overlay, no jumpy hover. */
+/* Rubric Matrix v9 — minimal calm glass interaction, stable and professional. */
 #rubric::before,
 #rubric::after{
   display:none!important;
@@ -47,19 +47,19 @@
   padding:18px 20px 18px 18px!important;
   border:1px solid transparent!important;
   border-radius:24px!important;
-  background:rgba(255,255,255,.64)!important;
+  background:rgba(255,255,255,.66)!important;
   background-image:none!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.72)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.74)!important;
   overflow:hidden!important;
   isolation:isolate!important;
-  transform:translate3d(0,0,0)!important;
+  transform:none!important;
   transition:
-    border-color .62s cubic-bezier(.19,1,.22,1),
-    background-color .62s cubic-bezier(.19,1,.22,1),
-    box-shadow .72s cubic-bezier(.19,1,.22,1)!important;
+    border-color .58s cubic-bezier(.19,1,.22,1),
+    background-color .58s cubic-bezier(.19,1,.22,1),
+    box-shadow .66s cubic-bezier(.19,1,.22,1)!important;
 }
 
-/* Slow glass veil: the row does not move; only the material layer fades in. */
+/* One calm material layer only. No movement, no chip morph, no jump. */
 #rubric .rubric-row::before{
   content:""!important;
   position:absolute!important;
@@ -69,16 +69,13 @@
   border-radius:inherit!important;
   opacity:0!important;
   background:
-    radial-gradient(circle at 18% 16%,rgba(255,255,255,.86),transparent 32%),
-    radial-gradient(circle at 88% 84%,rgba(225,248,255,.34),transparent 38%),
-    linear-gradient(135deg,rgba(255,255,255,.76),rgba(250,253,255,.50) 50%,rgba(255,255,255,.66))!important;
-  transform:scale(.996)!important;
-  transition:
-    opacity .74s cubic-bezier(.19,1,.22,1),
-    transform .82s cubic-bezier(.19,1,.22,1)!important;
+    radial-gradient(circle at 20% 18%,rgba(255,255,255,.72),transparent 34%),
+    radial-gradient(circle at 88% 84%,rgba(226,248,255,.26),transparent 40%),
+    linear-gradient(135deg,rgba(255,255,255,.62),rgba(250,253,255,.44) 52%,rgba(255,255,255,.56))!important;
+  transition:opacity .68s cubic-bezier(.19,1,.22,1)!important;
 }
 
-/* Subtle divider only, so the matrix stays calm. */
+/* Matrix divider stays subtle and stable. */
 #rubric .rubric-row::after{
   content:""!important;
   position:absolute!important;
@@ -89,29 +86,24 @@
   height:1px!important;
   z-index:0!important;
   pointer-events:none!important;
-  opacity:.72!important;
+  opacity:.70!important;
   background:linear-gradient(90deg,transparent,rgba(35,111,185,.08),rgba(35,111,185,.08),transparent)!important;
-  transform:none!important;
-  transition:opacity .56s cubic-bezier(.19,1,.22,1)!important;
+  transition:opacity .54s cubic-bezier(.19,1,.22,1)!important;
 }
 
 #rubric .rubric-row:last-child::after{opacity:0!important;}
 
 #rubric .rubric-row:hover{
-  border-color:rgba(0,122,255,.13)!important;
-  background:rgba(255,255,255,.78)!important;
+  border-color:rgba(0,122,255,.14)!important;
+  background:rgba(255,255,255,.80)!important;
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.96),
     inset 0 0 0 1px rgba(255,255,255,.56),
-    0 12px 26px rgba(0,122,255,.05)!important;
+    0 10px 24px rgba(0,122,255,.045)!important;
 }
 
-#rubric .rubric-row:hover::before{
-  opacity:1!important;
-  transform:scale(1)!important;
-}
-
-#rubric .rubric-row:hover::after{opacity:.32!important;}
+#rubric .rubric-row:hover::before{opacity:1!important;}
+#rubric .rubric-row:hover::after{opacity:.34!important;}
 
 #rubric .rubric-name,
 #rubric .rubric-note{
@@ -131,10 +123,9 @@
   font-weight:800!important;
   letter-spacing:-.044em!important;
   text-wrap:pretty;
-  transition:color .56s cubic-bezier(.19,1,.22,1)!important;
+  transition:color .50s cubic-bezier(.19,1,.22,1)!important;
 }
 
-/* Stable chip: no background-image swap, so it does not snap. */
 #rubric .rubric-name::before{
   counter-increment:rubricItem!important;
   content:"0" counter(rubricItem)!important;
@@ -153,52 +144,29 @@
   box-shadow:
     0 7px 18px rgba(0,122,255,.04),
     inset 0 1px 0 rgba(255,255,255,1)!important;
-  transform:translate3d(0,0,0) scale(1)!important;
+  transform:none!important;
   transition:
-    transform .72s cubic-bezier(.19,1,.22,1),
-    color .56s cubic-bezier(.19,1,.22,1),
-    border-color .56s cubic-bezier(.19,1,.22,1),
-    box-shadow .72s cubic-bezier(.19,1,.22,1),
-    filter .72s cubic-bezier(.19,1,.22,1)!important;
+    color .50s cubic-bezier(.19,1,.22,1),
+    border-color .50s cubic-bezier(.19,1,.22,1),
+    box-shadow .58s cubic-bezier(.19,1,.22,1),
+    filter .58s cubic-bezier(.19,1,.22,1)!important;
 }
 
-/* Soft aura around the chip, opacity-only animation for smoothness. */
+/* Remove all extra chip glow/rail mechanisms. */
 #rubric .rubric-name::after{
-  content:""!important;
-  position:absolute!important;
-  left:21px!important;
-  top:50%!important;
-  width:48px!important;
-  height:48px!important;
-  border-radius:18px!important;
-  z-index:-1!important;
-  pointer-events:none!important;
-  opacity:0!important;
-  background:radial-gradient(circle,rgba(11,216,255,.18),rgba(0,122,255,.075) 44%,transparent 74%)!important;
-  filter:blur(12px)!important;
-  transform:translate(-50%,-50%) scale(.86)!important;
-  transition:
-    opacity .72s cubic-bezier(.19,1,.22,1),
-    transform .82s cubic-bezier(.19,1,.22,1)!important;
+  content:none!important;
+  display:none!important;
 }
 
-#rubric .rubric-row:hover .rubric-name{
-  color:#061a31!important;
-}
+#rubric .rubric-row:hover .rubric-name{color:#061a31!important;}
 
 #rubric .rubric-row:hover .rubric-name::before{
-  transform:translate3d(0,-.5px,0) scale(1.012)!important;
   color:#005ff0!important;
   border-color:rgba(0,122,255,.22)!important;
   box-shadow:
-    0 10px 24px rgba(0,122,255,.075),
+    0 9px 21px rgba(0,122,255,.065),
     inset 0 1px 0 rgba(255,255,255,1)!important;
-  filter:saturate(1.04)!important;
-}
-
-#rubric .rubric-row:hover .rubric-name::after{
-  opacity:1!important;
-  transform:translate(-50%,-50%) scale(1)!important;
+  filter:saturate(1.03)!important;
 }
 
 #rubric .rubric-note{
@@ -209,7 +177,7 @@
   font-weight:500!important;
   letter-spacing:-.018em!important;
   text-wrap:pretty;
-  transition:color .56s cubic-bezier(.19,1,.22,1)!important;
+  transition:color .50s cubic-bezier(.19,1,.22,1)!important;
 }
 
 #rubric .rubric-row:hover .rubric-note{color:#476985!important;}
@@ -225,7 +193,6 @@
   #rubric .rubric-row{border-radius:20px!important;}
   #rubric .rubric-name{grid-template-columns:38px minmax(0,1fr)!important;font-size:15.4px!important;gap:12px!important;}
   #rubric .rubric-name::before{width:38px!important;height:38px!important;border-radius:13px!important;}
-  #rubric .rubric-name::after{left:19px!important;width:42px!important;height:42px!important;border-radius:15px!important;}
   #rubric .rubric-note{font-size:14px!important;line-height:1.66!important;}
 }
 
@@ -235,7 +202,6 @@
   #rubric .rubric-row::after,
   #rubric .rubric-name,
   #rubric .rubric-name::before,
-  #rubric .rubric-name::after,
   #rubric .rubric-note{
     transition:none!important;
   }
