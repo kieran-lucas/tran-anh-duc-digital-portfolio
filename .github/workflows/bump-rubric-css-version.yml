@@ -1,0 +1,33 @@
+name: Bump rubric CSS cache
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump rubric stylesheet version
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p = Path('src/pages/index.astro')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('/rubric-matrix-v2.css?v=20260524-1', '/rubric-matrix-v2.css?v=20260524-white-2')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/pages/index.astro
+            git commit -m "fix: bust rubric matrix css cache"
+            git push
+          fi
