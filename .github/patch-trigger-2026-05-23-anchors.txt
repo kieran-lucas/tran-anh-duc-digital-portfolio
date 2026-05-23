@@ -1,0 +1,1 @@
+Trigger GitHub Actions to apply anchor navigation v2 patch.
