@@ -148,7 +148,7 @@
     });
 
     setText('#reflection .section-head p', portfolioCopy.reflectionIntro);
-    setText('#reflection .reflection-visual h3', 'Tôi hiểu AI rõ hơn và biết trình bày sản phẩm học tập tốt hơn.');
+    setText('#reflection .reflection-visual h3', 'Sau khi hoàn thành toàn bộ khóa học, tôi hiểu rõ hơn về AI, biết sử dụng AI một cách hợp lý và hiệu quả, đồng thời có sự tiến bộ rõ rệt trong thiết kế và trình bày sản phẩm học tập.');
 
     setText('#rubric .section-head p', portfolioCopy.rubricIntro);
     document.querySelectorAll('#rubric .rubric-row').forEach((row, index) => {
