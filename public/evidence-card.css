@@ -19,5 +19,7 @@
 .panel-cta{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;white-space:nowrap!important;min-width:max-content!important;line-height:1!important;}
 .panel-cta .premium-external-icon{flex:0 0 auto!important;}
 .hero-actions .btn-primary{max-width:198px!important;overflow:hidden!important;white-space:nowrap!important;justify-content:flex-start!important;}
+#reflection .reflection-visual h3{font-size:0!important;line-height:0!important;}
+#reflection .reflection-visual h3::before{content:"Sau khi hoàn thành môn học, tôi hiểu rõ hơn về AI, biết sử dụng AI một cách hợp lý và hiệu quả, đồng thời có sự tiến bộ rõ rệt trong thiết kế và trình bày sản phẩm học tập."!important;display:block!important;color:#fff!important;font-size:clamp(28px,3.05vw,40px)!important;line-height:1.06!important;letter-spacing:-.064em!important;}
 @media(max-width:720px){.evidence-window .evidence-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.evidence-window .evidence-item{transition:none;transform:none}.evidence-window .evidence-item:hover,.evidence-window .evidence-item:focus-within{transform:none}}
