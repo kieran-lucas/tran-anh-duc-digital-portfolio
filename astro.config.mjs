@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 import { readFile, writeFile } from 'node:fs/promises';
 
+import cloudflare from '@astrojs/cloudflare';
+
 const portfolioUiStylesheet = '<link rel="stylesheet" href="/portfolio-ui.css?v=20260524-refactor-v1" data-portfolio-ui="true" />';
 const portfolioRuntimeScript = '<script src="/portfolio-runtime.js?v=20260524-hero-hover-v14" defer data-portfolio-runtime="true"></script>';
 
@@ -251,7 +253,10 @@ export default defineConfig({
   output: 'static',
   site: 'https://tran-anh-duc-portfolio.vercel.app',
   integrations: [portfolioIntegration()],
+
   vite: {
     plugins: [portfolioVitePlugin()]
-  }
+  },
+
+  adapter: cloudflare()
 });
