@@ -322,7 +322,17 @@
     enhanceHeroInteractions();
     calibrateAnchors();
     applyCursorPolicy();
-    new MutationObserver(applyCursorPolicy).observe(document.documentElement, { childList: true, subtree: true });
+
+    let cursorPolicyRaf = 0;
+    const scheduleCursorPolicy = () => {
+      if (cursorPolicyRaf) return;
+      cursorPolicyRaf = requestAnimationFrame(() => {
+        cursorPolicyRaf = 0;
+        applyCursorPolicy();
+      });
+    };
+
+    new MutationObserver(scheduleCursorPolicy).observe(document.documentElement, { childList: true, subtree: true });
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
