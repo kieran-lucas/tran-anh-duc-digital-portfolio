@@ -305,11 +305,15 @@
   };
 
   const applyCursorPolicy = () => {
-    const interactiveSelector = 'a,button,[role="button"],summary,.brand,.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.terminal-card .mini-stat,.evidence-window .evidence-item';
+    const interactiveSelector = 'a,button,[role="button"],summary,.brand,.btn,.top-action,.action-link,.panel-cta,.nav a,.toc a,.terminal-card .mini-stat';
     document.querySelectorAll('body *').forEach((node) => node.style.setProperty('cursor', 'default', 'important'));
     document.querySelectorAll(interactiveSelector).forEach((root) => {
       root.style.setProperty('cursor', 'pointer', 'important');
       root.querySelectorAll('*').forEach((child) => child.style.setProperty('cursor', 'pointer', 'important'));
+    });
+    document.querySelectorAll('.evidence-window .evidence-item').forEach((root) => {
+      root.style.setProperty('cursor', 'default', 'important');
+      root.querySelectorAll('*').forEach((child) => child.style.setProperty('cursor', 'default', 'important'));
     });
   };
 
